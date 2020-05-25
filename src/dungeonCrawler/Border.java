@@ -6,7 +6,7 @@ public class Border extends BoardCell{
 	
 	public Border(int X, int Y) {
 		super();
-		icon = '$';
+		icon = '#';
 		this.X = X;
 		this.Y = Y;
 		this.type = CellType.BORDER;

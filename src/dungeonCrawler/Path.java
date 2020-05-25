@@ -4,7 +4,7 @@ public class Path extends BoardCell{
 
 	public Path(int X, int Y) {
 		super();
-		icon = '#';
+		icon = ' ';
 		this.X = X;
 		this.Y = Y;
 		this.type = CellType.PATH;

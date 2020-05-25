@@ -15,12 +15,13 @@ public class Board {
 	private int level;
 	private static Board theInstance = new Board();
 	ArrayList<Room> rooms;
+	ArrayList<Corridor> corridors;
 	private final int MAX_HEIGHT = 50;
 	private final int MAX_WIDTH = 150;
 	private final int MAX_ROOM_SIZE = 25;
 	private final int MIN_ROOM_SIZE = 8;
 	private int NUM_ROOMS;
-	
+
 	//Methods
 	public void generateBoard() {
 		/*
@@ -30,14 +31,14 @@ public class Board {
 		//Generates a new board whenever the method is called.
 		theInstance.board = new BoardCell[MAX_HEIGHT][MAX_WIDTH];
 		Random rando = new Random();
-		
+
 		int xStair = rando.nextInt(MAX_HEIGHT - 10) + 5;
 		int yStair = rando.nextInt(MAX_WIDTH - 10) + 5;
 		NUM_ROOMS = rando.nextInt(6) + 4;
-		
+
 		//Generate the rooms
 		generateRooms();
-		
+
 		//Place Borders
 		for (int i = 0; i < MAX_HEIGHT; i++) {
 			for (int j = 0; j < MAX_WIDTH; j++) {
@@ -45,21 +46,24 @@ public class Board {
 					theInstance.board[i][j] = new Border(i, j);
 				}
 				else {
-					theInstance.board[i][j] = new Floor(i, j);
+					theInstance.board[i][j] = new Border(i, j);
 				}
 			}
 		}
-		
-		//Place the Rooms
+
+		//Generate Corridors
+		generateCorridors();
+
+		//Place the Rooms and Corridors
 		placeRooms();
-		
+		placeCorridors();
+
 		//Place the Stairs
 		Collections.shuffle(theInstance.rooms);
 		theInstance.board[theInstance.rooms.get(0).getyStair()][theInstance.rooms.get(0).getxStair()] = new Stairs(theInstance.rooms.get(0).getyStair(), theInstance.rooms.get(0).getxStair());
 		theInstance.board[theInstance.rooms.get(1).getyStair()][theInstance.rooms.get(1).getxStair()] = new Stairs(theInstance.rooms.get(1).getyStair(), theInstance.rooms.get(1).getxStair());
-		
 	}
-	
+
 	public void placeRooms() {
 		for (int var = 0; var < theInstance.rooms.size(); var++) {
 			for (int i = theInstance.rooms.get(var).getY1(); i < theInstance.rooms.get(var).getY2(); i++) {
@@ -73,7 +77,27 @@ public class Board {
 			}
 		}
 	}
-	
+
+	public void placeCorridors() {
+		for (int i = 0; i < theInstance.corridors.size(); i++) {
+			for (int j = 0; j < theInstance.corridors.get(i).getCorridor().size(); j++) {
+				theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).Y][theInstance.corridors.get(i).getCorridor().get(j).X] = theInstance.corridors.get(i).getCorridor().get(j);
+			}
+		}
+	}
+
+	public void generateCorridors() {
+		corridors = new ArrayList<Corridor>();
+
+		for (int i = 0; i < theInstance.rooms.size(); i++) {
+			if (i != theInstance.rooms.size() - 1) {
+				theInstance.corridors.add(new Corridor(theInstance.rooms.get(i), theInstance.rooms.get(i + 1)));
+			} else {
+				theInstance.corridors.add(new Corridor(theInstance.rooms.get(i), theInstance.rooms.get(0)));
+			}
+		}
+	}
+
 	public void generateRooms() {
 		theInstance.rooms = new ArrayList<Room>();
 		Random rando = new Random();
@@ -82,7 +106,7 @@ public class Board {
 			int h = rando.nextInt(MAX_ROOM_SIZE - MIN_ROOM_SIZE + 1) + MIN_ROOM_SIZE;
 			int x = rando.nextInt(MAX_WIDTH - w - 1) + 1;
 			int y = rando.nextInt(MAX_HEIGHT - h - 1) + 1;
-			
+
 			Room newRoom = new Room(x, y, w, h);
 			boolean failed = false;
 			for (Room otherRoom : theInstance.rooms) {
@@ -96,7 +120,7 @@ public class Board {
 			}
 		}
 	}
-	
+
 	public void displayBoard() {
 		for (int i = 0; i < theInstance.board.length; i++) {
 			for (int j = 0; j < theInstance.board[i].length; j++) {
@@ -105,11 +129,15 @@ public class Board {
 			System.out.println();
 		}
 	}
-	
+
 	public static Board getBoard() {
 		return theInstance;
 	}
-	
+
+	public ArrayList<Room> getRooms() {
+		return rooms;
+	}
+
 	public static void main(String[] args) {
 		Board instance = Board.getBoard();
 		instance.generateBoard();
