@@ -6,6 +6,7 @@
 package dungeonCrawler;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
@@ -29,14 +30,21 @@ public class Board {
 
 	public void init() {
 		theInstance.level = 0;
-		generatePossibleEnemies();
+		//generatePossibleEnemies();
 		generateBoard();
 		displayBoard();
 	}
+	
+	//Plays the Game
+	public void playGame() {
+		
+	}
+	
 	//Adds all possible enemies to the ArrayList "possibleEnemies"
-	public void generatePossibleEnemies() {
+	public void generatePossibleEnemies(int i, int j) {
 		theInstance.possibleEnemies = new ArrayList<Enemy>();
-		theInstance.possibleEnemies.add(new Skeleton(-1, -1));
+		theInstance.possibleEnemies.add(new Skeleton(i, j));
+		theInstance.possibleEnemies.add(new Spider(i, j));
 	}
 	
 	public void generateBoard() {
@@ -93,18 +101,14 @@ public class Board {
 	public void placeEnemies() {
 		for (int i = 0; i < theInstance.board.length; i++) {
 			for (int j = 0; j < theInstance.board[i].length; j++) {
+				generatePossibleEnemies(i,j);
+				Collections.shuffle(theInstance.possibleEnemies);
 				if (theInstance.board[i][j].getType() != CellType.ROOM && theInstance.board[i][j].getType() != CellType.PATH) {
 					continue;
 				} else {
 					for (int k = 0; k < theInstance.possibleEnemies.size(); k++) {
 						if (theInstance.possibleEnemies.get(k).spawn()) {
-							switch (k) {
-							case 0:
-								theInstance.board[i][j].enemy = new Skeleton(i,j);
-								break;
-							default:
-								break;
-							}
+							theInstance.board[i][j].enemy = theInstance.possibleEnemies.get(k);
 							break;
 						}
 					}
@@ -195,10 +199,5 @@ public class Board {
 
 	public ArrayList<Room> getRooms() {
 		return theInstance.rooms;
-	}
-
-	public static void main(String[] args) {
-		Board instance = Board.getBoard();
-		instance.init();
 	}
 }

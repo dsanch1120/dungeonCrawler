@@ -61,7 +61,22 @@ Possible Items:
 	- Bow
 	- Helmet
 Possible Abilities
-	- Chill
+	- Undead Decay
 Gold: 1-3
+Spawns at Levels 1-6
 
-
+Spider
+Icon: s
+Endurance: 1
+Strength: 1
+Defense: 1
+Agility: 2
+Intelligence: 0
+Charisma: 0
+Possible Items:
+	NONE
+Possible Abilities
+	- Poison
+	- Paralyze
+Gold: 1-2
+Spawns at Levels 1-3
