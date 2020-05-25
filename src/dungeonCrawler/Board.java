@@ -16,13 +16,29 @@ public class Board {
 	private static Board theInstance = new Board();
 	ArrayList<Room> rooms;
 	ArrayList<Corridor> corridors;
+	ArrayList<Enemy> possibleEnemies;
+	ArrayList<BoardCell[][]> levels = new ArrayList<BoardCell[][]>();
 	private final int MAX_HEIGHT = 50;
 	private final int MAX_WIDTH = 150;
 	private final int MAX_ROOM_SIZE = 25;
 	private final int MIN_ROOM_SIZE = 8;
 	private int NUM_ROOMS;
+	private Player player;
 
 	//Methods
+
+	public void init() {
+		theInstance.level = 0;
+		generatePossibleEnemies();
+		generateBoard();
+		displayBoard();
+	}
+	//Adds all possible enemies to the ArrayList "possibleEnemies"
+	public void generatePossibleEnemies() {
+		theInstance.possibleEnemies = new ArrayList<Enemy>();
+		theInstance.possibleEnemies.add(new Skeleton(-1, -1));
+	}
+	
 	public void generateBoard() {
 		/*
 		 * Plan for generating board
@@ -31,6 +47,8 @@ public class Board {
 		//Generates a new board whenever the method is called.
 		theInstance.board = new BoardCell[MAX_HEIGHT][MAX_WIDTH];
 		Random rando = new Random();
+
+		theInstance.level++;
 
 		int xStair = rando.nextInt(MAX_HEIGHT - 10) + 5;
 		int yStair = rando.nextInt(MAX_WIDTH - 10) + 5;
@@ -61,9 +79,40 @@ public class Board {
 		//Place the Stairs
 		Collections.shuffle(theInstance.rooms);
 		theInstance.board[theInstance.rooms.get(0).getyStair()][theInstance.rooms.get(0).getxStair()] = new Stairs(theInstance.rooms.get(0).getyStair(), theInstance.rooms.get(0).getxStair());
-		theInstance.board[theInstance.rooms.get(1).getyStair()][theInstance.rooms.get(1).getxStair()] = new Stairs(theInstance.rooms.get(1).getyStair(), theInstance.rooms.get(1).getxStair());
+		if (theInstance.level > 1) {
+			theInstance.board[theInstance.rooms.get(1).getyStair()][theInstance.rooms.get(1).getxStair()] = new Stairs(theInstance.rooms.get(1).getyStair(), theInstance.rooms.get(1).getxStair());
+		} else {
+			player = new Player(theInstance.rooms.get(1).getyStair(), theInstance.rooms.get(1).getxStair());
+		}
+		theInstance.levels.add(theInstance.board);
+		
+		//Place the Enemies
+		placeEnemies();
 	}
 
+	public void placeEnemies() {
+		for (int i = 0; i < theInstance.board.length; i++) {
+			for (int j = 0; j < theInstance.board[i].length; j++) {
+				if (theInstance.board[i][j].getType() != CellType.ROOM && theInstance.board[i][j].getType() != CellType.PATH) {
+					continue;
+				} else {
+					for (int k = 0; k < theInstance.possibleEnemies.size(); k++) {
+						if (theInstance.possibleEnemies.get(k).spawn()) {
+							switch (k) {
+							case 0:
+								theInstance.board[i][j].enemy = new Skeleton(i,j);
+								break;
+							default:
+								break;
+							}
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	public void placeRooms() {
 		for (int var = 0; var < theInstance.rooms.size(); var++) {
 			for (int i = theInstance.rooms.get(var).getY1(); i < theInstance.rooms.get(var).getY2(); i++) {
@@ -124,23 +173,32 @@ public class Board {
 	public void displayBoard() {
 		for (int i = 0; i < theInstance.board.length; i++) {
 			for (int j = 0; j < theInstance.board[i].length; j++) {
-				System.out.print(theInstance.board[i][j].getIcon());
+				if (theInstance.player.getxCoordinate() == i && theInstance.player.getyCoordinate() == j) {
+					System.out.print(theInstance.player.getIcon());
+				} else if (theInstance.board[i][j].hasEnemy()) {
+					System.out.print(theInstance.board[i][j].enemy.getIcon());
+				} else {
+					System.out.print(theInstance.board[i][j].getIcon());
+				}
 			}
 			System.out.println();
 		}
 	}
 
+	public int getLevel() {
+		return theInstance.level;
+	}
+	
 	public static Board getBoard() {
 		return theInstance;
 	}
 
 	public ArrayList<Room> getRooms() {
-		return rooms;
+		return theInstance.rooms;
 	}
 
 	public static void main(String[] args) {
 		Board instance = Board.getBoard();
-		instance.generateBoard();
-		instance.displayBoard();
+		instance.init();
 	}
 }

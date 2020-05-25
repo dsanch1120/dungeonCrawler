@@ -11,7 +11,17 @@ public class Path extends BoardCell{
 	}
 	
 	@Override
-	protected void behavior() {
+	public boolean hasPlayer() {
+		return(!(player == null));
+	}
+	
+	@Override
+	public boolean hasEnemy() {
+		return (!(enemy == null));
+	}
+	
+	@Override
+	public void behavior() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -11,7 +11,19 @@ public class Stairs extends BoardCell{
 	}
 	
 	@Override
-	protected void behavior() {
+	public boolean hasPlayer() {
+		//FIXME
+		//Stair should be able to have the player, but not an enemy.
+		return false;
+	}
+	
+	@Override
+	public boolean hasEnemy() {
+		return false;
+	}
+	
+	@Override
+	public void behavior() {
 		// TODO Auto-generated method stub
 		
 	}

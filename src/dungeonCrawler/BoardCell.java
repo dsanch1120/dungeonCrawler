@@ -10,15 +10,20 @@ public abstract class BoardCell {
 	protected int X;
 	protected int Y;
 	protected CellType type;
+	protected Enemy enemy;
+	protected Player player;
 	
 	public CellType getType() {
 		return type;
 	}
 
-	protected abstract void behavior();
+	public abstract void behavior();
 
 	public char getIcon() {
 		return icon;
 	}
+	
+	public abstract boolean hasPlayer();
+	public abstract boolean hasEnemy();
 	
 }

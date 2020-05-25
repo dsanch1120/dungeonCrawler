@@ -1,0 +1,67 @@
+This file contains information about all of the different enemy types in the game.
+
+For reference, I will include what the various attributes mean.
+For ability descriptions, consult the file specifically for that. 
+I didn't include a "universal" player information because that will differ depending on how they build their character
+Instead, I included a sample level one character.
+Note that as the game progresses, the character will level up and become more powerful (as will the enemies)
+Thus the information presented is for the first level unless there is a special case.
+
+Endurance
+	- The amount of hitpoints one can take before they die
+		EX. Player's HP is 15, they can take 15 points of damage before dying
+Strength
+	- Determines the maximum damage one can exert on another during a battle
+		EX. Enemy's strength of 3 allows them to exert up to 3 damage on the player
+	- Determines how much the player can carry.
+		EX. Player's low strength means they can only carry a few items
+Defense
+	- Determines the maximum damage one can absorb/negate from an attack
+		EX. Enemy attack of 13 is reduced to 8 after player makes defense roll of 5
+	- Determines likelihood of counter-attack
+		EX. Enemy attack of 5 is met by a counter attack after player makes high defense roll
+Agility
+	- Determines likelihood of dodging attack (or increases odds of being hit)
+		EX. Enemy's attack is dodged by player after a high agility roll
+		EX. Enemy's attack is more likely to not miss due to player's low agility
+	- Determines likelihood of landing an attack
+		EX. Player's high agility roll beats enemies low agility roll. Attack lands
+Perception
+	- Determines how much of an enemy's stats player is able to see 
+		EX. Player's high perception allows them to see enemy's health, items, and abilities
+		EX. Player's low perception means they can't see the enemy's health, items, or abilities
+	- Determines how much of the board the player can see at once.
+		EX. Player's low perception means they can only see a maximum length of 10 away
+		EX. Player's extremely high perception allows them to see almost the entire level
+Intelligence
+	- Increases likelihood of gaining a new feat or ability at level-up
+		EX. Player's high intelligence allows them to gain a new feat/ability every 2 level-ups
+	- Allows player to use more advanced weapons
+		EX. Player's low intelligence prevents them from using explosive arrows
+	- Increases player's ability to use magic
+Charisma 
+	- Reduces costs and increases sell value of items at merchant store
+	- *PLAYER* Increases likelihood of passing certain dialogue checks
+		- Player's high charisma allows them to pass the sphinx without attempting his tests
+		- Player's low charisma prevents them from persuading a pillager against attacking.
+	- *ENEMY* Increases difficulty of player passing dialogue check
+		- Enemy's low charisma roll allowed the player to intimidate them away from a fight.  
+
+
+SKELETON
+Icon: S
+Endurance: 1
+Strength: 1
+Defense: 1
+Agility: 2
+Intelligence: 1
+Charisma: 0
+Possible Items:
+	- Sword
+	- Bow
+	- Helmet
+Possible Abilities
+	- Chill
+Gold: 1-3
+
+
