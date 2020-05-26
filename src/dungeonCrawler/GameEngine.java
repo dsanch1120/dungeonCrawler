@@ -5,6 +5,7 @@ public class GameEngine {
 	
 	public void beginGame() {
 		board.init();
+		board.playGame();
 	}
 	
 	public static void main(String[] args) {

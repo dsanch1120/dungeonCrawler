@@ -29,6 +29,7 @@ public class Player {
 	public Player(int xCoordinate, int yCoordinate) {
 		this.xCoordinate = xCoordinate;
 		this.yCoordinate = yCoordinate;
+		this.HP = 1;
 	}
 	
 	
@@ -53,11 +54,30 @@ public class Player {
 	}
 	
 	//Getters and Setters
+	
+	
 	public int getxCoordinate() {
 		return xCoordinate;
 	}
 
+	public int getHP() {
+		return HP;
+	}
+
+
 	public int getyCoordinate() {
 		return yCoordinate;
 	}
+
+
+	public void moveX(int xCoordinate) {
+		this.xCoordinate = xCoordinate;
+	}
+
+
+	public void moveY(int yCoordinate) {
+		this.yCoordinate = yCoordinate;
+	}
+	
+	
 }

@@ -5,12 +5,15 @@
  */
 package dungeonCrawler;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
-public class Board {
+public class Board implements KeyListener{
 	//Variables to be used throughout the class
 	private BoardCell[][] board;
 	private int level;
@@ -30,23 +33,75 @@ public class Board {
 
 	public void init() {
 		theInstance.level = 0;
-		//generatePossibleEnemies();
 		generateBoard();
 		displayBoard();
 	}
-	
+
 	//Plays the Game
 	public void playGame() {
+			generateBoard();
+			displayBoard();
+			String[] raw = {"/bin/sh", "-c", "stty raw </dev/tty"};
+			try {
+				Runtime.getRuntime().exec(raw).waitFor();
+			} catch (InterruptedException e) {
+				System.out.println("Interrupted Exception");
+			} catch (IOException e) {
+				System.out.println("IO Exception");
+			}
+			
+			try {
+				char tmp = (char) System.in.read();
+				System.out.println(tmp);
+			} catch (IOException e1) {
+				System.out.println("IO Exception");
+			}
+			
+			String[] cooked = {"/bin/sh", "-c", "stty cooked </dev/tty"};
+			try {
+				Runtime.getRuntime().exec(cooked).waitFor();
+			} catch (InterruptedException e) {
+				System.out.println("Interrupted Exception");
+			} catch (IOException e) {
+				System.out.println("IO Exception");
+			}
 		
 	}
-	
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		//Intentionally left empty
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		//Intentionally left empty
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		int key = e.getKeyCode();
+		if (key == KeyEvent.VK_LEFT) {
+
+		}
+		if (key == KeyEvent.VK_RIGHT) {
+
+		}
+		if (key == KeyEvent.VK_UP) {
+
+		}
+		if (key == KeyEvent.VK_DOWN) {
+			System.out.println("Down");
+		}
+	}
+
 	//Adds all possible enemies to the ArrayList "possibleEnemies"
 	public void generatePossibleEnemies(int i, int j) {
 		theInstance.possibleEnemies = new ArrayList<Enemy>();
 		theInstance.possibleEnemies.add(new Skeleton(i, j));
 		theInstance.possibleEnemies.add(new Spider(i, j));
 	}
-	
+
 	public void generateBoard() {
 		/*
 		 * Plan for generating board
@@ -89,11 +144,13 @@ public class Board {
 		theInstance.board[theInstance.rooms.get(0).getyStair()][theInstance.rooms.get(0).getxStair()] = new Stairs(theInstance.rooms.get(0).getyStair(), theInstance.rooms.get(0).getxStair());
 		if (theInstance.level > 1) {
 			theInstance.board[theInstance.rooms.get(1).getyStair()][theInstance.rooms.get(1).getxStair()] = new Stairs(theInstance.rooms.get(1).getyStair(), theInstance.rooms.get(1).getxStair());
+			theInstance.player.moveX(theInstance.rooms.get(1).getxStair());
+			theInstance.player.moveY(theInstance.rooms.get(1).getyStair());
 		} else {
 			player = new Player(theInstance.rooms.get(1).getyStair(), theInstance.rooms.get(1).getxStair());
 		}
 		theInstance.levels.add(theInstance.board);
-		
+
 		//Place the Enemies
 		placeEnemies();
 	}
@@ -116,7 +173,7 @@ public class Board {
 			}
 		}
 	}
-	
+
 	public void placeRooms() {
 		for (int var = 0; var < theInstance.rooms.size(); var++) {
 			for (int i = theInstance.rooms.get(var).getY1(); i < theInstance.rooms.get(var).getY2(); i++) {
@@ -192,7 +249,7 @@ public class Board {
 	public int getLevel() {
 		return theInstance.level;
 	}
-	
+
 	public static Board getBoard() {
 		return theInstance;
 	}
