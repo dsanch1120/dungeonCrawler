@@ -13,15 +13,17 @@ public class Skeleton extends Enemy{
 		super(xCoordinate, yCoordinate);
 		Random rando = new Random();
 		this.icon = 'S';
-		this.ENDURANCE = 1 * this.currentLevel / 3;
-		this.STRENGTH = 1 * this.currentLevel / 3;
-		this.DEFENSE = 1 * this.currentLevel / 3;
-		this.AGILITY = 2 * this.currentLevel / 3;
-		this.INTELLIGENCE = 1 * this.currentLevel / 3;
+		this.ENDURANCE = 1 * this.currentLevel;
+		this.STRENGTH = 1 * this.currentLevel;
+		this.DEFENSE = 1 * this.currentLevel;
+		this.AGILITY = 2 * this.currentLevel;
+		this.INTELLIGENCE = 1 * this.currentLevel;
 		this.CHARISMA = 0;
 		this.spawnChance = 0.0005 * (3 / this.currentLevel);
 		this.gold = rando.nextInt(3) + 1;
 		this.XP = 5;
+		this.maxHP = this.ENDURANCE * 5;
+		this.HP = this.maxHP;
 		//ADD ITEMS TO SKELETON
 		
 		//ADD ABILITIES TO SKELETON
@@ -39,14 +41,13 @@ public class Skeleton extends Enemy{
 	
 	@Override
 	public Integer attack() {
-		// TODO Auto-generated method stub
-		return null;
+		Random rando = new Random();
+		return rando.nextInt(this.STRENGTH) + 1;
 	}
 
 	@Override
 	public Integer defend() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.DEFENSE;
 	}
 
 }

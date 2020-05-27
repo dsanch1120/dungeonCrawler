@@ -1,0 +1,19 @@
+*DELETE AFTER GAME IS COMPLETED*
+This exists as a place to list my thoughts on the order in which certain methods
+	should be called. Basically this will be commented sudo-code.
+
+Main Description	
+1. While player's health is greater than 0
+	1. Clear the previous board
+	2. Generate the new board
+	3. Display the new board
+	4. Switch console to "raw" mode
+	5. Get user input
+	6. Handle user input
+	7. Return console to "cooked" mode
+	
+Sub-Descriptions
+1.5
+	1. If user hits "a, s, d, or w"
+		1. If they can move, move in that direction.
+	2. Check if player is on the same space as an enemy 

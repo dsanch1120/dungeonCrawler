@@ -6,6 +6,7 @@
 package dungeonCrawler;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Enemy {
 	//Variables
@@ -39,6 +40,12 @@ public abstract class Enemy {
 		}
 	} 
 
+	//Other methods
+	public Integer agilityRoll() {
+		Random rando = new Random();
+		return rando.nextInt(this.AGILITY) + 1;
+	}
+	
 	//Methods to be implemented
 	public abstract boolean spawn();
 	public abstract Integer attack();

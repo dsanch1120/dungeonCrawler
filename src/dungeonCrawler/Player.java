@@ -6,6 +6,7 @@
 package dungeonCrawler;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Player {
 	//Variables
@@ -22,6 +23,7 @@ public class Player {
 	private int xCoordinate;
 	private int yCoordinate;
 	private ArrayList<Item> inventory;
+	private ArrayList<Weapon> weapons;
 	private int level;
 	private final char ICON = 'X';
 	
@@ -30,6 +32,16 @@ public class Player {
 		this.xCoordinate = xCoordinate;
 		this.yCoordinate = yCoordinate;
 		this.HP = 1;
+		
+		//FIXME
+		this.ENDURANCE = 3;
+		this.STRENGTH = 3;
+		this.DEFENSE = 1;
+		this.AGILITY = 3;
+		this.PERCEPTION = 3;
+		this.INTELLIGENCE = 3;
+		this.CHARISMA = 3;
+		this.HP = this.ENDURANCE * 5;
 	}
 	
 	
@@ -46,11 +58,17 @@ public class Player {
 
 	//Handles the player's attacks
 	public Integer attack() {
-		return null;
+		//This needs to be further "flushed out"
+		Random rando = new Random();
+		return rando.nextInt(this.STRENGTH) + 1;
 	}
 	//Handles the player's defense
 	public Integer defend() {
-		return null;
+		return this.DEFENSE;
+	}
+	public Integer agilityRoll() {
+		Random rando = new Random();
+		return rando.nextInt(this.AGILITY) + 1;
 	}
 	
 	//Getters and Setters
@@ -59,6 +77,11 @@ public class Player {
 	public int getxCoordinate() {
 		return xCoordinate;
 	}
+
+	public void setHP(int hP) {
+		HP = hP;
+	}
+
 
 	public int getHP() {
 		return HP;
