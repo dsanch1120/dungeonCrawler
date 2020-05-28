@@ -31,12 +31,12 @@ public class Board {
 
 	public void init() {
 		theInstance.level = -1;
-		generateBoard();
 	}
 
 	//Plays the Game
 	public void playGame() {
-
+		generateBoard();
+		displayBoard();
 	}
 	//Move the player
 	private void move() {
@@ -48,8 +48,6 @@ public class Board {
 		Scanner scan = new Scanner(System.in);
 		scan.nextLine();
 		while (theInstance.player.getHP() > 0 && enemy.HP > 0) {
-			//*UNCOMMENT THIS FOR JAR FILE*
-			//clearTerminal();
 			System.out.println("Player Health: " + theInstance.player.getHP());
 			System.out.println("Enemy Health: " + enemy.HP);
 			System.out.println("Press anything to attack");
@@ -93,12 +91,6 @@ public class Board {
 		return false;
 	}
 
-	//Clears terminal
-	private void clearTerminal() {
-		System.out.print("\033[H\033[2J");
-		System.out.flush();
-	}
-
 	//Adds all possible enemies to the ArrayList "possibleEnemies"
 	public void generatePossibleEnemies(int i, int j) {
 		theInstance.possibleEnemies = new ArrayList<Enemy>();
@@ -107,10 +99,7 @@ public class Board {
 	}
 
 	public void generateBoard() {
-		/*
-		 * Plan for generating board
-		 * Within an embedded for loop
-		 */
+
 		//Generates a new board whenever the method is called.
 		theInstance.board = new BoardCell[MAX_HEIGHT][MAX_WIDTH];
 		Random rando = new Random();
