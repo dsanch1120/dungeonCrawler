@@ -36,103 +36,15 @@ public class Board {
 
 	//Plays the Game
 	public void playGame() {
-		while (true) {
-			clearTerminal();
-			generateBoard();
-			displayBoard();
-			raw();
-			while (true) {
-				cook();
-				raw();
-				boolean battleHappened = false;
-				if (theInstance.board[theInstance.player.getxCoordinate()][theInstance.player.getyCoordinate()].hasEnemy()) {
-					if (battle(theInstance.board[theInstance.player.getxCoordinate()][theInstance.player.getyCoordinate()].enemy)) {
-						System.out.println("You have won the battle");
-						theInstance.board[theInstance.player.getxCoordinate()][theInstance.player.getyCoordinate()].enemy = null;
-						battleHappened = true;
-						continue;
-					} else {
-						System.out.println("You have lost the battle");
-						battleHappened = true;
-						break;
-					}
-				}
-				if (!battleHappened) {
-					try {
-						char tmp = (char) System.in.read();
-						theInstance.board[theInstance.player.getxCoordinate()][theInstance.player.getyCoordinate()].player = null;
-						move(tmp);
-						theInstance.board[theInstance.player.getxCoordinate()][theInstance.player.getyCoordinate()].player = theInstance.player;
-						if (tmp == 'q') {
-							break;
-						} else {
-							clearTerminal();
-							displayBoard();
-							continue;
-						}
-					} catch (IOException e1) {
-						System.out.println("IO Exception");
-					}
-				}
-//				clearTerminal();
-//				displayBoard();
-			}
-			cook();
-			break;
-		}
-		cook();
+
 	}
 	//Move the player
-	private void move(char tmp) {
-		if (tmp == 'w') {
-			if (canMove('x', -1)) {
-				theInstance.player.moveX(theInstance.player.getxCoordinate() - 1);
-			}
-		}
-		if (tmp == 'a') {
-			if (canMove('y', -1)) {
-				theInstance.player.moveY(theInstance.player.getyCoordinate() - 1);
-			}
-		}
-		if (tmp == 's') {
-			if (canMove('x', 1)) {
-				theInstance.player.moveX(theInstance.player.getxCoordinate() + 1);
-			}
-		}
-		if (tmp == 'd') {
-			if (canMove('y', 1)) {
-				theInstance.player.moveY(theInstance.player.getyCoordinate() + 1);
-			}
-		}
-	}
-
-	//Makes terminal "raw"
-	private void raw() {
-		String[] raw = {"/bin/sh", "-c", "stty raw </dev/tty"};
-		try {
-			Runtime.getRuntime().exec(raw).waitFor();
-		} catch (InterruptedException e) {
-			System.out.println("Interrupted Exception");
-		} catch (IOException e) {
-			System.out.println("IO Exception");
-		}
-	}
-
-	//Makes terminal "cooked"
-	private void cook() {
-		String[] cooked = {"/bin/sh", "-c", "stty cooked </dev/tty"};
-		try {
-			Runtime.getRuntime().exec(cooked).waitFor();
-		} catch (InterruptedException e) {
-			System.out.println("Interrupted Exception");
-		} catch (IOException e) {
-			System.out.println("IO Exception");
-		}
+	private void move() {
+	
 	}
 
 	//Handles a battle
 	private boolean battle(Enemy enemy) {
-		cook();
 		Scanner scan = new Scanner(System.in);
 		scan.nextLine();
 		while (theInstance.player.getHP() > 0 && enemy.HP > 0) {
@@ -156,12 +68,10 @@ public class Board {
 			theInstance.player.setHP(theInstance.player.getHP() - enemyAttack);
 			if (enemy.HP < 1) {
 				scan.close();
-				raw();
 				return true;
 			}
 			if (theInstance.player.getHP() < 1) {
 				scan.close();
-				raw();
 				return false;
 			}
 		}
