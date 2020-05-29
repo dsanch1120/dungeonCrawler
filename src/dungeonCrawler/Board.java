@@ -26,6 +26,7 @@ public class Board {
 	private final int MIN_ROOM_SIZE = 8;
 	private int NUM_ROOMS;
 	private Player player;
+	private boolean newGame;
 
 	//Methods
 
@@ -239,9 +240,19 @@ public class Board {
 			System.out.println();
 		}
 	}
+	
+	//Getters and Setters
 
 	public int getLevel() {
 		return theInstance.level;
+	}
+
+	public boolean isNewGame() {
+		return newGame;
+	}
+
+	public void setNewGame(boolean newGame) {
+		this.newGame = newGame;
 	}
 
 	public static Board getBoard() {
