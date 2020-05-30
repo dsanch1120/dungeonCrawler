@@ -29,7 +29,6 @@ public class Board {
 	private boolean newGame;
 
 	//Methods
-
 	public void init() {
 		theInstance.level = -1;
 	}
@@ -243,6 +242,10 @@ public class Board {
 	
 	//Getters and Setters
 
+	public Player getPlayer() {
+		return theInstance.player;
+	}
+	
 	public int getLevel() {
 		return theInstance.level;
 	}
