@@ -5,6 +5,7 @@
  */
 package dungeonCrawler;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -16,6 +17,8 @@ public abstract class Enemy {
 	protected int XP;
 	protected int xCoordinate;
 	protected int yCoordinate;
+	protected final int WIDTH = 15;
+	protected final int HEIGHT = 15;
 	protected int ENDURANCE;
 	protected int STRENGTH;
 	protected int DEFENSE;
@@ -50,7 +53,8 @@ public abstract class Enemy {
 	public abstract boolean spawn();
 	public abstract Integer attack();
 	public abstract Integer defend();
-
+	public abstract void draw(Graphics cell);
+	
 	//Getters and Setters
 	public char getIcon() {
 		return icon;

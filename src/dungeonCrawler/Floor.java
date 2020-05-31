@@ -1,5 +1,8 @@
 package dungeonCrawler;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class Floor extends BoardCell{
 
 	public Floor(int X, int Y) {
@@ -26,4 +29,12 @@ public class Floor extends BoardCell{
 		
 	}
 
+	@Override
+	public void draw(Graphics cell) {
+		cell.setColor(Color.BLACK);
+		cell.drawRect(X*15, Y*15, width, height);
+		cell.setColor(Color.LIGHT_GRAY);
+		cell.fillRect(X*15, Y*15, width - 1, height - 1);
+	}
+	
 }

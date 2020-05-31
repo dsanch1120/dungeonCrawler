@@ -5,6 +5,8 @@
  */
 package dungeonCrawler;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Random;
 
 public class Skeleton extends Enemy{
@@ -25,7 +27,7 @@ public class Skeleton extends Enemy{
 		this.maxHP = this.ENDURANCE * 5;
 		this.HP = this.maxHP;
 		//ADD ITEMS TO SKELETON
-		
+
 		//ADD ABILITIES TO SKELETON
 	}
 
@@ -38,7 +40,7 @@ public class Skeleton extends Enemy{
 		int spawnCheck = rando.nextInt(100000) + 1;
 		return ((this.spawnChance * 100000) >= spawnCheck);
 	}
-	
+
 	@Override
 	public Integer attack() {
 		Random rando = new Random();
@@ -48,6 +50,16 @@ public class Skeleton extends Enemy{
 	@Override
 	public Integer defend() {
 		return this.DEFENSE;
+	}
+
+	@Override
+	public void draw(Graphics cell) {
+		cell.setColor(Color.BLACK);
+		cell.drawRect(xCoordinate*15, yCoordinate*15, WIDTH, HEIGHT);
+		cell.setColor(Color.YELLOW);
+		cell.fillRect(xCoordinate*15, yCoordinate*15, WIDTH - 1, HEIGHT - 1);
+//		cell.setColor(Color.BLACK);
+//		cell.drawString("" + this.icon, xCoordinate*15, yCoordinate*15);
 	}
 
 }

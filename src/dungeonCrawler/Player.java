@@ -5,11 +5,14 @@
  */
 package dungeonCrawler;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Player {
 	//Variables
+	private String name;
 	private int ENDURANCE;
 	private int STRENGTH;
 	private int DEFENSE;
@@ -22,6 +25,9 @@ public class Player {
 	private int HP;
 	private int xCoordinate;
 	private int yCoordinate;
+	private final int WIDTH = 15;
+	private final int HEIGHT = 15;
+	private Purse purse;
 	private ArrayList<Item> inventory;
 	private ArrayList<Weapon> weapons;
 	private int level;
@@ -42,6 +48,9 @@ public class Player {
 		this.INTELLIGENCE = 3;
 		this.CHARISMA = 3;
 		this.HP = this.ENDURANCE * 5;
+		this.name = "";
+		
+		this.purse = new Purse(0);
 	}
 	
 	
@@ -71,8 +80,28 @@ public class Player {
 		return rando.nextInt(this.AGILITY) + 1;
 	}
 	
-	//Getters and Setters
+	public void draw(Graphics cell) {
+		// TODO Auto-generated method stub
+		cell.setColor(Color.BLACK);
+		cell.drawRect(xCoordinate*15, yCoordinate*15, WIDTH, HEIGHT);
+		cell.setColor(Color.LIGHT_GRAY);
+		cell.fillRect(xCoordinate*15, yCoordinate*15, WIDTH - 1, HEIGHT - 1);
+		cell.setColor(Color.BLACK);
+		cell.drawString("X", xCoordinate*15, yCoordinate*15);
+	}
 	
+	//Getters and Setters
+	public int getXP() {
+		return this.XP;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public int getGold() {
+		return purse.behavior();
+	}
 	
 	public int getxCoordinate() {
 		return xCoordinate;
