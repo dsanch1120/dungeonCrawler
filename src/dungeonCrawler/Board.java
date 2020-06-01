@@ -6,6 +6,8 @@
 package dungeonCrawler;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +31,7 @@ public class Board extends JPanel{
 	private final int MAX_ROOM_SIZE = 25;
 	private final int MIN_ROOM_SIZE = 8;
 	private int NUM_ROOMS;
-	private Player player;
+	private static Player player;
 	private boolean newGame;
 
 	//Methods
@@ -100,7 +102,7 @@ public class Board extends JPanel{
 		theInstance.possibleEnemies.add(new Skeleton(i, j));
 		theInstance.possibleEnemies.add(new Spider(i, j));
 	}
-
+	//Handles the creation of the board by calling various methods
 	public void generateBoard() {
 
 		//Generates a new board whenever the method is called.
@@ -150,7 +152,7 @@ public class Board extends JPanel{
 		//Place the Enemies
 		placeEnemies();
 	}
-
+	//Places the randomly genereated enemies
 	public void placeEnemies() {
 		enemies = new ArrayList<Enemy>();
 		for (int i = 0; i < theInstance.board.length; i++) {
@@ -171,7 +173,7 @@ public class Board extends JPanel{
 			}
 		}
 	}
-
+	//Places the already generated rooms
 	public void placeRooms() {
 		for (int var = 0; var < theInstance.rooms.size(); var++) {
 			for (int i = theInstance.rooms.get(var).getX1(); i < theInstance.rooms.get(var).getX2(); i++) {
@@ -185,7 +187,7 @@ public class Board extends JPanel{
 			}
 		}
 	}
-
+	//Places the already generated corridors
 	public void placeCorridors() {
 		for (int i = 0; i < theInstance.corridors.size(); i++) {
 			for (int j = 0; j < theInstance.corridors.get(i).getCorridor().size(); j++) {
@@ -193,7 +195,7 @@ public class Board extends JPanel{
 			}
 		}
 	}
-
+	//Generates corridors to connect the rooms
 	public void generateCorridors() {
 		corridors = new ArrayList<Corridor>();
 
@@ -205,7 +207,7 @@ public class Board extends JPanel{
 			}
 		}
 	}
-
+	//Generates a list of rooms, destroys a newly created room if it intersects with an already created one
 	public void generateRooms() {
 		theInstance.rooms = new ArrayList<Room>();
 		Random rando = new Random();
@@ -229,7 +231,7 @@ public class Board extends JPanel{
 			}
 		}
 	}
-
+	//Paints the board
 	public void paintComponent(Graphics cell) {
 		super.paintComponent(cell);
 		for (int i = 0; i < board.length; i++) {
@@ -244,26 +246,20 @@ public class Board extends JPanel{
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).draw(cell);
 		}
-		/*
-		for (int i = 0; i < theInstance.board.length; i++) {
-			for (int j = 0; j < theInstance.board[i].length; j++) {
-				if (theInstance.player.getxCoordinate() == i && theInstance.player.getyCoordinate() == j) {
-					System.out.print(theInstance.player.getIcon());
-				} else if (theInstance.board[i][j].hasEnemy()) {
-					System.out.print(theInstance.board[i][j].enemy.getIcon());
-				} else {
-					System.out.print(theInstance.board[i][j].getIcon());
-				}
-			}
-			System.out.println();
-		}
-		*/
+	}
+	
+	private Board() {
+		
 	}
 	
 	//Getters and Setters
-
-	public Player getPlayer() {
-		return theInstance.player;
+	
+	
+	public BoardCell[][] getBoardArray() {
+		return theInstance.board;
+	}
+	public static Player getPlayer() {
+		return Board.player;
 	}
 	
 	public int getLevel() {

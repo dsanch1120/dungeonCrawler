@@ -12,6 +12,7 @@ import java.util.Random;
 
 public class Player {
 	//Variables
+	private Board board;
 	private String name;
 	private int ENDURANCE;
 	private int STRENGTH;
@@ -32,13 +33,14 @@ public class Player {
 	private ArrayList<Weapon> weapons;
 	private int level;
 	private final char ICON = 'X';
-	
+
 	//Constructor
 	public Player(int xCoordinate, int yCoordinate) {
+		this.board = Board.getBoard();
 		this.xCoordinate = xCoordinate;
 		this.yCoordinate = yCoordinate;
 		this.HP = 1;
-		
+
 		//FIXME
 		this.ENDURANCE = 3;
 		this.STRENGTH = 3;
@@ -49,16 +51,16 @@ public class Player {
 		this.CHARISMA = 3;
 		this.HP = this.ENDURANCE * 5;
 		this.name = "";
-		
+
 		this.purse = new Purse(0);
 	}
-	
-	
+
+
 	//Methods
-	
+
 	//Checks the player can level up and increases their level
 	public void levelUp() {
-		
+
 	}
 	public char getIcon() {
 		return ICON;
@@ -75,11 +77,12 @@ public class Player {
 	public Integer defend() {
 		return this.DEFENSE;
 	}
+	//"Rolls" the player's agility during a battle
 	public Integer agilityRoll() {
 		Random rando = new Random();
 		return rando.nextInt(this.AGILITY) + 1;
 	}
-	
+	//Draws the player on the board
 	public void draw(Graphics cell) {
 		// TODO Auto-generated method stub
 		cell.setColor(Color.BLACK);
@@ -89,20 +92,30 @@ public class Player {
 		cell.setColor(Color.BLACK);
 		cell.drawString("X", xCoordinate*15, yCoordinate*15);
 	}
-	
+	//Checks if the player can move
+	public boolean canMove(int movement) {
+		if (board.getBoardArray()[xCoordinate + movement][yCoordinate].getType() == CellType.BORDER) {
+			return false;
+		} else if (board.getBoardArray()[xCoordinate][yCoordinate + movement].getType() == CellType.BORDER) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	//Getters and Setters
 	public int getXP() {
 		return this.XP;
 	}
-	
+
 	public String getName() {
 		return this.name;
 	}
-	
+
 	public int getGold() {
 		return purse.behavior();
 	}
-	
+
 	public int getxCoordinate() {
 		return xCoordinate;
 	}
@@ -123,13 +136,17 @@ public class Player {
 
 
 	public void moveX(int xCoordinate) {
-		this.xCoordinate = xCoordinate;
+		if (this.canMove(xCoordinate)) {
+			this.xCoordinate += xCoordinate;
+		}
 	}
 
 
 	public void moveY(int yCoordinate) {
-		this.yCoordinate = yCoordinate;
+		if (this.canMove(yCoordinate)) {
+			this.yCoordinate += yCoordinate;
+		}
 	}
-	
-	
+
+
 }

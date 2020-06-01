@@ -10,6 +10,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -80,6 +82,8 @@ public class DungeonCrawler extends JFrame{
 
 		//Adds Board to JFrame
 		add(board, BorderLayout.CENTER);
+		Listener listener = new Listener();
+		addKeyListener(listener);
 		
 		setVisible(true);
 	}
@@ -111,6 +115,49 @@ public class DungeonCrawler extends JFrame{
 		setVisible(true);
 	}
 
+	//Keyboard listener that moves the player
+	//Listens for player input
+	private class Listener implements KeyListener {
+		//keyPressed and keyTyped are left intentionally unimplemented
+		@Override
+		public void keyPressed(KeyEvent e) {
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			int keyCode = e.getKeyCode();
+			System.out.println("Button Released");
+			switch(keyCode) {
+			case KeyEvent.VK_UP:
+				Board.getPlayer().moveY(1);
+				System.out.println("Move up");
+				break;
+			case KeyEvent.VK_DOWN:
+				board.getPlayer().moveY(-1);
+				System.out.println("Move down");
+				break;
+			case KeyEvent.VK_LEFT:
+				board.getPlayer().moveX(-1);
+				System.out.println("Move left");
+				break;
+			case KeyEvent.VK_RIGHT:
+				board.getPlayer().moveX(1);
+				System.out.println("Move right");
+				break;
+			default:
+				System.out.println("No movement");
+				break;
+			}
+			board.repaint();
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+		}
+		
+	}
+	
+	//Classes for the various buttons
 	private class PotionButton extends JPanel {
 		private JButton button;
 		ButtonListener listener = new ButtonListener();
