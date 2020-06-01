@@ -36,10 +36,10 @@ public class Stairs extends BoardCell{
 		// TODO Auto-generated method stub
 		cell.setColor(Color.BLACK);
 		cell.drawRect(X*15, Y*15, width, height);
-		cell.setColor(Color.BLACK);
+		cell.setColor(Color.LIGHT_GRAY);
 		cell.fillRect(X*15, Y*15, width - 1, height - 1);
-//		cell.setColor(Color.BLACK);
-//		cell.drawString("%", X*15, Y*15);
+		cell.setColor(Color.BLACK);
+		cell.drawString("%", X*15, Y*15);
 	}
 
 }

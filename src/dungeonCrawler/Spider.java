@@ -56,9 +56,9 @@ public class Spider extends Enemy{
 	public void draw(Graphics cell) {
 		cell.setColor(Color.BLACK);
 		cell.drawRect(xCoordinate*15, yCoordinate*15, WIDTH, HEIGHT);
-		cell.setColor(Color.CYAN);
+		cell.setColor(Color.LIGHT_GRAY);
 		cell.fillRect(xCoordinate*15, yCoordinate*15, WIDTH - 1, HEIGHT - 1);
-//		cell.setColor(Color.BLACK);
-//		cell.drawString("" + this.icon, xCoordinate*15, yCoordinate*15);
+		cell.setColor(Color.BLACK);
+		cell.drawString("" + this.icon, xCoordinate*15, yCoordinate*15);
 	}
 }

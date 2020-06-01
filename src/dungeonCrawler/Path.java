@@ -33,7 +33,7 @@ public class Path extends BoardCell{
 	public void draw(Graphics cell) {
 		cell.setColor(Color.BLACK);
 		cell.drawRect(X*15, Y*15, width, height);
-		cell.setColor(Color.MAGENTA);
+		cell.setColor(Color.LIGHT_GRAY);
 		cell.fillRect(X*15, Y*15, width - 1, height - 1);
 	}
 

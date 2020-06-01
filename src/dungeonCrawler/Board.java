@@ -176,7 +176,7 @@ public class Board extends JPanel{
 		for (int var = 0; var < theInstance.rooms.size(); var++) {
 			for (int i = theInstance.rooms.get(var).getX1(); i < theInstance.rooms.get(var).getX2(); i++) {
 				for (int j = theInstance.rooms.get(var).getY1(); j < theInstance.rooms.get(var).getY2(); j++) {
-					if (i == theInstance.rooms.get(var).getY1() || i == theInstance.rooms.get(var).getY2() - 1 || j == theInstance.rooms.get(var).getX1() || j == theInstance.rooms.get(var).getX2() - 1) {
+					if (j == theInstance.rooms.get(var).getY1() || j == theInstance.rooms.get(var).getY2() - 1 || i == theInstance.rooms.get(var).getX1() || i == theInstance.rooms.get(var).getX2() - 1) {
 						theInstance.board[i][j] = new Border(i,j);
 					} else {
 						theInstance.board[i][j] = new Floor(i,j);
@@ -244,7 +244,7 @@ public class Board extends JPanel{
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).draw(cell);
 		}
-		
+		/*
 		for (int i = 0; i < theInstance.board.length; i++) {
 			for (int j = 0; j < theInstance.board[i].length; j++) {
 				if (theInstance.player.getxCoordinate() == i && theInstance.player.getyCoordinate() == j) {
@@ -257,7 +257,7 @@ public class Board extends JPanel{
 			}
 			System.out.println();
 		}
-		
+		*/
 	}
 	
 	//Getters and Setters
