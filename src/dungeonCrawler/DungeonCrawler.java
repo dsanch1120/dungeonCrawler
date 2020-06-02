@@ -13,11 +13,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 public class DungeonCrawler extends JFrame{
 	private Board board;
@@ -68,7 +73,7 @@ public class DungeonCrawler extends JFrame{
 		northPanel.add(playerXP);
 		add(northPanel, BorderLayout.NORTH);
 
-		//Creates Southern Panel
+		//Creates and adds Southern Panel
 		JPanel southPanel = new JPanel();
 		southPanel.setLayout(new GridLayout(2,3));
 		southPanel.add(inventoryButton.getButton());
@@ -82,9 +87,46 @@ public class DungeonCrawler extends JFrame{
 
 		//Adds Board to JFrame
 		add(board, BorderLayout.CENTER);
-		Listener listener = new Listener();
-		addKeyListener(listener);
-		
+
+		//Adds key bindings
+		InputMap im = board.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		//Handles moving up
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false), "Move up");
+		ActionMap am = board.getActionMap();
+		am.put("Move up", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				board.getPlayer().moveY(-1);
+				repaint();
+			}
+		});
+		//Handles moving left
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, false), "Move left");
+		am.put("Move left", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				board.getPlayer().moveX(-1);
+				repaint();
+			}
+		});
+		//Handles moving right
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, false), "Move right");
+		am.put("Move right", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				board.getPlayer().moveX(1);
+				repaint();
+			}
+		});
+		//Handles moving down
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false), "Move down");
+		am.put("Move down", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				board.getPlayer().moveY(1);
+				repaint();
+			}
+		});
 		setVisible(true);
 	}
 
@@ -115,48 +157,7 @@ public class DungeonCrawler extends JFrame{
 		setVisible(true);
 	}
 
-	//Keyboard listener that moves the player
-	//Listens for player input
-	private class Listener implements KeyListener {
-		//keyPressed and keyTyped are left intentionally unimplemented
-		@Override
-		public void keyPressed(KeyEvent e) {
-		}
 
-		@Override
-		public void keyReleased(KeyEvent e) {
-			int keyCode = e.getKeyCode();
-			System.out.println("Button Released");
-			switch(keyCode) {
-			case KeyEvent.VK_UP:
-				Board.getPlayer().moveY(1);
-				System.out.println("Move up");
-				break;
-			case KeyEvent.VK_DOWN:
-				board.getPlayer().moveY(-1);
-				System.out.println("Move down");
-				break;
-			case KeyEvent.VK_LEFT:
-				board.getPlayer().moveX(-1);
-				System.out.println("Move left");
-				break;
-			case KeyEvent.VK_RIGHT:
-				board.getPlayer().moveX(1);
-				System.out.println("Move right");
-				break;
-			default:
-				System.out.println("No movement");
-				break;
-			}
-			board.repaint();
-		}
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-		}
-		
-	}
-	
 	//Classes for the various buttons
 	private class PotionButton extends JPanel {
 		private JButton button;
@@ -182,21 +183,21 @@ public class DungeonCrawler extends JFrame{
 			}	
 		}
 	}
-	
+
 	private class SettingsButton extends JPanel {
 		private JButton button;
 		ButtonListener listener = new ButtonListener();
-		
+
 		public SettingsButton() {
 			this.button = new JButton("Settings");
 			this.button.addActionListener(listener);
 		}
-		
+
 		//Getter method
 		public JButton getButton() {
 			return button;
 		}
-		
+
 		private class ButtonListener implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -207,7 +208,7 @@ public class DungeonCrawler extends JFrame{
 			}	
 		}
 	}
-	
+
 	private class PlayerButton extends JPanel {
 		private JButton button;
 		ButtonListener listener = new ButtonListener();

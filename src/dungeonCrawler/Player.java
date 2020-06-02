@@ -87,16 +87,16 @@ public class Player {
 		// TODO Auto-generated method stub
 		cell.setColor(Color.BLACK);
 		cell.drawRect(xCoordinate*15, yCoordinate*15, WIDTH, HEIGHT);
-		cell.setColor(Color.LIGHT_GRAY);
+		cell.setColor(Color.MAGENTA);
 		cell.fillRect(xCoordinate*15, yCoordinate*15, WIDTH - 1, HEIGHT - 1);
-		cell.setColor(Color.BLACK);
-		cell.drawString("X", xCoordinate*15, yCoordinate*15);
+		//cell.setColor(Color.BLACK);
+		//cell.drawString("X", xCoordinate*15, (yCoordinate*15) + 15);
 	}
 	//Checks if the player can move
-	public boolean canMove(int movement) {
-		if (board.getBoardArray()[xCoordinate + movement][yCoordinate].getType() == CellType.BORDER) {
+	public boolean canMove(int movement, char direction) {
+		if (direction == 'x' && board.getBoardArray()[xCoordinate + movement][yCoordinate].getType() == CellType.BORDER) {
 			return false;
-		} else if (board.getBoardArray()[xCoordinate][yCoordinate + movement].getType() == CellType.BORDER) {
+		} else if (direction == 'y' && board.getBoardArray()[xCoordinate][yCoordinate + movement].getType() == CellType.BORDER) {
 			return false;
 		} else {
 			return true;
@@ -136,14 +136,14 @@ public class Player {
 
 
 	public void moveX(int xCoordinate) {
-		if (this.canMove(xCoordinate)) {
+		if (this.canMove(xCoordinate, 'x')) {
 			this.xCoordinate += xCoordinate;
 		}
 	}
 
 
 	public void moveY(int yCoordinate) {
-		if (this.canMove(yCoordinate)) {
+		if (this.canMove(yCoordinate, 'y')) {
 			this.yCoordinate += yCoordinate;
 		}
 	}
