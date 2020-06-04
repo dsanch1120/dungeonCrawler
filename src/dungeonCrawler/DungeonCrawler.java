@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -19,13 +20,20 @@ import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class DungeonCrawler extends JFrame{
 	private Board board;
+	private Player player = Board.getPlayer();
 	private StartButton startButton = new StartButton();
 	private LoadGameButton loadGameButton = new LoadGameButton();
 	private PlayerButton playerButton = new PlayerButton();
@@ -34,13 +42,32 @@ public class DungeonCrawler extends JFrame{
 	private ArmorButton armorButton = new ArmorButton();
 	private PotionButton potionButton = new PotionButton();
 	private SettingsButton settingsButton = new SettingsButton();
+	private InitialSubmitButton iSButton = new InitialSubmitButton();
 	private JPanel initialMenu = new JPanel();
-	private boolean visible = true;
+	private JTextField userName = new JTextField(30);
+	private JTextField pointsDisplay = new JTextField();
+	private JTextField strengthPoints = new JTextField();
+	private JTextField endurancePoints = new JTextField();
+	private JTextField defensePoints = new JTextField();
+	private JTextField agilityPoints = new JTextField();
+	private JTextField perceptionPoints = new JTextField();
+	private JTextField intelligencePoints = new JTextField();
+	private JTextField charismaPoints = new JTextField();
+	private int availablePoints = 8;
+	private AttributeSlider strengthSlider = new AttributeSlider("Strength", 0);
+	private AttributeSlider enduranceSlider = new AttributeSlider("Endurance", 1);
+	private AttributeSlider defenseSlider = new AttributeSlider("Defense", 2);
+	private AttributeSlider agilitySlider = new AttributeSlider("Agility", 3);
+	private AttributeSlider perceptionSlider = new AttributeSlider("Perception", 4);
+	private AttributeSlider intelligenceSlider = new AttributeSlider("Intelligence", 5);
+	private AttributeSlider charismaSlider = new AttributeSlider("Charisma", 6);
+	private ArrayList<JTextField> attributePointTitles = new ArrayList<JTextField>();
 
+	//GUI for the main game
 	public void dungeonCrawler() {
-		this.remove(initialMenu);
+		this.getContentPane().removeAll();
 		setVisible(false);
-
+		
 		//Updates the board
 		board = Board.getBoard();
 		board.init();
@@ -128,8 +155,10 @@ public class DungeonCrawler extends JFrame{
 			}
 		});
 		setVisible(true);
+		
+		JOptionPane.showMessageDialog(this, "You are " + board.getPlayer().getName() + ". \n Survive the Dungeon");
 	}
-
+	//GUI for the initial menu
 	public void initialMenu() {
 		//Opens and initializes the board to be used throughout class
 		board = Board.getBoard();
@@ -156,9 +185,170 @@ public class DungeonCrawler extends JFrame{
 		add(initialMenu, BorderLayout.CENTER);
 		setVisible(true);
 	}
+	//GUI for choosing a new player
+	public void newPlayer() {
+		//Variables
+		final int MIN_POINTS = 1;
+		final int MAX_POINTS = 5;
 
+		attributePointTitles.add(strengthPoints);
+		attributePointTitles.add(endurancePoints);
+		attributePointTitles.add(defensePoints);
+		attributePointTitles.add(agilityPoints);
+		attributePointTitles.add(perceptionPoints);
+		attributePointTitles.add(intelligencePoints);
+		attributePointTitles.add(charismaPoints);
 
-	//Classes for the various buttons
+		//Clears the JFrame
+		this.remove(initialMenu);
+		setVisible(false);
+
+		//Modifies Size and title
+		setSize(new Dimension(600, 750));
+		setTitle("Create Character");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		//Components of new player
+		pointsDisplay.setEditable(false);
+		pointsDisplay.setText("Remaining Points: " + availablePoints);
+		add(pointsDisplay, BorderLayout.NORTH);
+		//Creates panel
+		JPanel panel = characterSliders();
+		add(panel, BorderLayout.CENTER);
+
+		add(iSButton.getButton(), BorderLayout.SOUTH);
+
+		setVisible(true);
+	}
+
+	private JPanel characterSliders() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(15,1));
+		//User's name
+		JPanel namePanel = new JPanel();
+		namePanel.setBorder(new TitledBorder(new EtchedBorder(), "Input Name"));
+		userName.setEditable(true);
+		namePanel.add(userName);
+		panel.add(namePanel);
+		//Strength title and Slider
+		strengthPoints.setEditable(false);
+		strengthPoints.setText("Strength: 1");
+		panel.add(strengthPoints);
+		panel.add(strengthSlider.getSlider());
+		//Endurance title and Slider
+		endurancePoints.setEditable(false);
+		endurancePoints.setText("Endurance: 1");
+		panel.add(endurancePoints);
+		panel.add(enduranceSlider.getSlider());
+		//Defense title and Slider
+		defensePoints.setEditable(false);
+		defensePoints.setText("Defense: 1");
+		panel.add(defensePoints);
+		panel.add(defenseSlider.getSlider());
+		//Agility title and Slider
+		agilityPoints.setEditable(false);
+		agilityPoints.setText("Agility: 1");
+		panel.add(agilityPoints);
+		panel.add(agilitySlider.getSlider());
+		//Perception title and Slider
+		perceptionPoints.setEditable(false);
+		perceptionPoints.setText("Perception: 1");
+		panel.add(perceptionPoints);
+		panel.add(perceptionSlider.getSlider());
+		//Intelligence title and Slider
+		intelligencePoints.setEditable(false);
+		intelligencePoints.setText("Intelligence: 1");
+		panel.add(intelligencePoints);
+		panel.add(intelligenceSlider.getSlider());
+		//Charisma title and Slider
+		charismaPoints.setEditable(false);
+		charismaPoints.setText("Charisma: 1");
+		panel.add(charismaPoints);
+		panel.add(charismaSlider.getSlider());
+
+		return panel;
+	}
+
+	//Classes for the various Components
+	private class AttributeSlider extends JSlider {
+		private JSlider slider;
+		private SliderListener listener = new SliderListener();
+		private String type;
+		private int typeIndex;
+		private int previousValue = 1;
+
+		public AttributeSlider(String type, int typeIndex) {
+			this.slider = new JSlider(JSlider.HORIZONTAL, 1, 5, 1);
+			this.slider.setMajorTickSpacing(1);
+			this.slider.setPaintTicks(true);
+			this.slider.addChangeListener(listener);
+			this.type = type;
+			this.typeIndex = typeIndex;
+		}
+
+		public JSlider getSlider() {
+			return slider;
+		}
+
+		private class SliderListener implements ChangeListener {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				int value = slider.getValue();
+				if (previousValue - value > 0) {
+					availablePoints++;
+				}
+				if (previousValue - value < 0) {
+					availablePoints--;
+				}
+				previousValue = value;
+				pointsDisplay.setEditable(true);
+				pointsDisplay.setText("Remaining Points: " + availablePoints);
+				pointsDisplay.setEditable(false);
+				attributePointTitles.get(typeIndex).setEditable(true);
+				attributePointTitles.get(typeIndex).setText(type + ": " + slider.getValue()); 
+				attributePointTitles.get(typeIndex).setEditable(false);
+
+			}
+		}
+	}
+
+	private class InitialSubmitButton extends JPanel {
+		private JButton button;
+		ButtonListener listener = new ButtonListener();
+
+		public InitialSubmitButton() {
+			this.button = new JButton("Submit");
+			this.button.addActionListener(listener);
+		}
+
+		//Getter method
+		public JButton getButton() {
+			return button;
+		}
+
+		private class ButtonListener implements ActionListener{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Ensures that the board object is current
+				board = Board.getBoard();
+				//Creates player according to user's decisions and starts a new game
+				if (availablePoints == 0) {
+					player.setAttributes(strengthSlider.getSlider().getValue(), enduranceSlider.getSlider().getValue(), defenseSlider.getSlider().getValue(), agilitySlider.getSlider().getValue(), perceptionSlider.getSlider().getValue(), intelligenceSlider.getSlider().getValue(), charismaSlider.getSlider().getValue());
+					player.setName(userName.getText());
+					dungeonCrawler();
+				}
+				else {
+					if (availablePoints > 0) {
+						JOptionPane.showMessageDialog(getTopLevelAncestor(), "You still have points to spend!");
+					} else {
+						JOptionPane.showMessageDialog(getTopLevelAncestor(), "You've spent too many points!");
+					}
+				}
+			}	
+		}
+	}
+
 	private class PotionButton extends JPanel {
 		private JButton button;
 		ButtonListener listener = new ButtonListener();
@@ -314,7 +504,7 @@ public class DungeonCrawler extends JFrame{
 		ButtonListener listener = new ButtonListener();
 
 		public StartButton() {
-			this.button = new JButton("Start Game");
+			this.button = new JButton("Start New Game");
 			this.button.addActionListener(listener);
 		}
 
@@ -330,7 +520,7 @@ public class DungeonCrawler extends JFrame{
 				board = Board.getBoard();
 				//Sets board newGame boolean to true
 				board.setNewGame(true);
-				dungeonCrawler();
+				newPlayer();
 			}
 		}
 	}
@@ -340,7 +530,7 @@ public class DungeonCrawler extends JFrame{
 		ButtonListener listener = new ButtonListener();
 
 		public LoadGameButton() {
-			this.button = new JButton("Load New Game");
+			this.button = new JButton("Load Game");
 			this.button.addActionListener(listener);
 		}
 
@@ -367,7 +557,5 @@ public class DungeonCrawler extends JFrame{
 	}
 
 	//Getters and Setters
-	public boolean isVisible() {
-		return visible;
-	}
+
 }

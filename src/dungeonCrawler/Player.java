@@ -35,26 +35,10 @@ public class Player {
 	private final char ICON = 'X';
 
 	//Constructor
-	public Player(int xCoordinate, int yCoordinate) {
+	public Player() {
 		this.board = Board.getBoard();
-		this.xCoordinate = xCoordinate;
-		this.yCoordinate = yCoordinate;
-		this.HP = 1;
-
-		//FIXME
-		this.ENDURANCE = 3;
-		this.STRENGTH = 3;
-		this.DEFENSE = 1;
-		this.AGILITY = 3;
-		this.PERCEPTION = 3;
-		this.INTELLIGENCE = 3;
-		this.CHARISMA = 3;
-		this.HP = this.ENDURANCE * 5;
-		this.name = "";
-
 		this.purse = new Purse(0);
 	}
-
 
 	//Methods
 
@@ -62,10 +46,6 @@ public class Player {
 	public void levelUp() {
 
 	}
-	public char getIcon() {
-		return ICON;
-	}
-
 
 	//Handles the player's attacks
 	public Integer attack() {
@@ -104,6 +84,28 @@ public class Player {
 	}
 
 	//Getters and Setters
+	public char getIcon() {
+		return ICON;
+	}
+	
+	public void setLocation(int xCoordinate, int yCoordinate) {
+		this.xCoordinate = xCoordinate;
+		this.yCoordinate = yCoordinate;
+	}
+	
+	public void setAttributes(int STRENGTH, int ENDURANCE, int DEFENSE, int AGILITY, int PERCEPTION, int INTELLIGENCE, int CHARISMA) {
+		this.STRENGTH = STRENGTH;
+		this.ENDURANCE = ENDURANCE;
+		this.DEFENSE = DEFENSE;
+		this.AGILITY = AGILITY;
+		this.PERCEPTION = PERCEPTION;
+		this.INTELLIGENCE = INTELLIGENCE;
+		this.CHARISMA = CHARISMA;
+		this.maxHP = ENDURANCE * 3;
+		this.HP = this.maxHP;
+		
+	}
+	
 	public int getXP() {
 		return this.XP;
 	}
@@ -124,6 +126,9 @@ public class Player {
 		HP = hP;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public int getHP() {
 		return HP;

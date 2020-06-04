@@ -26,6 +26,8 @@ public class Board extends JPanel{
 	ArrayList<Enemy> possibleEnemies;
 	ArrayList<Enemy> enemies;
 	ArrayList<BoardCell[][]> levels = new ArrayList<BoardCell[][]>();
+	ArrayList<Integer> playerAttributes = new ArrayList<Integer>();
+	private String playerName;
 	private final int MAX_HEIGHT = 60;
 	private final int MAX_WIDTH = 100;
 	private final int MAX_ROOM_SIZE = 25;
@@ -43,11 +45,7 @@ public class Board extends JPanel{
 	public void playGame() {
 		generateBoard();
 	}
-	//Move the player
-	private void move() {
 	
-	}
-
 	//Handles a battle
 	private boolean battle(Enemy enemy) {
 		Scanner scan = new Scanner(System.in);
@@ -145,7 +143,7 @@ public class Board extends JPanel{
 			theInstance.player.moveX(theInstance.rooms.get(1).getxStair());
 			theInstance.player.moveY(theInstance.rooms.get(1).getyStair());
 		} else {
-			player = new Player(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair());
+			player.setLocation(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair());
 		}
 		theInstance.levels.add(theInstance.board);
 
@@ -259,6 +257,9 @@ public class Board extends JPanel{
 		return theInstance.board;
 	}
 	public static Player getPlayer() {
+		if (Board.player == null) {
+			player = new Player();
+		}
 		return Board.player;
 	}
 	
@@ -273,7 +274,7 @@ public class Board extends JPanel{
 	public void setNewGame(boolean newGame) {
 		this.newGame = newGame;
 	}
-
+	
 	public static Board getBoard() {
 		return theInstance;
 	}
