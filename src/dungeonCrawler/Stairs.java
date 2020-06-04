@@ -4,13 +4,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Stairs extends BoardCell{
-
-	public Stairs(int X, int Y) {
+	private int stairType;
+	
+	public Stairs(int X, int Y, int stairType) {
 		super();
 		icon = '%';
 		this.X = X;
 		this.Y = Y;
 		this.type = CellType.STAIRS;
+		this.stairType = stairType;
 	}
 	
 	@Override
@@ -26,9 +28,8 @@ public class Stairs extends BoardCell{
 	}
 	
 	@Override
-	public void behavior() {
-		// TODO Auto-generated method stub
-		
+	public int behavior() {
+		return stairType;
 	}
 
 	@Override
@@ -36,10 +37,10 @@ public class Stairs extends BoardCell{
 		// TODO Auto-generated method stub
 		cell.setColor(Color.BLACK);
 		cell.drawRect(X*15, Y*15, width, height);
-		cell.setColor(Color.LIGHT_GRAY);
+		cell.setColor(Color.CYAN);
 		cell.fillRect(X*15, Y*15, width - 1, height - 1);
-		cell.setColor(Color.BLACK);
-		cell.drawString("%", X*15, Y*15);
+//		cell.setColor(Color.BLACK);
+//		cell.drawString("%", X*15, Y*15);
 	}
 
 }

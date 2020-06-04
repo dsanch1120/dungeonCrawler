@@ -11,6 +11,8 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -27,6 +29,7 @@ public class Board extends JPanel{
 	ArrayList<Enemy> enemies;
 	ArrayList<BoardCell[][]> levels = new ArrayList<BoardCell[][]>();
 	ArrayList<Integer> playerAttributes = new ArrayList<Integer>();
+	Map<Integer, ArrayList<Room>> levelRooms = new HashMap<Integer, ArrayList<Room>>();
 	private String playerName;
 	private final int MAX_HEIGHT = 60;
 	private final int MAX_WIDTH = 100;
@@ -45,54 +48,29 @@ public class Board extends JPanel{
 	public void playGame() {
 		generateBoard();
 	}
-	
-	//Handles a battle
-	private boolean battle(Enemy enemy) {
-		Scanner scan = new Scanner(System.in);
-		scan.nextLine();
-		while (theInstance.player.getHP() > 0 && enemy.HP > 0) {
-			System.out.println("Player Health: " + theInstance.player.getHP());
-			System.out.println("Enemy Health: " + enemy.HP);
-			System.out.println("Press anything to attack");
-			String input = scan.nextLine();
-			int playerAttack = theInstance.player.attack();
-			int enemyAttack = enemy.attack();
-			playerAttack -= enemy.defend();
-			enemyAttack -= theInstance.player.defend();
-			if (enemy.agilityRoll() < theInstance.player.agilityRoll()) {
-				enemyAttack = 0;
-			}
-			if (theInstance.player.agilityRoll() < enemy.agilityRoll()) {
-				playerAttack = 0;
-			}
-			enemy.HP -= playerAttack;
-			theInstance.player.setHP(theInstance.player.getHP() - enemyAttack);
-			if (enemy.HP < 1) {
-				scan.close();
-				return true;
-			}
-			if (theInstance.player.getHP() < 1) {
-				scan.close();
-				return false;
+
+	public void checkLocation() {
+		//Check if player should battle an opponent
+		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].hasEnemy()) {
+			//FIXME Add functionality for battle later
+		}
+		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].getType() == CellType.STAIRS) {
+			switch (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].behavior()) {
+			case (0):
+				generateBoard();
+				break;
+			case (1):
+				theInstance.level--;
+				theInstance.player.setLocation(levelRooms.get(theInstance.level).get(1).getxStair(), levelRooms.get(theInstance.level).get(1).getyStair());
+				break;
+			default:
+				System.out.println("ERROR");
+				System.exit(0);
 			}
 		}
-		scan.close();
-		return false;
 	}
 
-	//Keeps the player from moving into a wall
-	private boolean canMove(char dim, int movement) {
-		switch (dim) {
-		case 'x':
-			return (!(theInstance.board[theInstance.player.getxCoordinate() + movement][theInstance.player.getyCoordinate()].getType() == CellType.BORDER));
-		case 'y':
-			return (!(theInstance.board[theInstance.player.getxCoordinate()][theInstance.player.getyCoordinate() + movement].getType() == CellType.BORDER));
-		default:
-			System.out.println("Error. This should not be happening");
-			break;	
-		}
-		return false;
-	}
+	//Handles switching of levels
 
 	//Adds all possible enemies to the ArrayList "possibleEnemies"
 	public void generatePossibleEnemies(int i, int j) {
@@ -109,13 +87,11 @@ public class Board extends JPanel{
 
 		theInstance.level++;
 
-		int xStair = rando.nextInt(MAX_HEIGHT - 10) + 5;
-		int yStair = rando.nextInt(MAX_WIDTH - 10) + 5;
 		NUM_ROOMS = rando.nextInt(6) + 4;
 
 		//Generate the rooms
 		generateRooms();
-
+		theInstance.levelRooms.put(theInstance.level, theInstance.rooms);
 		//Place Borders
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
@@ -137,18 +113,18 @@ public class Board extends JPanel{
 
 		//Place the Stairs
 		Collections.shuffle(theInstance.rooms);
-		theInstance.board[theInstance.rooms.get(0).getxStair()][theInstance.rooms.get(0).getyStair()] = new Stairs(theInstance.rooms.get(0).getxStair(), theInstance.rooms.get(0).getyStair());
+		theInstance.board[theInstance.rooms.get(0).getxStair()][theInstance.rooms.get(0).getyStair()] = new Stairs(theInstance.rooms.get(0).getxStair(), theInstance.rooms.get(0).getyStair(), 0);
 		if (theInstance.level > 1) {
-			theInstance.board[theInstance.rooms.get(1).getxStair()][theInstance.rooms.get(1).getyStair()] = new Stairs(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair());
+			theInstance.board[theInstance.rooms.get(1).getxStair()][theInstance.rooms.get(1).getyStair()] = new Stairs(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair(), 1);
 			theInstance.player.moveX(theInstance.rooms.get(1).getxStair());
 			theInstance.player.moveY(theInstance.rooms.get(1).getyStair());
-		} else {
-			player.setLocation(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair());
 		}
-		theInstance.levels.add(theInstance.board);
+		player.setLocation(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair());
+
 
 		//Place the Enemies
 		placeEnemies();
+		theInstance.levels.add(theInstance.board);
 	}
 	//Places the randomly genereated enemies
 	public void placeEnemies() {
@@ -232,27 +208,28 @@ public class Board extends JPanel{
 	//Paints the board
 	public void paintComponent(Graphics cell) {
 		super.paintComponent(cell);
-		for (int i = 0; i < board.length; i++) {
-			for (int j = 0; j < board[i].length; j++) {
-				BoardCell boardCell = theInstance.board[i][j];
+		BoardCell[][] tempBoard = theInstance.levels.get(theInstance.level);
+		for (int i = 0; i < tempBoard.length; i++) {
+			for (int j = 0; j < tempBoard[i].length; j++) {
+				BoardCell boardCell = tempBoard[i][j];
 				boardCell.draw(cell);
 			}
 		}
-		
+
 		theInstance.player.draw(cell);
-		
+
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).draw(cell);
 		}
 	}
-	
+
 	private Board() {
-		
+
 	}
-	
+
 	//Getters and Setters
-	
-	
+
+
 	public BoardCell[][] getBoardArray() {
 		return theInstance.board;
 	}
@@ -262,7 +239,7 @@ public class Board extends JPanel{
 		}
 		return Board.player;
 	}
-	
+
 	public int getLevel() {
 		return theInstance.level;
 	}
@@ -274,7 +251,7 @@ public class Board extends JPanel{
 	public void setNewGame(boolean newGame) {
 		this.newGame = newGame;
 	}
-	
+
 	public static Board getBoard() {
 		return theInstance;
 	}

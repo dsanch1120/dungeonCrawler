@@ -23,7 +23,7 @@ public abstract class BoardCell {
 		return type;
 	}
 
-	public abstract void behavior();
+	public abstract int behavior();
 
 	public Color getColor() {
 		return color;

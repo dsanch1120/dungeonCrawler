@@ -124,6 +124,7 @@ public class DungeonCrawler extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				board.getPlayer().moveY(-1);
+				board.checkLocation();
 				repaint();
 			}
 		});
@@ -133,6 +134,7 @@ public class DungeonCrawler extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				board.getPlayer().moveX(-1);
+				board.checkLocation();
 				repaint();
 			}
 		});
@@ -142,6 +144,7 @@ public class DungeonCrawler extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				board.getPlayer().moveX(1);
+				board.checkLocation();
 				repaint();
 			}
 		});
@@ -151,6 +154,7 @@ public class DungeonCrawler extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				board.getPlayer().moveY(1);
+				board.checkLocation();
 				repaint();
 			}
 		});

@@ -24,9 +24,8 @@ public class Path extends BoardCell{
 	}
 	
 	@Override
-	public void behavior() {
-		// TODO Auto-generated method stub
-		
+	public int behavior() {
+		return -1;
 	}
 
 	@Override

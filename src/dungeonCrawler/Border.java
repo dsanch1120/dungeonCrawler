@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Border extends BoardCell{
-	
+
 	public Border(int X, int Y) {
 		super();
 		icon = '+';
@@ -17,16 +17,15 @@ public class Border extends BoardCell{
 	public boolean hasPlayer() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean hasEnemy() {
 		return false;
 	}
-	
+
 	@Override
-	public void behavior() {
-		// TODO Auto-generated method stub
-		
+	public int behavior() {
+		return -1;		
 	}
 
 	@Override
@@ -36,6 +35,6 @@ public class Border extends BoardCell{
 		cell.setColor(Color.DARK_GRAY);
 		cell.fillRect(X*15, Y*15, width-1, height-1);
 	}
-	
-	
+
+
 }

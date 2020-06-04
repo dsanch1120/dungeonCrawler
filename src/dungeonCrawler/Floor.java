@@ -12,21 +12,20 @@ public class Floor extends BoardCell{
 		this.Y = Y;
 		this.type = CellType.ROOM;
 	}
-	
+
 	@Override
 	public boolean hasPlayer() {
 		return(!(player == null));
 	}
-	
+
 	@Override
 	public boolean hasEnemy() {
 		return (!(enemy == null));
 	}
-	
+
 	@Override
-	public void behavior() {
-		// TODO Auto-generated method stub
-		
+	public int behavior() {
+		return -1;	
 	}
 
 	@Override
@@ -36,5 +35,5 @@ public class Floor extends BoardCell{
 		cell.setColor(Color.LIGHT_GRAY);
 		cell.fillRect(X*15, Y*15, width - 1, height - 1);
 	}
-	
+
 }
