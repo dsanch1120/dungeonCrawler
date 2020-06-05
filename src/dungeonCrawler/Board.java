@@ -228,9 +228,6 @@ public class Board extends JPanel{
 
 		theInstance.player.draw(cell);
 
-		for (int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).draw(cell);
-		}
 	}
 
 	private Board() {
