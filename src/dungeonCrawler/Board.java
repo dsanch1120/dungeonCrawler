@@ -57,11 +57,22 @@ public class Board extends JPanel{
 		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].getType() == CellType.STAIRS) {
 			switch (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].behavior()) {
 			case (0):
-				generateBoard();
+				try {
+					theInstance.level++;
+					theInstance.board = theInstance.levels.get(theInstance.level);
+					theInstance.player.setLocation(theInstance.levelRooms.get(theInstance.level).get(1).getxStair(), (theInstance.levelRooms.get(theInstance.level).get(1).getyStair()));
+				} catch(NullPointerException e) {
+					theInstance.level--;
+					generateBoard();
+				} catch(IndexOutOfBoundsException e) {
+					theInstance.level--;
+					generateBoard();
+				}
 				break;
 			case (1):
 				theInstance.level--;
-				theInstance.player.setLocation(levelRooms.get(theInstance.level).get(1).getxStair(), levelRooms.get(theInstance.level).get(1).getyStair());
+				theInstance.board = levels.get(theInstance.level);
+				theInstance.player.setLocation(levelRooms.get(theInstance.level).get(0).getxStair(), levelRooms.get(theInstance.level).get(0).getyStair());
 				break;
 			default:
 				System.out.println("ERROR");
@@ -114,10 +125,9 @@ public class Board extends JPanel{
 		//Place the Stairs
 		Collections.shuffle(theInstance.rooms);
 		theInstance.board[theInstance.rooms.get(0).getxStair()][theInstance.rooms.get(0).getyStair()] = new Stairs(theInstance.rooms.get(0).getxStair(), theInstance.rooms.get(0).getyStair(), 0);
-		if (theInstance.level > 1) {
+		if (theInstance.level > 0) {
 			theInstance.board[theInstance.rooms.get(1).getxStair()][theInstance.rooms.get(1).getyStair()] = new Stairs(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair(), 1);
-			theInstance.player.moveX(theInstance.rooms.get(1).getxStair());
-			theInstance.player.moveY(theInstance.rooms.get(1).getyStair());
+			theInstance.player.setLocation(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair());
 		}
 		player.setLocation(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair());
 
