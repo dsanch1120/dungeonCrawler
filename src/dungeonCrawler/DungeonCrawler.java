@@ -338,8 +338,8 @@ public class DungeonCrawler extends JFrame{
 				board = Board.getBoard();
 				//Creates player according to user's decisions and starts a new game
 				if (availablePoints == 0) {
-					player.setAttributes(strengthSlider.getSlider().getValue(), enduranceSlider.getSlider().getValue(), defenseSlider.getSlider().getValue(), agilitySlider.getSlider().getValue(), perceptionSlider.getSlider().getValue(), intelligenceSlider.getSlider().getValue(), charismaSlider.getSlider().getValue());
-					player.setName(userName.getText());
+					board.getPlayer().setAttributes(strengthSlider.getSlider().getValue(), enduranceSlider.getSlider().getValue(), defenseSlider.getSlider().getValue(), agilitySlider.getSlider().getValue(), perceptionSlider.getSlider().getValue(), intelligenceSlider.getSlider().getValue(), charismaSlider.getSlider().getValue());
+					board.getPlayer().setName(userName.getText());
 					dungeonCrawler();
 				}
 				else {
@@ -423,7 +423,7 @@ public class DungeonCrawler extends JFrame{
 				//Ensures that the board object is current
 				board = Board.getBoard();
 				//ADD FUNCTIONALITY LATER
-				//Displays player information
+				PlayerView playerView = new PlayerView();
 			}	
 		}
 	}

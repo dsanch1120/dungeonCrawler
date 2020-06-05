@@ -138,7 +138,35 @@ public class Player {
 	public int getyCoordinate() {
 		return yCoordinate;
 	}
+	
+	
+	public int getCHARISMA() {
+		return CHARISMA;
+	}
 
+	public int getENDURANCE() {
+		return ENDURANCE;
+	}
+
+	public int getSTRENGTH() {
+		return STRENGTH;
+	}
+
+	public int getDEFENSE() {
+		return DEFENSE;
+	}
+
+	public int getAGILITY() {
+		return AGILITY;
+	}
+
+	public int getPERCEPTION() {
+		return PERCEPTION;
+	}
+
+	public int getINTELLIGENCE() {
+		return INTELLIGENCE;
+	}
 
 	public void moveX(int xCoordinate) {
 		if (this.canMove(xCoordinate, 'x')) {
