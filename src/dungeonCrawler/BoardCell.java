@@ -7,6 +7,7 @@ package dungeonCrawler;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 public abstract class BoardCell {
 	protected char icon;
@@ -18,6 +19,8 @@ public abstract class BoardCell {
 	protected Enemy enemy;
 	protected Player player;
 	protected Color color;
+	protected String fileName;
+	protected BufferedImage image;
 	
 	public CellType getType() {
 		return type;

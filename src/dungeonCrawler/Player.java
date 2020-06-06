@@ -36,6 +36,8 @@ public class Player {
 
 	//Constructor
 	public Player() {
+		this.inventory = new ArrayList<Item>();
+		this.weapons = new ArrayList<Weapon>();
 		this.board = Board.getBoard();
 		this.purse = new Purse(0);
 	}
