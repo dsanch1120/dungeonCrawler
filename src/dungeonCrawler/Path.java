@@ -16,11 +16,11 @@ public class Path extends BoardCell{
 		this.Y = Y;
 		this.type = CellType.PATH;
 		try {
-			image = ImageIO.read(new File("data/Dungeon_Tileset.png"));
+			oImage = ImageIO.read(new File("data/Dungeon_Tileset.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		image = image.getSubimage(96, 0, 16, 16);
+		oImage = oImage.getSubimage(96, 0, 16, 16);
 	}
 	
 	@Override
@@ -40,7 +40,7 @@ public class Path extends BoardCell{
 
 	@Override
 	public void draw(Graphics cell) {
-		cell.drawImage(image, X*15, Y*15, null);
+		cell.drawImage(oImage, X*15, Y*15, null);
 //		cell.setColor(Color.BLACK);
 //		cell.drawRect(X*15, Y*15, width, height);
 //		cell.setColor(Color.LIGHT_GRAY);

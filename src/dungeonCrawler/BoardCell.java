@@ -20,7 +20,7 @@ public abstract class BoardCell {
 	protected Player player;
 	protected Color color;
 	protected String fileName;
-	protected BufferedImage image;
+	protected BufferedImage oImage;
 	
 	public CellType getType() {
 		return type;
