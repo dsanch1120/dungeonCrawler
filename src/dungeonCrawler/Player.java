@@ -5,10 +5,18 @@
  */
 package dungeonCrawler;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 public class Player {
 	//Variables
@@ -33,6 +41,7 @@ public class Player {
 	private ArrayList<Weapon> weapons;
 	private int level;
 	private final char ICON = 'X';
+	BufferedImage image;
 
 	//Constructor
 	public Player() {
@@ -40,6 +49,12 @@ public class Player {
 		this.weapons = new ArrayList<Weapon>();
 		this.board = Board.getBoard();
 		this.purse = new Purse(0);
+		try {
+			image = ImageIO.read(new File("data/player.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		image = image.getSubimage(69, 89, 60, 70);
 	}
 
 	//Methods
@@ -64,15 +79,19 @@ public class Player {
 		Random rando = new Random();
 		return rando.nextInt(this.AGILITY) + 1;
 	}
+	
+	private BufferedImage resizeImage(BufferedImage originalImage, int width, int height, int type) {  
+        BufferedImage resizedImage = new BufferedImage(width, height, type);  
+        Graphics2D g = resizedImage.createGraphics();  
+        g.drawImage(originalImage, 0, 0, width, height, null);  
+        g.dispose();  
+        return resizedImage;  
+    }  
+	
 	//Draws the player on the board
 	public void draw(Graphics cell) {
-		// TODO Auto-generated method stub
-		cell.setColor(Color.BLACK);
-		cell.drawRect(xCoordinate*15, yCoordinate*15, WIDTH, HEIGHT);
-		cell.setColor(Color.MAGENTA);
-		cell.fillRect(xCoordinate*15, yCoordinate*15, WIDTH - 1, HEIGHT - 1);
-		//cell.setColor(Color.BLACK);
-		//cell.drawString("X", xCoordinate*15, (yCoordinate*15) + 15);
+		image = resizeImage(image, 16, 16, 2);
+		cell.drawImage(image, xCoordinate * 15, yCoordinate * 15, null);
 	}
 	//Checks if the player can move
 	public boolean canMove(int movement, char direction) {

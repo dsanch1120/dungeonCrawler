@@ -7,7 +7,12 @@ package dungeonCrawler;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 public class Spider extends Enemy{
 
@@ -26,6 +31,14 @@ public class Spider extends Enemy{
 		this.XP = 3;
 		this.maxHP = this.ENDURANCE * 5;
 		this.HP = this.maxHP;
+		try {
+			image = ImageIO.read(new File("data/Dungeon_Tileset.png"));
+			oImage = ImageIO.read(new File("data/bat.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		image = image.getSubimage(143, 111, 16, 16);
+		oImage = oImage.getSubimage(0, 0, 16, 16);
 		//ADD ITEMS TO SPIDER
 		
 		//ADD ABILITIES TO SPIDER
@@ -54,11 +67,7 @@ public class Spider extends Enemy{
 
 	@Override
 	public void draw(Graphics cell) {
-		cell.setColor(Color.BLACK);
-		cell.drawRect(xCoordinate*15, yCoordinate*15, WIDTH, HEIGHT);
-		cell.setColor(Color.LIGHT_GRAY);
-		cell.fillRect(xCoordinate*15, yCoordinate*15, WIDTH - 1, HEIGHT - 1);
-		cell.setColor(Color.BLACK);
-		cell.drawString("" + this.icon, xCoordinate*15, yCoordinate*15);
+		cell.drawImage(image, xCoordinate*15, yCoordinate*15, null);
+		cell.drawImage(oImage, xCoordinate*15, yCoordinate*15, null);
 	}
 }

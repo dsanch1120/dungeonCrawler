@@ -6,6 +6,7 @@
 package dungeonCrawler;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -31,7 +32,9 @@ public abstract class Enemy {
 	protected ArrayList<Item> inventory;
 	protected Board board = Board.getBoard();
 	protected int currentLevel;
-
+	BufferedImage oImage;
+	BufferedImage image;
+	
 	//Constructor
 	public Enemy(int xCoordinate, int yCoordinate) {
 		super();

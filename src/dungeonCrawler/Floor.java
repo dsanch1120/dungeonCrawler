@@ -11,17 +11,13 @@ import javax.imageio.ImageIO;
 public class Floor extends BoardCell{
 	BufferedImage image;
 	
-	public Floor(int X, int Y) {
-		super();
+	public Floor(int X, int Y, BufferedImage oImage) {
+		super(oImage);
 		icon = ' ';
 		this.X = X;
 		this.Y = Y;
 		this.type = CellType.ROOM;
-		try {
-			oImage = ImageIO.read(new File("data/Dungeon_Tileset.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.oImage = oImage;
 		image = oImage.getSubimage(96, 0, 16, 16);
 	}
 

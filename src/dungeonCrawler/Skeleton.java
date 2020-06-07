@@ -7,7 +7,12 @@ package dungeonCrawler;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 public class Skeleton extends Enemy{
 
@@ -26,6 +31,14 @@ public class Skeleton extends Enemy{
 		this.XP = 5;
 		this.maxHP = this.ENDURANCE * 5;
 		this.HP = this.maxHP;
+		try {
+			image = ImageIO.read(new File("data/Dungeon_Tileset.png"));
+			oImage = ImageIO.read(new File("data/Dungeon_Character_2.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		image = image.getSubimage(143, 111, 16, 16);
+		oImage = oImage.getSubimage(63, 15, 16, 16);
 		//ADD ITEMS TO SKELETON
 
 		//ADD ABILITIES TO SKELETON
@@ -54,12 +67,8 @@ public class Skeleton extends Enemy{
 
 	@Override
 	public void draw(Graphics cell) {
-		cell.setColor(Color.BLACK);
-		cell.drawRect(xCoordinate*15, yCoordinate*15, WIDTH, HEIGHT);
-		cell.setColor(Color.LIGHT_GRAY);
-		cell.fillRect(xCoordinate*15, yCoordinate*15, WIDTH - 1, HEIGHT - 1);
-		cell.setColor(Color.BLACK);
-		cell.drawString("" + this.icon, xCoordinate*15, yCoordinate*15);
+		cell.drawImage(image, xCoordinate*15, yCoordinate*15, null);
+		cell.drawImage(oImage, xCoordinate*15, yCoordinate*15, null);
 	}
 
 }

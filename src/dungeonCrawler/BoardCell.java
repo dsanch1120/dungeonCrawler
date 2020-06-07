@@ -8,6 +8,10 @@ package dungeonCrawler;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public abstract class BoardCell {
 	protected char icon;
@@ -21,6 +25,11 @@ public abstract class BoardCell {
 	protected Color color;
 	protected String fileName;
 	protected BufferedImage oImage;
+	protected boolean editable = true;
+	
+	public BoardCell(BufferedImage oImage) {
+		this.oImage = oImage;
+	}
 	
 	public CellType getType() {
 		return type;
@@ -34,6 +43,14 @@ public abstract class BoardCell {
 	
 	public char getIcon() {
 		return icon;
+	}
+	
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
+	
+	public boolean isEditable() {
+		return editable;
 	}
 	
 	public abstract void draw(Graphics cell);

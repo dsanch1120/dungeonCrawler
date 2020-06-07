@@ -5,6 +5,7 @@
  */
 package dungeonCrawler;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Corridor {
@@ -16,13 +17,15 @@ public class Corridor {
 	private Board board = Board.getBoard();
 	private int x;
 	private int y;
+	private BufferedImage image;
 	
-	public Corridor(Room room1, Room room2) {
+	public Corridor(Room room1, Room room2, BufferedImage image) {
 		corridor = new ArrayList<Path>();
 		generateHPath(room1);
 		generateVPath(room2);
 		this.room1 = room1;
 		this.room2 = room2;
+		this.image = image;
 		generatePath();
 	}
 	
@@ -37,27 +40,27 @@ public class Corridor {
 	
 	private void generatePath() {
 		//Adds the corner to the corridor
-		corridor.add(new Path(x, y));
+		corridor.add(new Path(x, y, image));
 		
 		//Adds the horizontal to the corridor
 		if (this.x > room2.getxStair()) {
 			for (int i = room2.getxStair(); i < this.x; i++) {
-				corridor.add(new Path(i, y));
+				corridor.add(new Path(i, y, image));
 			}
 		} else {
 			for (int i = this.x; i < room2.getxStair(); i++) {
-				corridor.add(new Path(i, y));
+				corridor.add(new Path(i, y, image));
 			}
 		}
 		
 		//Adds the vertical to the corridor
 		if (this.y > room1.getyStair()) {
 			for (int i = room1.getyStair(); i < this.y; i++) {
-				corridor.add(new Path(x, i));
+				corridor.add(new Path(x, i, image));
 			}
 		} else {
 			for (int i = this.y; i < room1.getyStair(); i++) {
-				corridor.add(new Path(x, i));
+				corridor.add(new Path(x, i, image));
 			}
 		}
 		

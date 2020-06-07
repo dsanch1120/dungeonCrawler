@@ -2,6 +2,7 @@ package dungeonCrawler;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -9,18 +10,13 @@ import javax.imageio.ImageIO;
 
 public class Path extends BoardCell{
 
-	public Path(int X, int Y) {
-		super();
+	public Path(int X, int Y, BufferedImage oImage) {
+		super(oImage);
 		icon = ' ';
 		this.X = X;
 		this.Y = Y;
 		this.type = CellType.PATH;
-		try {
-			oImage = ImageIO.read(new File("data/Dungeon_Tileset.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		oImage = oImage.getSubimage(96, 0, 16, 16);
+		this.oImage = oImage.getSubimage(96, 0, 16, 16);
 	}
 	
 	@Override
@@ -41,10 +37,6 @@ public class Path extends BoardCell{
 	@Override
 	public void draw(Graphics cell) {
 		cell.drawImage(oImage, X*15, Y*15, null);
-//		cell.setColor(Color.BLACK);
-//		cell.drawRect(X*15, Y*15, width, height);
-//		cell.setColor(Color.LIGHT_GRAY);
-//		cell.fillRect(X*15, Y*15, width - 1, height - 1);
 	}
 
 	

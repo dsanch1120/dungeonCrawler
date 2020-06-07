@@ -8,6 +8,8 @@ package dungeonCrawler;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +18,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class Board extends JPanel{
@@ -38,10 +41,16 @@ public class Board extends JPanel{
 	private int NUM_ROOMS;
 	private static Player player;
 	private boolean newGame;
+	private BufferedImage image;
 
 	//Methods
 	public void init() {
 		theInstance.level = -1;
+		try {
+			image = ImageIO.read(new File("data/Dungeon_Tileset.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	//Plays the Game
@@ -108,10 +117,10 @@ public class Board extends JPanel{
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
 				if (i == 0 || i == board.length - 1 || j == 0 || j == board[i].length - 1) {
-					theInstance.board[i][j] = new Border(i, j, 8);
+					theInstance.board[i][j] = new Border(i, j, 8, image);
 				}
 				else {
-					theInstance.board[i][j] = new Border(i, j, 8);
+					theInstance.board[i][j] = new Border(i, j, 8, image);
 				}
 			}
 		}
@@ -120,14 +129,15 @@ public class Board extends JPanel{
 		generateCorridors();
 
 		//Place the Rooms and Corridors
+		//placeCorridors();
 		placeRooms();
 		placeCorridors();
 
 		//Place the Stairs
 		Collections.shuffle(theInstance.rooms);
-		theInstance.board[theInstance.rooms.get(0).getxStair()][theInstance.rooms.get(0).getyStair()] = new Stairs(theInstance.rooms.get(0).getxStair(), theInstance.rooms.get(0).getyStair(), 0);
+		theInstance.board[theInstance.rooms.get(0).getxStair()][theInstance.rooms.get(0).getyStair()] = new Stairs(theInstance.rooms.get(0).getxStair(), theInstance.rooms.get(0).getyStair(), 0, image);
 		if (theInstance.level > 0) {
-			theInstance.board[theInstance.rooms.get(1).getxStair()][theInstance.rooms.get(1).getyStair()] = new Stairs(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair(), 1);
+			theInstance.board[theInstance.rooms.get(1).getxStair()][theInstance.rooms.get(1).getyStair()] = new Stairs(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair(), 1, image);
 			theInstance.player.setLocation(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair());
 		}
 		player.setLocation(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair());
@@ -163,35 +173,35 @@ public class Board extends JPanel{
 		for (int var = 0; var < theInstance.rooms.size(); var++) {
 			for (int i = theInstance.rooms.get(var).getX1() - 1; i <= theInstance.rooms.get(var).getX2(); i++) {
 				for (int j = theInstance.rooms.get(var).getY1() - 1; j <= theInstance.rooms.get(var).getY2(); j++) {
-					if (j == theInstance.rooms.get(var).getY1() - 1 || j == theInstance.rooms.get(var).getY2() || i == theInstance.rooms.get(var).getX1() - 1 || i == theInstance.rooms.get(var).getX2()) {
+					if (theInstance.board[i][j].getType() != CellType.PATH && (j == theInstance.rooms.get(var).getY1() - 1 || j == theInstance.rooms.get(var).getY2() || i == theInstance.rooms.get(var).getX1() - 1 || i == theInstance.rooms.get(var).getX2())) {
 						if (j == theInstance.rooms.get(var).getY1() - 1 && i == theInstance.rooms.get(var).getX1() - 1) {
-							theInstance.board[i][j] = new Border(i,j,0);
+							theInstance.board[i][j] = new Border(i, j, 0, image);
 						}
 						else if (j == theInstance.rooms.get(var).getY1() - 1 && i == theInstance.rooms.get(var).getX2()) {
-							theInstance.board[i][j] = new Border(i,j,1);
+							theInstance.board[i][j] = new Border(i, j, 1, image);
 						}
 						else if (j == theInstance.rooms.get(var).getY2() && i == theInstance.rooms.get(var).getX1() - 1) {
-							theInstance.board[i][j] = new Border(i,j,2);
+							theInstance.board[i][j] = new Border(i, j, 2, image);
 						}
 						else if (j == theInstance.rooms.get(var).getY2() && i == theInstance.rooms.get(var).getX2()) {
-							theInstance.board[i][j] = new Border(i,j,3);
+							theInstance.board[i][j] = new Border(i, j, 3, image);
 						}
 						else if (j == theInstance.rooms.get(var).getY1() - 1) {
-							theInstance.board[i][j] = new Border(i,j,4);
+							theInstance.board[i][j] = new Border(i, j, 4, image);
 						}
 						else if (j == theInstance.rooms.get(var).getY2()) {
-							theInstance.board[i][j] = new Border(i,j,5);
+							theInstance.board[i][j] = new Border(i, j, 5, image);
 						}
 						else if (i == theInstance.rooms.get(var).getX1() - 1) {
-							theInstance.board[i][j] = new Border(i,j,6);
+							theInstance.board[i][j] = new Border(i, j, 6, image);
 						}
 						else if (i == theInstance.rooms.get(var).getX2()) {
-							theInstance.board[i][j] = new Border(i,j,7);
+							theInstance.board[i][j] = new Border(i, j, 7, image);
 						} else {
-							theInstance.board[i][j] = new Border(i,j,8);
+							theInstance.board[i][j] = new Border(i, j, 8, image);
 						}
 					} else {
-						theInstance.board[i][j] = new Floor(i,j);
+						theInstance.board[i][j] = new Floor(i,j, image);
 					}
 				}
 			}
@@ -203,16 +213,36 @@ public class Board extends JPanel{
 			for (int j = 0; j < theInstance.corridors.get(i).getCorridor().size(); j++) {
 				theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X][theInstance.corridors.get(i).getCorridor().get(j).Y] = theInstance.corridors.get(i).getCorridor().get(j);
 				if (theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X + 1][theInstance.corridors.get(i).getCorridor().get(j).Y].getType() == CellType.BORDER) {
-					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X + 1][theInstance.corridors.get(i).getCorridor().get(j).Y] = new Border(theInstance.corridors.get(i).getCorridor().get(j).X + 1, theInstance.corridors.get(i).getCorridor().get(j).Y, 7);
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X + 1][theInstance.corridors.get(i).getCorridor().get(j).Y] = new Border(theInstance.corridors.get(i).getCorridor().get(j).X + 1, theInstance.corridors.get(i).getCorridor().get(j).Y, 7, image);
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X + 1][theInstance.corridors.get(i).getCorridor().get(j).Y].setEditable(false);
 				} 
 				if (theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X - 1][theInstance.corridors.get(i).getCorridor().get(j).Y].getType() == CellType.BORDER) {
-					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X - 1][theInstance.corridors.get(i).getCorridor().get(j).Y] = new Border(theInstance.corridors.get(i).getCorridor().get(j).X - 1, theInstance.corridors.get(i).getCorridor().get(j).Y, 6);
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X - 1][theInstance.corridors.get(i).getCorridor().get(j).Y] = new Border(theInstance.corridors.get(i).getCorridor().get(j).X - 1, theInstance.corridors.get(i).getCorridor().get(j).Y, 6, image);
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X - 1][theInstance.corridors.get(i).getCorridor().get(j).Y].setEditable(false);
 				}
 				if (theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X][theInstance.corridors.get(i).getCorridor().get(j).Y + 1].getType() == CellType.BORDER) {
-					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X][theInstance.corridors.get(i).getCorridor().get(j).Y + 1] = new Border(theInstance.corridors.get(i).getCorridor().get(j).X, theInstance.corridors.get(i).getCorridor().get(j).Y + 1, 5);	
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X][theInstance.corridors.get(i).getCorridor().get(j).Y + 1] = new Border(theInstance.corridors.get(i).getCorridor().get(j).X, theInstance.corridors.get(i).getCorridor().get(j).Y + 1, 5, image);	
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X][theInstance.corridors.get(i).getCorridor().get(j).Y + 1].setEditable(false);
 				}
 				if (theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X][theInstance.corridors.get(i).getCorridor().get(j).Y - 1].getType() == CellType.BORDER) {
-					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X][theInstance.corridors.get(i).getCorridor().get(j).Y - 1] = new Border(theInstance.corridors.get(i).getCorridor().get(j).X, theInstance.corridors.get(i).getCorridor().get(j).Y - 1, 4);	
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X][theInstance.corridors.get(i).getCorridor().get(j).Y - 1] = new Border(theInstance.corridors.get(i).getCorridor().get(j).X, theInstance.corridors.get(i).getCorridor().get(j).Y - 1, 4, image);	
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X][theInstance.corridors.get(i).getCorridor().get(j).Y - 1].setEditable(false);
+				}
+				if (theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X - 1][theInstance.corridors.get(i).getCorridor().get(j).Y - 1].getType() == CellType.BORDER && theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X - 1][theInstance.corridors.get(i).getCorridor().get(j).Y - 1].isEditable()) {
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X - 1][theInstance.corridors.get(i).getCorridor().get(j).Y - 1] = new Border(theInstance.corridors.get(i).getCorridor().get(j).X - 1, theInstance.corridors.get(i).getCorridor().get(j).Y - 1, 0, image);	
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X - 1][theInstance.corridors.get(i).getCorridor().get(j).Y - 1].setEditable(false);
+				}
+				if (theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X + 1][theInstance.corridors.get(i).getCorridor().get(j).Y - 1].getType() == CellType.BORDER && theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X + 1][theInstance.corridors.get(i).getCorridor().get(j).Y - 1].isEditable()) {
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X + 1][theInstance.corridors.get(i).getCorridor().get(j).Y - 1] = new Border(theInstance.corridors.get(i).getCorridor().get(j).X + 1, theInstance.corridors.get(i).getCorridor().get(j).Y - 1, 1, image);	
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X + 1][theInstance.corridors.get(i).getCorridor().get(j).Y - 1].setEditable(false);
+				}
+				if (theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X - 1][theInstance.corridors.get(i).getCorridor().get(j).Y + 1].getType() == CellType.BORDER && theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X - 1][theInstance.corridors.get(i).getCorridor().get(j).Y + 1].isEditable()) {
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X - 1][theInstance.corridors.get(i).getCorridor().get(j).Y + 1] = new Border(theInstance.corridors.get(i).getCorridor().get(j).X - 1, theInstance.corridors.get(i).getCorridor().get(j).Y + 1, 2, image);
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X - 1][theInstance.corridors.get(i).getCorridor().get(j).Y + 1].setEditable(false);
+				}
+				if (theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X + 1][theInstance.corridors.get(i).getCorridor().get(j).Y + 1].getType() == CellType.BORDER && theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X + 1][theInstance.corridors.get(i).getCorridor().get(j).Y + 1].isEditable()) {
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X + 1][theInstance.corridors.get(i).getCorridor().get(j).Y + 1] = new Border(theInstance.corridors.get(i).getCorridor().get(j).X + 1, theInstance.corridors.get(i).getCorridor().get(j).Y + 1, 3, image);	
+					theInstance.board[theInstance.corridors.get(i).getCorridor().get(j).X + 1][theInstance.corridors.get(i).getCorridor().get(j).Y + 1].setEditable(false);
 				}
 			}
 		}
@@ -223,9 +253,9 @@ public class Board extends JPanel{
 
 		for (int i = 0; i < theInstance.rooms.size(); i++) {
 			if (i != theInstance.rooms.size() - 1) {
-				theInstance.corridors.add(new Corridor(theInstance.rooms.get(i), theInstance.rooms.get(i + 1)));
+				theInstance.corridors.add(new Corridor(theInstance.rooms.get(i), theInstance.rooms.get(i + 1), image));
 			} else {
-				theInstance.corridors.add(new Corridor(theInstance.rooms.get(i), theInstance.rooms.get(0)));
+				theInstance.corridors.add(new Corridor(theInstance.rooms.get(i), theInstance.rooms.get(0), image));
 			}
 		}
 	}

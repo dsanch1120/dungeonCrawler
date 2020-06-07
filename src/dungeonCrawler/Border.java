@@ -10,21 +10,53 @@ import javax.imageio.ImageIO;
 
 public class Border extends BoardCell{
 	int bType;
-
-	public Border(int X, int Y, int bType) {
-		super();
+	BufferedImage image;
+	
+	public Border(int X, int Y, int bType, BufferedImage oImage) {
+		super(oImage);
 		icon = '+';
 		this.X = X;
 		this.Y = Y;
 		this.type = CellType.BORDER;
 		this.bType = bType;
-		try {
-			oImage = ImageIO.read(new File("data/Dungeon_Tileset.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.oImage = oImage;
+		loadImage();
 	}
 
+	private void loadImage() {
+		switch (bType) {
+		case 0:	//Top left corner
+			image = oImage.getSubimage(0, 0, 16, 16);
+			break;
+		case 1:	//Top right corner
+			image = oImage.getSubimage(79, 0, 16, 16);
+			break;
+		case 2:	//Bottom left corner
+			image = oImage.getSubimage(0, 63, 16, 16);
+			break;
+		case 3: //Bottom right corner
+			image = oImage.getSubimage(79, 63, 16, 16);
+			break;
+		case 4:	//Top Side Border
+			image = oImage.getSubimage(15, 0, 16, 16);
+			break;
+		case 5:	//Bottom Side Border
+			image = oImage.getSubimage(15, 63, 16, 16);
+			break;
+		case 6:	//Left side Border
+			image = oImage.getSubimage(0, 15, 16, 16);
+			break;
+		case 7:	//Right side Border
+			image = oImage.getSubimage(79, 15, 16, 16);
+			break;
+		case 8:	//Basic Border Type
+			image = oImage.getSubimage(127, 111, 16, 16);
+			break;
+		default:
+			System.out.println("Error. This should not be accessed");
+		}
+	}
+	
 	@Override
 	public boolean hasPlayer() {
 		return false;
@@ -42,47 +74,7 @@ public class Border extends BoardCell{
 
 	@Override
 	public void draw(Graphics cell) {
-		BufferedImage image;
-		switch (bType) {
-		case 0:	//Top left corner
-			image = oImage.getSubimage(0, 0, 16, 16);
-			cell.drawImage(image, X*15, Y*15, null);
-			break;
-		case 1:	//Top right corner
-			image = oImage.getSubimage(79, 0, 16, 16);
-			cell.drawImage(image, X*15, Y*15, null);
-			break;
-		case 2:	//Bottom left corner
-			image = oImage.getSubimage(0, 63, 16, 16);
-			cell.drawImage(image, X*15, Y*15, null);
-			break;
-		case 3: //Bottom right corner
-			image = oImage.getSubimage(79, 63, 16, 16);
-			cell.drawImage(image, X*15, Y*15, null);
-			break;
-		case 4:	//Top Side Border
-			image = oImage.getSubimage(15, 0, 16, 16);
-			cell.drawImage(image, X*15, Y*15, null);
-			break;
-		case 5:	//Bottom Side Border
-			image = oImage.getSubimage(15, 63, 16, 16);
-			cell.drawImage(image, X*15, Y*15, null);
-			break;
-		case 6:	//Left side Border
-			image = oImage.getSubimage(0, 15, 16, 16);
-			cell.drawImage(image, X*15, Y*15, null);
-			break;
-		case 7:	//Right side Border
-			image = oImage.getSubimage(79, 15, 16, 16);
-			cell.drawImage(image, X*15, Y*15, null);
-			break;
-		case 8:	//Basic Border Type
-			image = oImage.getSubimage(127, 111, 16, 16);
-			cell.drawImage(image, X*15, Y*15, null);
-			break;
-		default:
-			System.out.println("Error. This should not be accessed");
-		}
+		cell.drawImage(image, X*15, Y*15, null);
 
 	}
 }
