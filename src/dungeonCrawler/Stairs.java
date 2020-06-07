@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 public class Stairs extends BoardCell{
 	private int stairType;
 	private BufferedImage image;
-	
+
 	public Stairs(int X, int Y, int stairType, BufferedImage oImage) {
 		super(oImage);
 		icon = '%';
@@ -28,17 +28,17 @@ public class Stairs extends BoardCell{
 		image = image.getSubimage(143, 47, 16, 16);
 		this.oImage = oImage.getSubimage(143, 111, 16, 16);
 	}
-	
+
 	@Override
 	public boolean hasPlayer() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean hasEnemy() {
 		return false;
 	}
-	
+
 	@Override
 	public int behavior() {
 		return stairType;
@@ -46,8 +46,15 @@ public class Stairs extends BoardCell{
 
 	@Override
 	public void draw(Graphics cell) {
-		cell.drawImage(oImage, X*15, Y*15, null);
-		cell.drawImage(image, X*15, Y*15, null);
+		if (visible) {
+			cell.drawImage(oImage, X*15, Y*15, null);
+			cell.drawImage(image, X*15, Y*15, null);
+		} else {
+			cell.setColor(Color.BLACK);
+			cell.drawRect(X*15, Y*15, width, height);
+			cell.setColor(Color.BLACK);
+			cell.fillRect(X*15, Y*15, width, height);
+		}
 	}
 
 }

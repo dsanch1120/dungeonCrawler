@@ -18,17 +18,17 @@ public class Path extends BoardCell{
 		this.type = CellType.PATH;
 		this.oImage = oImage.getSubimage(96, 0, 16, 16);
 	}
-	
+
 	@Override
 	public boolean hasPlayer() {
 		return(!(player == null));
 	}
-	
+
 	@Override
 	public boolean hasEnemy() {
 		return (!(enemy == null));
 	}
-	
+
 	@Override
 	public int behavior() {
 		return -1;
@@ -36,8 +36,14 @@ public class Path extends BoardCell{
 
 	@Override
 	public void draw(Graphics cell) {
-		cell.drawImage(oImage, X*15, Y*15, null);
+		if (visible) {
+			cell.drawImage(oImage, X*15, Y*15, null);
+		} else {
+			cell.setColor(Color.BLACK);
+			cell.drawRect(X*15, Y*15, width, height);
+			cell.setColor(Color.BLACK);
+			cell.fillRect(X*15, Y*15, width, height);
+		}
 	}
 
-	
 }

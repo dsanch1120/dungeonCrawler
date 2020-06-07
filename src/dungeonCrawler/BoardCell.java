@@ -26,9 +26,18 @@ public abstract class BoardCell {
 	protected String fileName;
 	protected BufferedImage oImage;
 	protected boolean editable = true;
+	protected boolean visible;
 	
 	public BoardCell(BufferedImage oImage) {
 		this.oImage = oImage;
+	}
+	
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+	
+	public boolean isVisible() {
+		return visible;
 	}
 	
 	public CellType getType() {

@@ -290,6 +290,11 @@ public class Board extends JPanel{
 		for (int i = 0; i < tempBoard.length; i++) {
 			for (int j = 0; j < tempBoard[i].length; j++) {
 				BoardCell boardCell = tempBoard[i][j];
+				if (i > (theInstance.player.getxCoordinate() + theInstance.player.getVisibility()) || i < (theInstance.player.getxCoordinate() - theInstance.player.getVisibility()) || j > (theInstance.player.getyCoordinate() + theInstance.player.getVisibility()) || j < (theInstance.player.getyCoordinate() - theInstance.player.getVisibility())) {
+					boardCell.setVisible(false);
+				} else {
+					boardCell.setVisible(true);
+				}
 				boardCell.draw(cell);
 			}
 		}

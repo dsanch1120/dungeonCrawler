@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 public class Border extends BoardCell{
 	int bType;
 	BufferedImage image;
-	
+
 	public Border(int X, int Y, int bType, BufferedImage oImage) {
 		super(oImage);
 		icon = '+';
@@ -56,7 +56,7 @@ public class Border extends BoardCell{
 			System.out.println("Error. This should not be accessed");
 		}
 	}
-	
+
 	@Override
 	public boolean hasPlayer() {
 		return false;
@@ -74,7 +74,13 @@ public class Border extends BoardCell{
 
 	@Override
 	public void draw(Graphics cell) {
-		cell.drawImage(image, X*15, Y*15, null);
-
+		if (visible) {
+			cell.drawImage(image, X*15, Y*15, null);
+		} else {
+			cell.setColor(Color.BLACK);
+			cell.drawRect(X*15, Y*15, width, height);
+			cell.setColor(Color.BLACK);
+			cell.fillRect(X*15, Y*15, width, height);
+		}
 	}
 }

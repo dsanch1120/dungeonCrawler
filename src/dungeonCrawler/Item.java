@@ -11,6 +11,7 @@ public abstract class Item {
 	protected char icon;
 	protected int xCoordinate;
 	protected int yCoordinate;
+	protected ItemType type;
 	
 	//Methods
 	public abstract int behavior();

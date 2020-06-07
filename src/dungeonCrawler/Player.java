@@ -105,6 +105,10 @@ public class Player {
 	}
 
 	//Getters and Setters
+	public int getVisibility() {
+		return PERCEPTION * 5;
+	}
+	
 	public char getIcon() {
 		return ICON;
 	}

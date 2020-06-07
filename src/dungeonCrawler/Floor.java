@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 
 public class Floor extends BoardCell{
 	BufferedImage image;
-	
+
 	public Floor(int X, int Y, BufferedImage oImage) {
 		super(oImage);
 		icon = ' ';
@@ -38,11 +38,18 @@ public class Floor extends BoardCell{
 
 	@Override
 	public void draw(Graphics cell) {
-		if (this.hasEnemy()) {
-			enemy.draw(cell);
+		if (visible) {
+			if (this.hasEnemy()) {
+				enemy.draw(cell);
+			} else {
+				cell.drawImage(image, X*15, Y*15, null);
+			}
+
 		} else {
-			cell.drawImage(image, X*15, Y*15, null);
+			cell.setColor(Color.BLACK);
+			cell.drawRect(X*15, Y*15, width, height);
+			cell.setColor(Color.BLACK);
+			cell.fillRect(X*15, Y*15, width, height);
 		}
 	}
 }
-
