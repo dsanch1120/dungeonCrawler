@@ -44,6 +44,7 @@ public class Board extends JPanel{
 	private BufferedImage image;
 
 	//Methods
+	//Initializes variables to be used throughout the program
 	public void init() {
 		theInstance.level = -1;
 		try {
@@ -52,12 +53,10 @@ public class Board extends JPanel{
 			e.printStackTrace();
 		}
 	}
-
 	//Plays the Game
 	public void playGame() {
 		generateBoard();
 	}
-	
 	//Checks the player's location after moving and handles any necessary events
 	public void checkLocation() {
 		//Check if player should battle an opponent
@@ -90,9 +89,6 @@ public class Board extends JPanel{
 			}
 		}
 	}
-
-	//Handles switching of levels
-
 	//Adds all possible enemies to the ArrayList "possibleEnemies"
 	public void generatePossibleEnemies(int i, int j) {
 		theInstance.possibleEnemies = new ArrayList<Enemy>();
@@ -142,10 +138,13 @@ public class Board extends JPanel{
 		}
 		player.setLocation(theInstance.rooms.get(1).getxStair(), theInstance.rooms.get(1).getyStair());
 
-
 		//Place the Enemies
 		placeEnemies();
 		theInstance.levels.add(theInstance.board);
+		
+		if (theInstance.rooms.size() >= 4) {
+			theInstance.board[theInstance.rooms.get(3).getxStair()][theInstance.rooms.get(3).getyStair()] = new Treasure(theInstance.rooms.get(3).getxStair(), theInstance.rooms.get(3).getyStair(), theInstance.image);
+		}
 	}
 	//Places the randomly genereated enemies
 	public void placeEnemies() {
@@ -302,17 +301,16 @@ public class Board extends JPanel{
 		theInstance.player.draw(cell);
 
 	}
-
+	//Ensures only one board can be created
 	private Board() {
 
 	}
 
 	//Getters and Setters
-
-
 	public BoardCell[][] getBoardArray() {
 		return theInstance.board;
 	}
+	
 	public static Player getPlayer() {
 		if (Board.player == null) {
 			player = new Player();
