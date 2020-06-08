@@ -1,6 +1,6 @@
 package dungeonCrawler;
 
-public class Armor extends Item {
+public abstract class Armor extends Item {
 
 	int defense;
 	
@@ -8,6 +8,9 @@ public class Armor extends Item {
 		this.name = name;
 		this.defense = defense;
 	}
+	
+	public abstract void equip();
+	public abstract void unequip();
 	
 	@Override
 	public int behavior() {

@@ -9,8 +9,7 @@ public abstract class Item {
 	//Variables
 	protected String name;
 	protected char icon;
-//	protected int xCoordinate;
-//	protected int yCoordinate;
+	protected Board board = Board.getBoard();
 	protected ItemType type;
 	
 	//Methods
