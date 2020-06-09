@@ -10,8 +10,12 @@ public abstract class Item {
 	protected String name;
 	protected char icon;
 	protected Board board = Board.getBoard();
+	protected String description;
 	protected ItemType type;
 	
 	//Methods
 	public abstract int behavior();
+	public String getDescription() {
+		return this.description;
+	}
 }

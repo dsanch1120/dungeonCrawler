@@ -1,3 +1,7 @@
+/*
+ * Created by Daniel Sanchez
+ * June 8, 2020
+ */
 package dungeonCrawler;
 
 public class Purse extends Item{

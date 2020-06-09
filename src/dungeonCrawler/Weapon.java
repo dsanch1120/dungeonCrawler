@@ -1,8 +1,12 @@
+/*
+ * Created by Daniel Sanchez
+ * June 8, 2020
+ */
 package dungeonCrawler;
 
 public abstract class Weapon extends Item {
 
-	int damage;
+	protected int damage;
 	
 	public Weapon(String name, int damage) {
 		this.name = name;
@@ -10,12 +14,11 @@ public abstract class Weapon extends Item {
 		this.type = ItemType.WEAPON;
 	}
 	
+	//The "equip" and "unequip" methods modify the player's attributes when the weapon
+	//	is equipped or unquipped.
+	//	EX. Dagger increases player agility by 1 when equipped.
 	public abstract void equip();
 	public abstract void unequip();
-	
-	@Override
-	public int behavior() {
-		return damage;
-	}
+	public abstract int behavior();
 
 }

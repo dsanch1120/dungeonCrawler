@@ -1,3 +1,7 @@
+/*
+ * Created by Daniel Sanchez
+ * June 6, 2020
+ */
 package dungeonCrawler;
 
 public abstract class Armor extends Item {

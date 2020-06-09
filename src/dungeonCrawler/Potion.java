@@ -1,3 +1,7 @@
+/*
+ * Created by Daniel Sanchez
+ * June, 2020
+ */
 package dungeonCrawler;
 
 public abstract class Potion extends Item{

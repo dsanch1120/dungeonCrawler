@@ -192,6 +192,34 @@ public class Player {
 	public int getINTELLIGENCE() {
 		return INTELLIGENCE;
 	}
+	
+	public void updateENDURANCE(int eNDURANCE) {
+		ENDURANCE += eNDURANCE;
+	}
+
+	public void updateSTRENGTH(int sTRENGTH) {
+		STRENGTH += sTRENGTH;
+	}
+
+	public void updateDEFENSE(int dEFENSE) {
+		DEFENSE += dEFENSE;
+	}
+
+	public void updateAGILITY(int aGILITY) {
+		AGILITY += aGILITY;
+	}
+
+	public void updatePERCEPTION(int pERCEPTION) {
+		PERCEPTION += pERCEPTION;
+	}
+
+	public void updateINTELLIGENCE(int iNTELLIGENCE) {
+		INTELLIGENCE += iNTELLIGENCE;
+	}
+
+	public void updateCHARISMA(int cHARISMA) {
+		CHARISMA += cHARISMA;
+	}
 
 	public void moveX(int xCoordinate) {
 		if (this.canMove(xCoordinate, 'x')) {
