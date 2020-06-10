@@ -77,12 +77,12 @@ public class Board extends JPanel{
 					theInstance.level--;
 					generateBoard();
 				}
-				break;
+			break;
 			case (1):
 				theInstance.level--;
-				theInstance.board = levels.get(theInstance.level);
-				theInstance.player.setLocation(levelRooms.get(theInstance.level).get(0).getxStair(), levelRooms.get(theInstance.level).get(0).getyStair());
-				break;
+			theInstance.board = levels.get(theInstance.level);
+			theInstance.player.setLocation(levelRooms.get(theInstance.level).get(0).getxStair(), levelRooms.get(theInstance.level).get(0).getyStair());
+			break;
 			default:
 				System.out.println("ERROR");
 				System.exit(0);
@@ -141,7 +141,7 @@ public class Board extends JPanel{
 		//Place the Enemies
 		placeEnemies();
 		theInstance.levels.add(theInstance.board);
-		
+
 		if (theInstance.rooms.size() >= 4) {
 			theInstance.board[theInstance.rooms.get(3).getxStair()][theInstance.rooms.get(3).getyStair()] = new Treasure(theInstance.rooms.get(3).getxStair(), theInstance.rooms.get(3).getyStair(), theInstance.image);
 		}
@@ -310,7 +310,7 @@ public class Board extends JPanel{
 	public BoardCell[][] getBoardArray() {
 		return theInstance.board;
 	}
-	
+
 	public static Player getPlayer() {
 		if (Board.player == null) {
 			player = new Player();
@@ -319,7 +319,11 @@ public class Board extends JPanel{
 	}
 
 	public int getLevel() {
-		return theInstance.level;
+		if (theInstance.level >= 1) {
+			return theInstance.level;
+		} else {
+			return 1;
+		}
 	}
 
 	public boolean isNewGame() {
