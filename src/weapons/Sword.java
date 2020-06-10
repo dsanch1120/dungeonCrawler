@@ -11,8 +11,18 @@ public class Sword extends Weapon{
 		super(name, damage);
 		this.name = "Level " + board.getLevel() + " " + name;
 		this.description = "The basic sword is best suited for a confident warrior. It has inherent advantages over other weapons, yet not of their drawbacks.";
+		this.spawnChance = 0.02 * (10 / board.getLevel());
+		this.weight = 2;
 	}
 
+	public Sword() {
+		super();
+		this.name = "Basic Sword";
+		this.description = "The basic sword is best suited for a confident warrior. It has inherent advantages over other weapons, yet not of their drawbacks.";
+		this.spawnChance = 0.02 * (10 / board.getLevel());
+		this.damage = 2;
+		this.weight = 2;
+	}
 	
 	//Because the basic sword doesn't impact the user's attributes, equip and unquip do nothing.
 	@Override
@@ -28,4 +38,9 @@ public class Sword extends Weapon{
 		return this.damage;
 	}
 
+	@Override
+	public boolean spawn() {
+		int spawnCheck = rando.nextInt(100000) + 1;
+		return ((this.spawnChance * 100000) >= spawnCheck);
+	}
 }

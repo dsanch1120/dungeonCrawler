@@ -25,4 +25,8 @@ public class Purse extends Item{
 		return gold;
 	}
 
+	@Override
+	public boolean spawn() {
+		return false;
+	}
 }

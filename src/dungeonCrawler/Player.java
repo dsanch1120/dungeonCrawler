@@ -18,6 +18,10 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import armor.BasicGarment;
+import potions.BasicHealthPotion;
+import weapons.Sword;
+
 public class Player {
 	//Variables
 	private Board board;
@@ -39,22 +43,37 @@ public class Player {
 	private Purse purse;
 	private ArrayList<Item> inventory;
 	private ArrayList<Weapon> weapons;
+	private ArrayList<Armor> armor;
+	private ArrayList<Potion> potions;
 	private int level;
 	private final char ICON = 'X';
-	BufferedImage image;
+	private BufferedImage image;
 
 	//Constructor
 	public Player() {
+		//Allocates memory for item related arraylists
 		this.inventory = new ArrayList<Item>();
 		this.weapons = new ArrayList<Weapon>();
+		this.armor = new ArrayList<Armor>();
+		this.potions = new ArrayList<Potion>();
+		//Gets the current instance of board
 		this.board = Board.getBoard();
+		//Initializes purse with 0 gold
 		this.purse = new Purse(0);
+		//Loads player image
 		try {
 			image = ImageIO.read(new File("data/player.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		image = image.getSubimage(69, 89, 60, 70);
+		//Adds items to player's inventory
+		armor.add(new BasicGarment());
+		inventory.add(armor.get(0));
+		weapons.add(new Sword());
+		inventory.add(weapons.get(0));
+		potions.add(new BasicHealthPotion());
+		inventory.add(potions.get(0));
 	}
 
 	//Methods
@@ -221,6 +240,14 @@ public class Player {
 		CHARISMA += cHARISMA;
 	}
 
+	public void updateHealth(int health) {
+		if (this.HP + health <= this.maxHP) {
+			this.HP += health;
+		} else {
+			this.HP = this.maxHP;
+		}
+	}
+	
 	public void moveX(int xCoordinate) {
 		if (this.canMove(xCoordinate, 'x')) {
 			this.xCoordinate += xCoordinate;

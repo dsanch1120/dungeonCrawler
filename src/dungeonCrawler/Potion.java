@@ -5,11 +5,12 @@
 package dungeonCrawler;
 
 public abstract class Potion extends Item{
-	int type;
 	
-	public Potion(String name, int type) {
+	public Potion(String name) {
 		this.name = name;
-		this.type = type;
+	}
+	
+	public Potion() {
 	}
 	
 	public abstract void effect();
@@ -17,6 +18,6 @@ public abstract class Potion extends Item{
 	
 	@Override
 	public int behavior() {
-		return type;
+		return -1;
 	}
 }

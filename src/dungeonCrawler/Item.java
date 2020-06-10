@@ -5,6 +5,8 @@
  */
 package dungeonCrawler;
 
+import java.util.Random;
+
 public abstract class Item {
 	//Variables
 	protected String name;
@@ -12,9 +14,13 @@ public abstract class Item {
 	protected Board board = Board.getBoard();
 	protected String description;
 	protected ItemType type;
+	protected Random rando = new Random();
+	protected double spawnChance;
+	protected double weight;
 	
 	//Methods
 	public abstract int behavior();
+	public abstract boolean spawn();
 	public String getDescription() {
 		return this.description;
 	}

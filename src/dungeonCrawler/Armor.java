@@ -6,11 +6,14 @@ package dungeonCrawler;
 
 public abstract class Armor extends Item {
 
-	int defense;
+	protected int defense;
 	
 	public Armor(String name, int defense) {
 		this.name = name;
 		this.defense = defense;
+	}
+	public Armor() {
+		
 	}
 	
 	public abstract void equip();
