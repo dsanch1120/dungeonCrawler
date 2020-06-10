@@ -21,6 +21,11 @@ public abstract class Item {
 	//Methods
 	public abstract int behavior();
 	public abstract boolean spawn();
+	
+	//Getters and Setters
+	public String getName() {
+		return this.name;
+	}
 	public String getDescription() {
 		return this.description;
 	}

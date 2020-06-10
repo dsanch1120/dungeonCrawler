@@ -128,6 +128,22 @@ public class Player {
 		return PERCEPTION * 5;
 	}
 	
+	public ArrayList<Item> getInventory() {
+		return inventory;
+	}
+
+	public ArrayList<Weapon> getWeapons() {
+		return weapons;
+	}
+
+	public ArrayList<Armor> getArmor() {
+		return armor;
+	}
+
+	public ArrayList<Potion> getPotions() {
+		return potions;
+	}
+
 	public char getIcon() {
 		return ICON;
 	}

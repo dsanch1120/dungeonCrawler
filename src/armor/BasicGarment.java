@@ -6,7 +6,9 @@ public class BasicGarment extends Armor{
 
 	public BasicGarment(String name, int defense) {
 		super(name, defense);
-		this.description = "Though it allows for slightly easier movement, the basic garment does little more than protect one from the embarrasment of fighting naked";
+		this.description = "Though it allows for slightly easier movement," 
+				+ "\n" + "the basic garment does little more than protect"
+				+ "\n" + "one from the embarrasment of fighting naked";
 		this.weight = 2;
 	}
 
@@ -14,7 +16,9 @@ public class BasicGarment extends Armor{
 		super();
 		this.name = "Basic Garment";
 		this.defense = 0;
-		this.description = "Though it allows for slightly easier movement, the basic garment does little more than protect one from the embarrasment of fighting naked";
+		this.description = "Though it allows for slightly easier movement," 
+				+ "\n" + "the basic garment does little more than protect"
+				+ "\n" + "one from the embarrasment of fighting naked";		
 		this.weight = 2;
 	}
 	

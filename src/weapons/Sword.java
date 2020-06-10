@@ -10,7 +10,9 @@ public class Sword extends Weapon{
 	public Sword(String name, int damage) {
 		super(name, damage);
 		this.name = "Level " + board.getLevel() + " " + name;
-		this.description = "The basic sword is best suited for a confident warrior. It has inherent advantages over other weapons, yet not of their drawbacks.";
+		this.description = "The basic sword is best suited for a confident warrior."
+				+ "\n" + "It has inherent advantages over other weapons, "
+				+ "\n" + "yet not of their drawbacks.";
 		this.spawnChance = 0.02 * (10 / board.getLevel());
 		this.weight = 2;
 	}
@@ -18,7 +20,9 @@ public class Sword extends Weapon{
 	public Sword() {
 		super();
 		this.name = "Basic Sword";
-		this.description = "The basic sword is best suited for a confident warrior. It has inherent advantages over other weapons, yet not of their drawbacks.";
+		this.description = "The basic sword is best suited for a confident warrior."
+				+ "\n" + "It has inherent advantages over other weapons, "
+				+ "\n" + "yet not of their drawbacks.";
 		this.spawnChance = 0.02 * (10 / board.getLevel());
 		this.damage = 2;
 		this.weight = 2;

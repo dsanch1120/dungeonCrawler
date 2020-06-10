@@ -7,8 +7,8 @@ public class BasicHealthPotion extends Potion{
 	public BasicHealthPotion(String name) {
 		super(name);
 		this.description = "The basic health potion restores a modest amount of health. "
-				+ "Good for bruises, cuts, and scrapes. "
-				+ "Not recommended for broken bones, dismemberment, or mortal wounds";
+				+ "\n" + "Good for bruises, cuts, and scrapes. "
+				+ "\n" + "Not for broken bones, dismemberment, or mortal wounds";
 		this.spawnChance = 0.04 * (5 / board.getLevel());
 		this.weight = 0.1;
 	}
@@ -17,8 +17,8 @@ public class BasicHealthPotion extends Potion{
 		super();
 		this.name = "Basic Health Potion";
 		this.description = "The basic health potion restores a modest amount of health. "
-				+ "Good for bruises, cuts, and scrapes. "
-				+ "Not recommended for broken bones, dismemberment, or mortal wounds";
+				+ "\n" + "Good for bruises, cuts, and scrapes. "
+				+ "\n" + "Not for broken bones, dismemberment, or mortal wounds";
 		this.spawnChance = 0.04 * (5 / board.getLevel());
 		this.weight = 0.1;
 	}

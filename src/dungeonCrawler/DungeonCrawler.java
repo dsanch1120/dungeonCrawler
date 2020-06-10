@@ -422,7 +422,7 @@ public class DungeonCrawler extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				//Ensures that the board object is current
 				board = Board.getBoard();
-				//ADD FUNCTIONALITY LATER
+				
 				PlayerView playerView = new PlayerView();
 			}	
 		}
@@ -497,8 +497,8 @@ public class DungeonCrawler extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				//Ensures that the board object is current
 				board = Board.getBoard();
-				//ADD FUNCTIONALITY LATER
-				//Displays player's inventory
+				
+				InventoryView inventoryView = new InventoryView();
 			}	
 		}
 	}
