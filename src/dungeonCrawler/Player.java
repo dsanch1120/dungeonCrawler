@@ -82,7 +82,21 @@ public class Player {
 	public void levelUp() {
 
 	}
-
+	
+	
+	//Handles adding an item
+	public void addItem(Item item) {
+		this.inventory.add(item);
+		if (item.getType() == ItemType.POTION) {
+			this.potions.add((Potion) item);
+		} else if (item.getType() == ItemType.ARMOR) {
+			this.armor.add((Armor) item);
+		} else if (item.getType() == ItemType.WEAPON){
+			this.weapons.add((Weapon) item);
+		} else {
+			System.out.println("ERROR");
+		}
+	}
 	//Handles the player's attacks
 	public Integer attack() {
 		//This needs to be further "flushed out"

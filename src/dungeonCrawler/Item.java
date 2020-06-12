@@ -23,6 +23,9 @@ public abstract class Item {
 	public abstract boolean spawn();
 	
 	//Getters and Setters
+	public ItemType getType() {
+		return this.type;
+	}
 	public String getName() {
 		return this.name;
 	}

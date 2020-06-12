@@ -8,6 +8,7 @@ public abstract class Potion extends Item{
 	
 	public Potion(String name) {
 		this.name = name;
+		this.type = ItemType.POTION;
 	}
 	
 	public Potion() {

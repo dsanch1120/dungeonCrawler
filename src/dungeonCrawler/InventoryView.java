@@ -40,9 +40,11 @@ public class InventoryView extends JFrame{
 			//Adds text to panels
 			item.setText(i.getName());
 			description.setText(i.getDescription());
+			name.add(item);
+			desc.add(description);
 			//Adds components to panel
-			row.add(item);
-			row.add(description);
+			row.add(name);
+			row.add(desc);
 			panel.add(row);
 		}
 		add(panel, BorderLayout.CENTER);

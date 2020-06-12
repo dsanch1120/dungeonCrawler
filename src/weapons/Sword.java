@@ -3,6 +3,7 @@
  * June 8, 2020
  */
 package weapons;
+import dungeonCrawler.ItemType;
 import dungeonCrawler.Weapon;
 
 public class Sword extends Weapon{
@@ -13,7 +14,8 @@ public class Sword extends Weapon{
 		this.description = "The basic sword is best suited for a confident warrior."
 				+ "\n" + "It has inherent advantages over other weapons, "
 				+ "\n" + "yet not of their drawbacks.";
-		this.spawnChance = 0.02 * (10 / board.getLevel());
+		this.spawnChance = 0.99;	//FIXME
+		//this.spawnChance = 0.02 * (10 / board.getLevel());
 		this.weight = 2;
 	}
 
@@ -26,6 +28,7 @@ public class Sword extends Weapon{
 		this.spawnChance = 0.02 * (10 / board.getLevel());
 		this.damage = 2;
 		this.weight = 2;
+		this.type = ItemType.WEAPON;
 	}
 	
 	//Because the basic sword doesn't impact the user's attributes, equip and unquip do nothing.
@@ -45,6 +48,6 @@ public class Sword extends Weapon{
 	@Override
 	public boolean spawn() {
 		int spawnCheck = rando.nextInt(100000) + 1;
-		return ((this.spawnChance * 100000) >= spawnCheck);
+		return ((this.spawnChance * 100000) <= spawnCheck);
 	}
 }

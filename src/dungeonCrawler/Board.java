@@ -21,18 +21,23 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import armor.BasicGarment;
+import potions.BasicHealthPotion;
+import weapons.Sword;
+
 public class Board extends JPanel{
 	//Variables to be used throughout the class
 	private BoardCell[][] board;
 	private int level;
 	private static Board theInstance = new Board();
-	ArrayList<Room> rooms;
-	ArrayList<Corridor> corridors;
-	ArrayList<Enemy> possibleEnemies;
-	ArrayList<Enemy> enemies;
-	ArrayList<BoardCell[][]> levels = new ArrayList<BoardCell[][]>();
-	ArrayList<Integer> playerAttributes = new ArrayList<Integer>();
-	Map<Integer, ArrayList<Room>> levelRooms = new HashMap<Integer, ArrayList<Room>>();
+	private ArrayList<Room> rooms;
+	private ArrayList<Corridor> corridors;
+	private ArrayList<Enemy> possibleEnemies;
+	private ArrayList<Item> possibleItems;
+	private ArrayList<Enemy> enemies;
+	private ArrayList<BoardCell[][]> levels = new ArrayList<BoardCell[][]>();
+	private ArrayList<Integer> playerAttributes = new ArrayList<Integer>();
+	private Map<Integer, ArrayList<Room>> levelRooms = new HashMap<Integer, ArrayList<Room>>();
 	private String playerName;
 	private final int MAX_HEIGHT = 60;
 	private final int MAX_WIDTH = 100;
@@ -52,6 +57,7 @@ public class Board extends JPanel{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		generatePossibleItems();
 	}
 	//Plays the Game
 	public void playGame() {
@@ -63,6 +69,11 @@ public class Board extends JPanel{
 		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].hasEnemy()) {
 			//FIXME Add functionality for battle later
 		}
+		
+		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].getType() == CellType.TREASURE) {
+			theInstance.board[player.getxCoordinate()][player.getyCoordinate()].behavior();
+		}
+		
 		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].getType() == CellType.STAIRS) {
 			switch (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].behavior()) {
 			case (0):
@@ -94,6 +105,13 @@ public class Board extends JPanel{
 		theInstance.possibleEnemies = new ArrayList<Enemy>();
 		theInstance.possibleEnemies.add(new Skeleton(i, j));
 		theInstance.possibleEnemies.add(new Spider(i, j));
+	}
+	//Adds all possible items to the ArrayList "possibleItems"
+	public void generatePossibleItems() {
+		theInstance.possibleItems = new ArrayList<Item>();
+		theInstance.possibleItems.add(new Sword());
+		theInstance.possibleItems.add(new BasicGarment());
+		theInstance.possibleItems.add(new BasicHealthPotion());
 	}
 	//Handles the creation of the board by calling various methods
 	public void generateBoard() {
@@ -146,7 +164,7 @@ public class Board extends JPanel{
 			theInstance.board[theInstance.rooms.get(3).getxStair()][theInstance.rooms.get(3).getyStair()] = new Treasure(theInstance.rooms.get(3).getxStair(), theInstance.rooms.get(3).getyStair(), theInstance.image);
 		}
 	}
-	//Places the randomly genereated enemies
+	//Places the randomly generated enemies
 	public void placeEnemies() {
 		enemies = new ArrayList<Enemy>();
 		for (int i = 0; i < theInstance.board.length; i++) {
@@ -307,6 +325,10 @@ public class Board extends JPanel{
 	}
 
 	//Getters and Setters
+	public ArrayList<Item> getPossibleItems() {
+		return theInstance.possibleItems;
+	}
+	
 	public BoardCell[][] getBoardArray() {
 		return theInstance.board;
 	}

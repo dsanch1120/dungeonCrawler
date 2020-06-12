@@ -1,6 +1,7 @@
 package armor;
 
 import dungeonCrawler.Armor;
+import dungeonCrawler.ItemType;
 
 public class BasicGarment extends Armor{
 
@@ -10,6 +11,7 @@ public class BasicGarment extends Armor{
 				+ "\n" + "the basic garment does little more than protect"
 				+ "\n" + "one from the embarrasment of fighting naked";
 		this.weight = 2;
+		this.type = ItemType.ARMOR;
 	}
 
 	public BasicGarment() {
@@ -20,6 +22,7 @@ public class BasicGarment extends Armor{
 				+ "\n" + "the basic garment does little more than protect"
 				+ "\n" + "one from the embarrasment of fighting naked";		
 		this.weight = 2;
+		this.type = ItemType.ARMOR;
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package potions;
 
+import dungeonCrawler.ItemType;
 import dungeonCrawler.Potion;
 
 public class BasicHealthPotion extends Potion{
@@ -9,8 +10,10 @@ public class BasicHealthPotion extends Potion{
 		this.description = "The basic health potion restores a modest amount of health. "
 				+ "\n" + "Good for bruises, cuts, and scrapes. "
 				+ "\n" + "Not for broken bones, dismemberment, or mortal wounds";
-		this.spawnChance = 0.04 * (5 / board.getLevel());
+		this.spawnChance = 0.99;	//FIXME
+		//this.spawnChance = 0.04 * (5 / board.getLevel());
 		this.weight = 0.1;
+		this.type = ItemType.POTION;
 	}
 
 	public BasicHealthPotion() {
@@ -21,6 +24,7 @@ public class BasicHealthPotion extends Potion{
 				+ "\n" + "Not for broken bones, dismemberment, or mortal wounds";
 		this.spawnChance = 0.04 * (5 / board.getLevel());
 		this.weight = 0.1;
+		this.type = ItemType.POTION;
 	}
 	
 	@Override
@@ -38,7 +42,7 @@ public class BasicHealthPotion extends Potion{
 	@Override
 	public boolean spawn() {
 		int spawnCheck = rando.nextInt(100000) + 1;
-		return ((this.spawnChance * 100000) >= spawnCheck);
+		return ((this.spawnChance * 100000) <= spawnCheck);
 	}
 
 }

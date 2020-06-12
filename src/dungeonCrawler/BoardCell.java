@@ -27,6 +27,7 @@ public abstract class BoardCell {
 	protected BufferedImage oImage;
 	protected boolean editable = true;
 	protected boolean visible;
+	protected Board board;
 	
 	public BoardCell(BufferedImage oImage) {
 		this.oImage = oImage;

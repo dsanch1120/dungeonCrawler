@@ -11,6 +11,7 @@ public abstract class Armor extends Item {
 	public Armor(String name, int defense) {
 		this.name = name;
 		this.defense = defense;
+		this.type = ItemType.ARMOR;
 	}
 	public Armor() {
 		
