@@ -48,7 +48,9 @@ public class Player {
 	private int level;
 	private final char ICON = 'X';
 	private BufferedImage image;
-
+	private Weapon equippedWeapon;
+	private Armor equippedArmor;
+	
 	//Constructor
 	public Player() {
 		//Allocates memory for item related arraylists
@@ -83,6 +85,24 @@ public class Player {
 
 	}
 	
+	//Equips the items
+	public void equipItem(Item item) {
+		if (item.getType() == ItemType.WEAPON) {
+			this.equippedWeapon = (Weapon) item;
+		}
+		if (item.getType() == ItemType.ARMOR) {
+			this.equippedArmor = (Armor) item;
+		}
+	}
+	//Unequips the items
+	public void unequipItem(Item item) {
+		if (item.getType() == ItemType.WEAPON) {
+			this.equippedWeapon = null;
+		}
+		if (item.getType() == ItemType.ARMOR) {
+			this.equippedArmor = null;
+		}
+	}
 	
 	//Handles adding an item
 	public void addItem(Item item) {
