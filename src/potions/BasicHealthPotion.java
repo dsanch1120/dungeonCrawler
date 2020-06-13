@@ -14,17 +14,33 @@ public class BasicHealthPotion extends Potion{
 		//this.spawnChance = 0.04 * (5 / board.getLevel());
 		this.weight = 0.1;
 		this.type = ItemType.POTION;
+		this.intelligenceCheck = 2;
+		checkIntelligence();
 	}
 
 	public BasicHealthPotion() {
 		super();
 		this.name = "Basic Health Potion";
-		this.description = "The basic health potion restores a modest amount of health. "
+		this.description = "The basic health potion restores 3 points of health. "
 				+ "\n" + "Good for bruises, cuts, and scrapes. "
 				+ "\n" + "Not for broken bones, dismemberment, or mortal wounds";
 		this.spawnChance = 0.04 * (5 / board.getLevel());
 		this.weight = 0.1;
 		this.type = ItemType.POTION;
+		this.intelligenceCheck = 2;
+		checkIntelligence();
+	}
+	
+	//Implemented Methods
+	@Override
+	public void checkIntelligence() {
+		if (board.getPlayer().getINTELLIGENCE() < 2) {
+			this.name = "Unknown Potion";
+		}
+		if (board.getPlayer().getINTELLIGENCE() < intelligenceCheck) {
+			this.description = "Your limited intelligence prevents you from"
+					+ "\n" + "understanding what this potion does";
+		}
 	}
 	
 	@Override

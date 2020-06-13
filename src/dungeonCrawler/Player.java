@@ -50,7 +50,7 @@ public class Player {
 	private BufferedImage image;
 	private Weapon equippedWeapon;
 	private Armor equippedArmor;
-	
+
 	//Constructor
 	public Player() {
 		//Allocates memory for item related arraylists
@@ -69,16 +69,6 @@ public class Player {
 			e.printStackTrace();
 		}
 		image = image.getSubimage(69, 89, 60, 70);
-		//Adds items to player's inventory
-		armor.add(new BasicGarment());
-		inventory.add(armor.get(0));
-		weapons.add(new Sword());
-		inventory.add(weapons.get(0));
-		potions.add(new BasicHealthPotion());
-		inventory.add(potions.get(0));
-		
-		equippedWeapon = weapons.get(0);
-		equippedArmor = armor.get(0);
 	}
 
 	//Methods
@@ -87,7 +77,18 @@ public class Player {
 	public void levelUp() {
 
 	}
-	
+	//Adds the starting items
+	public void addStartingItems() {
+		armor.add(new BasicGarment());
+		inventory.add(armor.get(0));
+		weapons.add(new Sword());
+		inventory.add(weapons.get(0));
+		potions.add(new BasicHealthPotion());
+		inventory.add(potions.get(0));
+
+		equippedWeapon = weapons.get(0);
+		equippedArmor = armor.get(0);
+	}
 	//Equips the items
 	public void equipItem(Item item) {
 		if (item.getType() == ItemType.WEAPON) {
@@ -106,7 +107,7 @@ public class Player {
 			this.equippedArmor = null;
 		}
 	}
-	
+
 	//Handles adding an item
 	public void addItem(Item item) {
 		this.inventory.add(item);
@@ -135,15 +136,15 @@ public class Player {
 		Random rando = new Random();
 		return rando.nextInt(this.AGILITY) + 1;
 	}
-	
+
 	private BufferedImage resizeImage(BufferedImage originalImage, int width, int height, int type) {  
-        BufferedImage resizedImage = new BufferedImage(width, height, type);  
-        Graphics2D g = resizedImage.createGraphics();  
-        g.drawImage(originalImage, 0, 0, width, height, null);  
-        g.dispose();  
-        return resizedImage;  
-    }  
-	
+		BufferedImage resizedImage = new BufferedImage(width, height, type);  
+		Graphics2D g = resizedImage.createGraphics();  
+		g.drawImage(originalImage, 0, 0, width, height, null);  
+		g.dispose();  
+		return resizedImage;  
+	}  
+
 	//Draws the player on the board
 	public void draw(Graphics cell) {
 		image = resizeImage(image, 16, 16, 2);
@@ -161,11 +162,11 @@ public class Player {
 	}
 
 	//Getters and Setters
-	
+
 	public Item getEquippedWeapon() {
 		return this.equippedWeapon;
 	}
-	
+
 	public void setEquippedWeapon(Weapon equippedWeapon) {
 		this.equippedWeapon = equippedWeapon;
 	}
@@ -177,11 +178,11 @@ public class Player {
 	public Item getEquippedArmor() {
 		return this.equippedArmor;
 	}
-	
+
 	public int getVisibility() {
 		return PERCEPTION * 5;
 	}
-	
+
 	public ArrayList<Item> getInventory() {
 		return inventory;
 	}
@@ -201,12 +202,12 @@ public class Player {
 	public char getIcon() {
 		return ICON;
 	}
-	
+
 	public void setLocation(int xCoordinate, int yCoordinate) {
 		this.xCoordinate = xCoordinate;
 		this.yCoordinate = yCoordinate;
 	}
-	
+
 	public void setAttributes(int STRENGTH, int ENDURANCE, int DEFENSE, int AGILITY, int PERCEPTION, int INTELLIGENCE, int CHARISMA) {
 		this.STRENGTH = STRENGTH;
 		this.ENDURANCE = ENDURANCE;
@@ -217,9 +218,9 @@ public class Player {
 		this.CHARISMA = CHARISMA;
 		this.maxHP = ENDURANCE * 3;
 		this.HP = this.maxHP;
-		
+
 	}
-	
+
 	public int getXP() {
 		return this.XP;
 	}
@@ -252,8 +253,8 @@ public class Player {
 	public int getyCoordinate() {
 		return yCoordinate;
 	}
-	
-	
+
+
 	public int getCHARISMA() {
 		return CHARISMA;
 	}
@@ -281,7 +282,7 @@ public class Player {
 	public int getINTELLIGENCE() {
 		return INTELLIGENCE;
 	}
-	
+
 	public void updateENDURANCE(int eNDURANCE) {
 		ENDURANCE += eNDURANCE;
 	}
@@ -317,7 +318,7 @@ public class Player {
 			this.HP = this.maxHP;
 		}
 	}
-	
+
 	public void moveX(int xCoordinate) {
 		if (this.canMove(xCoordinate, 'x')) {
 			this.xCoordinate += xCoordinate;

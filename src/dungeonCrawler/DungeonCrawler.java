@@ -340,6 +340,7 @@ public class DungeonCrawler extends JFrame{
 				if (availablePoints == 0) {
 					board.getPlayer().setAttributes(strengthSlider.getSlider().getValue(), enduranceSlider.getSlider().getValue(), defenseSlider.getSlider().getValue(), agilitySlider.getSlider().getValue(), perceptionSlider.getSlider().getValue(), intelligenceSlider.getSlider().getValue(), charismaSlider.getSlider().getValue());
 					board.getPlayer().setName(userName.getText());
+					board.getPlayer().addStartingItems();
 					dungeonCrawler();
 				}
 				else {

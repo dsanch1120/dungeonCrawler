@@ -6,6 +6,8 @@ package dungeonCrawler;
 
 public abstract class Potion extends Item{
 	
+	protected int intelligenceCheck;
+	
 	public Potion(String name) {
 		this.name = name;
 		this.type = ItemType.POTION;
@@ -16,6 +18,7 @@ public abstract class Potion extends Item{
 	
 	public abstract void effect();
 	public abstract void endEffect();
+	public abstract void checkIntelligence();
 	
 	@Override
 	public int behavior() {
