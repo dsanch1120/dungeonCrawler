@@ -25,10 +25,11 @@ import javax.swing.JTextField;
 public class Treasure extends BoardCell {
 	BufferedImage image;
 	
-	private static ArrayList<Item> contents = new ArrayList<Item>();
+	private ArrayList<Item> contents;
 
 	public Treasure(int X, int Y, BufferedImage oImage) {
 		super(oImage);
+		contents = new ArrayList<Item>();
 		this.X = X;
 		this.Y = Y;
 		this.type = CellType.TREASURE;
@@ -52,7 +53,7 @@ public class Treasure extends BoardCell {
 		}
 	}
 	
-	public static ArrayList<Item> getContents() {
+	public ArrayList<Item> getContents() {
 		return contents;
 	}
 	

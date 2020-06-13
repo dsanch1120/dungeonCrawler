@@ -57,7 +57,6 @@ public class Board extends JPanel{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		generatePossibleItems();
 	}
 	//Plays the Game
 	public void playGame() {
@@ -123,7 +122,8 @@ public class Board extends JPanel{
 		theInstance.level++;
 
 		NUM_ROOMS = rando.nextInt(6) + 4;
-
+		generatePossibleItems();
+		
 		//Generate the rooms
 		generateRooms();
 		theInstance.levelRooms.put(theInstance.level, theInstance.rooms);
