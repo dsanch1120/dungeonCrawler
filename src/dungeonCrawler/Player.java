@@ -76,6 +76,9 @@ public class Player {
 		inventory.add(weapons.get(0));
 		potions.add(new BasicHealthPotion());
 		inventory.add(potions.get(0));
+		
+		equippedWeapon = weapons.get(0);
+		equippedArmor = armor.get(0);
 	}
 
 	//Methods
@@ -158,6 +161,23 @@ public class Player {
 	}
 
 	//Getters and Setters
+	
+	public Item getEquippedWeapon() {
+		return this.equippedWeapon;
+	}
+	
+	public void setEquippedWeapon(Weapon equippedWeapon) {
+		this.equippedWeapon = equippedWeapon;
+	}
+
+	public void setEquippedArmor(Armor equippedArmor) {
+		this.equippedArmor = equippedArmor;
+	}
+
+	public Item getEquippedArmor() {
+		return this.equippedArmor;
+	}
+	
 	public int getVisibility() {
 		return PERCEPTION * 5;
 	}

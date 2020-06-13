@@ -472,8 +472,8 @@ public class DungeonCrawler extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				//Ensures that the board object is current
 				board = Board.getBoard();
-				//ADD FUNCTIONALITY LATER
 				//Changes Player's Weapon
+				WeaponView weaponView = new WeaponView();
 			}	
 		}
 	}

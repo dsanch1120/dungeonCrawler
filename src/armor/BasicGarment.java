@@ -16,7 +16,7 @@ public class BasicGarment extends Armor{
 
 	public BasicGarment() {
 		super();
-		this.name = "Basic Garment";
+		this.name = "Level " + board.getLevel() + " Basic Garment";
 		this.defense = 0;
 		this.description = "Though it allows for slightly easier movement," 
 				+ "\n" + "the basic garment does little more than protect"

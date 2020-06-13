@@ -21,7 +21,7 @@ public class Sword extends Weapon{
 
 	public Sword() {
 		super();
-		this.name = "Basic Sword";
+		this.name = "Level " + board.getLevel() + " Basic Sword";
 		this.description = "The basic sword is best suited for a confident warrior."
 				+ "\n" + "It has inherent advantages over other weapons, "
 				+ "\n" + "yet not of their drawbacks.";

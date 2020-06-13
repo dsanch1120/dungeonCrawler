@@ -92,7 +92,7 @@ public class Treasure extends BoardCell {
 		}
 		
 		public void DisplayTreasure() {
-			setSize(500, 850);
+			setSize(850, 600);
 			JTextField title = new JTextField(15);
 			title.setEditable(false);
 			title.setText("Treasure Chest");
