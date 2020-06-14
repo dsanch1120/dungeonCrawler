@@ -7,6 +7,7 @@ package dungeonCrawler;
 public abstract class Potion extends Item{
 	
 	protected int intelligenceCheck;
+	protected Health health = Health.getInstance();
 	
 	public Potion(String name) {
 		this.name = name;

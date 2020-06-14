@@ -68,26 +68,32 @@ public class Board extends JPanel{
 		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].hasEnemy()) {
 			//FIXME Add functionality for battle later
 		}
-		
+		//Checks if the player is on a treasure chest
 		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].getType() == CellType.TREASURE) {
 			theInstance.board[player.getxCoordinate()][player.getyCoordinate()].behavior();
 		}
-		
+		//Handles a player standing on stairs
 		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].getType() == CellType.STAIRS) {
 			switch (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].behavior()) {
+			//Case 0 is the "up" stairs.
 			case (0):
 				try {
+					//Checks if the "next level" exists. If it does, it loads it.
 					theInstance.level++;
 					theInstance.board = theInstance.levels.get(theInstance.level);
 					theInstance.player.setLocation(theInstance.levelRooms.get(theInstance.level).get(1).getxStair(), (theInstance.levelRooms.get(theInstance.level).get(1).getyStair()));
+				//If the next level does not exist, a new level is generated.
 				} catch(NullPointerException e) {
 					theInstance.level--;
+					player.updateXP(5);
 					generateBoard();
 				} catch(IndexOutOfBoundsException e) {
 					theInstance.level--;
+					player.updateXP(5);
 					generateBoard();
 				}
 			break;
+			//Case 1 is the "down" stairs
 			case (1):
 				theInstance.level--;
 			theInstance.board = levels.get(theInstance.level);

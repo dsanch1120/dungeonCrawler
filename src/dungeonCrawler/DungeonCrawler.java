@@ -32,6 +32,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class DungeonCrawler extends JFrame{
+	private static DungeonCrawler instance = new DungeonCrawler();
 	private Board board;
 	private Player player = Board.getPlayer();
 	private StartButton startButton = new StartButton();
@@ -83,9 +84,12 @@ public class DungeonCrawler extends JFrame{
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new GridLayout(1,3));
 
-		JTextField playerHealth = new JTextField();
-		playerHealth.setEditable(false);
-		playerHealth.setText("Heath: " + board.getPlayer().getHP());
+//		JTextField playerHealth = new JTextField();
+//		playerHealth.setEditable(false);
+//		playerHealth.setText("Heath: " + board.getPlayer().getHP());
+//		System.out.println(board.getPlayer().getHP());
+		Health playerHealth = Health.getInstance();
+		playerHealth.updateHealth();
 
 		JTextField playerName = new JTextField();
 		playerName.setEditable(false);
@@ -94,6 +98,7 @@ public class DungeonCrawler extends JFrame{
 		JTextField playerXP = new JTextField();
 		playerXP.setEditable(false);
 		playerXP.setText("XP: " + board.getPlayer().getXP());
+		System.out.println(board.getPlayer().getXP());
 
 		northPanel.add(playerHealth);
 		northPanel.add(playerName);
@@ -562,5 +567,7 @@ public class DungeonCrawler extends JFrame{
 	}
 
 	//Getters and Setters
-
+	public static DungeonCrawler getInstance() {
+		return instance;
+	}
 }

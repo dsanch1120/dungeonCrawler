@@ -34,10 +34,8 @@ public class BasicHealthPotion extends Potion{
 	//Implemented Methods
 	@Override
 	public void checkIntelligence() {
-		if (board.getPlayer().getINTELLIGENCE() < 2) {
-			this.name = "Unknown Potion";
-		}
 		if (board.getPlayer().getINTELLIGENCE() < intelligenceCheck) {
+			this.name = "Unknown Potion";
 			this.description = "Your limited intelligence prevents you from"
 					+ "\n" + "understanding what this potion does";
 		}
@@ -45,7 +43,8 @@ public class BasicHealthPotion extends Potion{
 	
 	@Override
 	public void effect() {
-		board.getPlayer().updateHealth(3);
+		board.getPlayer().updateHealth(-1);
+		health.updateHealth();
 	}
 
 	//Healing potions have an "instant" effect, thus the endEffect method is left unimplemented

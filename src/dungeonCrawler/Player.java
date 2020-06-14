@@ -62,6 +62,8 @@ public class Player {
 		this.board = Board.getBoard();
 		//Initializes purse with 0 gold
 		this.purse = new Purse(0);
+		//Initializes XP with 0
+		this.XP = 0;
 		//Loads player image
 		try {
 			image = ImageIO.read(new File("data/player.png"));
@@ -163,6 +165,10 @@ public class Player {
 
 	//Getters and Setters
 
+	public void updateXP(int XP) {
+		this.XP += XP;
+	}
+	
 	public Item getEquippedWeapon() {
 		return this.equippedWeapon;
 	}
