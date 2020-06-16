@@ -95,10 +95,12 @@ public class DungeonCrawler extends JFrame{
 		playerName.setEditable(false);
 		playerName.setText(board.getPlayer().getName());
 
-		JTextField playerXP = new JTextField();
-		playerXP.setEditable(false);
-		playerXP.setText("XP: " + board.getPlayer().getXP());
-		System.out.println(board.getPlayer().getXP());
+//		JTextField playerXP = new JTextField();
+//		playerXP.setEditable(false);
+//		playerXP.setText("XP: " + board.getPlayer().getXP());
+		XP playerXP = XP.getInstance();
+		playerXP.updateXP();
+		
 
 		northPanel.add(playerHealth);
 		northPanel.add(playerName);

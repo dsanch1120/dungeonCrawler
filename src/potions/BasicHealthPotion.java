@@ -43,7 +43,7 @@ public class BasicHealthPotion extends Potion{
 	
 	@Override
 	public void effect() {
-		board.getPlayer().updateHealth(-1);
+		board.getPlayer().updateHealth(3);
 		health.updateHealth();
 	}
 

@@ -30,6 +30,7 @@ public class Board extends JPanel{
 	private BoardCell[][] board;
 	private int level;
 	private static Board theInstance = new Board();
+	private XP xp = XP.getInstance();
 	private ArrayList<Room> rooms;
 	private ArrayList<Corridor> corridors;
 	private ArrayList<Enemy> possibleEnemies;
@@ -47,6 +48,7 @@ public class Board extends JPanel{
 	private static Player player;
 	private boolean newGame;
 	private BufferedImage image;
+	
 
 	//Methods
 	//Initializes variables to be used throughout the program
@@ -86,10 +88,12 @@ public class Board extends JPanel{
 				} catch(NullPointerException e) {
 					theInstance.level--;
 					player.updateXP(5);
+					xp.updateXP();
 					generateBoard();
 				} catch(IndexOutOfBoundsException e) {
 					theInstance.level--;
 					player.updateXP(5);
+					xp.updateXP();
 					generateBoard();
 				}
 			break;
