@@ -89,6 +89,7 @@ public class PotionView extends JFrame {
 				public void actionPerformed(ActionEvent arg0) {
 					board.getPlayer().getPotions().get(index).effect();
 					board.getPlayer().getPotions().remove(index);
+					board.getPlayer().updateInventory();
 					displayPotions();
 				}
 				

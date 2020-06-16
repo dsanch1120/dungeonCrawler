@@ -14,9 +14,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import armor.BasicGarment;
 import potions.BasicHealthPotion;
@@ -34,6 +38,7 @@ public class Player {
 	private int INTELLIGENCE;
 	private int CHARISMA;
 	private int XP;
+	private int xpThreshold;
 	private int maxHP;
 	private int HP;
 	private int xCoordinate;
@@ -41,7 +46,7 @@ public class Player {
 	private final int WIDTH = 15;
 	private final int HEIGHT = 15;
 	private Purse purse;
-	private ArrayList<Item> inventory;
+	private Set<Item> inventory;
 	private ArrayList<Weapon> weapons;
 	private ArrayList<Armor> armor;
 	private ArrayList<Potion> potions;
@@ -54,7 +59,7 @@ public class Player {
 	//Constructor
 	public Player() {
 		//Allocates memory for item related arraylists
-		this.inventory = new ArrayList<Item>();
+		this.inventory = new HashSet<Item>();
 		this.weapons = new ArrayList<Weapon>();
 		this.armor = new ArrayList<Armor>();
 		this.potions = new ArrayList<Potion>();
@@ -64,6 +69,7 @@ public class Player {
 		this.purse = new Purse(0);
 		//Initializes XP with 0
 		this.XP = 0;
+		this.xpThreshold = 25;
 		//Loads player image
 		try {
 			image = ImageIO.read(new File("data/player.png"));
@@ -77,7 +83,8 @@ public class Player {
 
 	//Checks the player can level up and increases their level
 	public void levelUp() {
-
+		this.xpThreshold += xpThreshold * (board.getLevel() - 1);
+		
 	}
 	//Adds the starting items
 	public void addStartingItems() {
@@ -109,7 +116,19 @@ public class Player {
 			this.equippedArmor = null;
 		}
 	}
-
+	//Updates the inventory
+	public void updateInventory() {
+		this.inventory = new HashSet<Item>();
+		for (int i = 0; i < this.armor.size(); i++) {
+			this.inventory.add(armor.get(i));
+		}
+		for (int i = 0; i < this.weapons.size(); i++) {
+			this.inventory.add(weapons.get(i));
+		}
+		for (int i = 0; i < this.potions.size(); i++) {
+			this.inventory.add(potions.get(i));
+		}
+	}
 	//Handles adding an item
 	public void addItem(Item item) {
 		this.inventory.add(item);
@@ -163,10 +182,19 @@ public class Player {
 		}
 	}
 
+	//Level up class
+	private class levelUpPanel extends JFrame {
+		public levelUpPanel() {
+			
+		}
+	}
+	
 	//Getters and Setters
-
 	public void updateXP(int XP) {
 		this.XP += XP;
+		if (this.XP >= this.xpThreshold) {
+			levelUp();
+		}
 	}
 	
 	public Item getEquippedWeapon() {
@@ -189,7 +217,7 @@ public class Player {
 		return PERCEPTION * 5;
 	}
 
-	public ArrayList<Item> getInventory() {
+	public Set<Item> getInventory() {
 		return inventory;
 	}
 
