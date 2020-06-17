@@ -84,10 +84,6 @@ public class DungeonCrawler extends JFrame{
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new GridLayout(1,3));
 
-//		JTextField playerHealth = new JTextField();
-//		playerHealth.setEditable(false);
-//		playerHealth.setText("Heath: " + board.getPlayer().getHP());
-//		System.out.println(board.getPlayer().getHP());
 		Health playerHealth = Health.getInstance();
 		playerHealth.updateHealth();
 
@@ -95,9 +91,6 @@ public class DungeonCrawler extends JFrame{
 		playerName.setEditable(false);
 		playerName.setText(board.getPlayer().getName());
 
-//		JTextField playerXP = new JTextField();
-//		playerXP.setEditable(false);
-//		playerXP.setText("XP: " + board.getPlayer().getXP());
 		XP playerXP = XP.getInstance();
 		playerXP.updateXP();
 		

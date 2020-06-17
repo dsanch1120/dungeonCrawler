@@ -2,13 +2,22 @@ package dungeonCrawler;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
 
-public class Battle extends JFrame{
+public class Battle extends JFrame {
+	private WeaponButton weaponButton = new WeaponButton();
+	private PotionButton potionButton = new PotionButton();
+	private ArmorButton armorButton = new ArmorButton();
+	private PlayerButton playerButton = new PlayerButton();
+	private AttackButton attackButton = new AttackButton();
+	private AbilityButton abilityButton = new AbilityButton();
 	
 	public Battle(Enemy enemy) {
 		//Ensures user is unable to close window
@@ -34,12 +43,162 @@ public class Battle extends JFrame{
 		enemyHealth.updateHealth();
 		add(northPanel, BorderLayout.NORTH);
 		
+		
+		
+		//Creates menu in the south of the JFrame
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new GridLayout(2,3));
+		southPanel.add(attackButton.getButton());
+		southPanel.add(playerButton.getButton());
+		southPanel.add(abilityButton.getButton());
+		southPanel.add(weaponButton.getButton());
+		southPanel.add(potionButton.getButton());
+		southPanel.add(armorButton.getButton());
+
+		add(southPanel, BorderLayout.SOUTH);
+		
 		setVisible(true);
 	}
 	
 	private void destroyWindow() {
 		setVisible(false);
 		dispose();
+	}
+
+	private class AbilityButton extends JPanel {
+		private JButton button;
+		ButtonListener listener = new ButtonListener();
+
+		public AbilityButton() {
+			this.button = new JButton("Use Ability");
+			this.button.addActionListener(listener);
+		}
+
+		//Getter method
+		public JButton getButton() {
+			return button;
+		}
+
+		private class ButtonListener implements ActionListener{
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+				
+			}	
+		}
+	}
+	
+	private class PlayerButton extends JPanel {
+		private JButton button;
+		ButtonListener listener = new ButtonListener();
+
+		public PlayerButton() {
+			this.button = new JButton("Player");
+			this.button.addActionListener(listener);
+		}
+
+		//Getter method
+		public JButton getButton() {
+			return button;
+		}
+
+		private class ButtonListener implements ActionListener{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PlayerView playerView = new PlayerView();
+			}	
+		}
+	}
+	
+	private class AttackButton extends JPanel {
+		private JButton button;
+		ButtonListener listener = new ButtonListener();
+		
+		public AttackButton() {
+			this.button = new JButton("Attack");
+			this.button.addActionListener(listener);
+		}
+		
+		//Getter method
+		public JButton getButton() {
+			return button;
+		}
+		
+		private class ButtonListener implements ActionListener {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Lets user Attack the enemy
+				//FIXME Edit Later
+			}
+		}
+	}
+	
+	private class PotionButton extends JPanel {
+		private JButton button;
+		ButtonListener listener = new ButtonListener();
+
+		public PotionButton() {
+			this.button = new JButton("Potions");
+			this.button.addActionListener(listener);
+		}
+
+		//Getter method
+		public JButton getButton() {
+			return button;
+		}
+
+		private class ButtonListener implements ActionListener{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Lets user drink a potion
+				PotionView potionView = new PotionView();
+			}	
+		}
+	}
+	
+	private class ArmorButton extends JPanel {
+		private JButton button;
+		ButtonListener listener = new ButtonListener();
+
+		public ArmorButton() {
+			this.button = new JButton("Change Armor");
+			this.button.addActionListener(listener);
+		}
+
+		//Getter method
+		public JButton getButton() {
+			return button;
+		}
+
+		private class ButtonListener implements ActionListener{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Changes player's armor
+				ArmorView armorView = new ArmorView();
+			}	
+		}
+	}
+	
+	private class WeaponButton extends JPanel {
+		private JButton button;
+		ButtonListener listener = new ButtonListener();
+
+		public WeaponButton() {
+			this.button = new JButton("Change Weapon");
+			this.button.addActionListener(listener);
+		}
+
+		//Getter method
+		public JButton getButton() {
+			return button;
+		}
+
+		private class ButtonListener implements ActionListener{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Changes Player's Weapon
+				WeaponView weaponView = new WeaponView();
+			}	
+		}
 	}
 	
 	private static class EnemyHealth extends JPanel {
