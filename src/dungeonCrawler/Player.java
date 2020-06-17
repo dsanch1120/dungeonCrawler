@@ -84,7 +84,7 @@ public class Player {
 	//Checks the player can level up and increases their level
 	public void levelUp() {
 		this.xpThreshold += xpThreshold * (board.getLevel() - 1);
-		
+		LevelUpView luView = new LevelUpView();
 	}
 	//Adds the starting items
 	public void addStartingItems() {
@@ -179,13 +179,6 @@ public class Player {
 			return false;
 		} else {
 			return true;
-		}
-	}
-
-	//Level up class
-	private class levelUpPanel extends JFrame {
-		public levelUpPanel() {
-			
 		}
 	}
 	
