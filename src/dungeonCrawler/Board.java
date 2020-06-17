@@ -68,7 +68,7 @@ public class Board extends JPanel{
 	public void checkLocation() {
 		//Check if player should battle an opponent
 		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].hasEnemy()) {
-			//FIXME Add functionality for battle later
+			Battle battle = new Battle(theInstance.board[player.getxCoordinate()][player.getyCoordinate()].enemy);
 		}
 		//Checks if the player is on a treasure chest
 		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].getType() == CellType.TREASURE) {

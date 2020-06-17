@@ -280,6 +280,14 @@ public class DungeonCrawler extends JFrame{
 		return panel;
 	}
 
+	public void hideFrame() {
+		setVisible(false);
+	}
+	
+	public void showFrame() {
+		setVisible(true);
+	}
+	
 	//Classes for the various Components
 	private class AttributeSlider extends JSlider {
 		private JSlider slider;
@@ -564,7 +572,7 @@ public class DungeonCrawler extends JFrame{
 	}
 
 	public static void main(String[] args) {
-		DungeonCrawler dc = new DungeonCrawler();
+		DungeonCrawler dc = DungeonCrawler.getInstance();
 		dc.initialMenu();
 	}
 

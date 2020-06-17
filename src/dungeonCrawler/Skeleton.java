@@ -19,6 +19,7 @@ public class Skeleton extends Enemy{
 	public Skeleton(int xCoordinate, int yCoordinate) {
 		super(xCoordinate, yCoordinate);
 		Random rando = new Random();
+		this.name = "Skeleton";
 		this.icon = 'S';
 		this.ENDURANCE = 1 * this.currentLevel;
 		this.STRENGTH = 1 * this.currentLevel;

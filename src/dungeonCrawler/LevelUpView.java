@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
 
 public class LevelUpView extends JFrame{
@@ -15,6 +16,8 @@ public class LevelUpView extends JFrame{
 
 	public LevelUpView() {
 		setSize(600,400);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 		//Adds title to north of JFrame
 		JTextField title = new JTextField(20);
 		title.setEditable(false);
