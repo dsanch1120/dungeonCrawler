@@ -26,7 +26,7 @@ public class Sword extends Weapon{
 				+ "\n" + "It has inherent advantages over other weapons, "
 				+ "\n" + "yet not of their drawbacks.";
 		this.spawnChance = 0.02 * (10 / board.getLevel());
-		this.damage = 2;
+		this.damage = 1;
 		this.weight = 2;
 		this.type = ItemType.WEAPON;
 	}

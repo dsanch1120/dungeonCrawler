@@ -72,4 +72,10 @@ public class Skeleton extends Enemy{
 		cell.drawImage(oImage, xCoordinate*15, yCoordinate*15, null);
 	}
 
+	@Override
+	public void takeDamage(int damage) {
+		this.HP -= damage;
+		
+	}
+
 }

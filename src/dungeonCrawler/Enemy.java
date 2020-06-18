@@ -56,6 +56,7 @@ public abstract class Enemy {
 	public abstract boolean spawn();
 	public abstract Integer attack();
 	public abstract Integer defend();
+	public abstract void takeDamage(int damage);
 	public abstract void draw(Graphics cell);
 	
 	//Getters and Setters

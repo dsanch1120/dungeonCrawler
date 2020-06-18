@@ -146,7 +146,12 @@ public class Player {
 	public Integer attack() {
 		//This needs to be further "flushed out"
 		Random rando = new Random();
-		return rando.nextInt(this.STRENGTH) + 1;
+		if (this.equippedWeapon == null) {
+			return rando.nextInt(this.STRENGTH) + 1;
+		} else {
+			return rando.nextInt(this.STRENGTH) + 1 + equippedWeapon.damage;
+		}
+
 	}
 	//Handles the player's defense
 	public Integer defend() {
@@ -181,7 +186,7 @@ public class Player {
 			return true;
 		}
 	}
-	
+
 	//Getters and Setters
 	public void updateXP(int XP) {
 		this.XP += XP;
@@ -189,7 +194,7 @@ public class Player {
 			levelUp();
 		}
 	}
-	
+
 	public Item getEquippedWeapon() {
 		return this.equippedWeapon;
 	}
