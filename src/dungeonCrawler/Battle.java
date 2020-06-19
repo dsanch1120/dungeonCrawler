@@ -4,11 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class Battle extends JFrame {
@@ -35,7 +37,7 @@ public class Battle extends JFrame {
 		//Creates Title in north of JFrame
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new GridLayout(1,3));
-		health = Health.getInstance();
+		health = new Health();
 		northPanel.add(health);
 		health.updateHealth();
 		JTextField title = new JTextField(25);
@@ -86,7 +88,7 @@ public class Battle extends JFrame {
 		private class ButtonListener implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {				
-
+				AbilityView abilityView = new AbilityView();
 			}	
 		}
 	}
@@ -139,14 +141,16 @@ public class Battle extends JFrame {
 					//Runs if the player misses, probably a pop-up window
 				}
 				enemyHealth.updateHealth();
-				health.updateHealth();
-				//FIXME needs to be further implemented
+				//health.updateHealth();
 				if (enemy.HP <= 0) {
 					Board.getPlayer().updateXP(enemy.XP);
 					XP.getInstance().updateXP();
 					Board.getBoard().getBoardArray()[Board.getPlayer().getxCoordinate()][Board.getPlayer().getyCoordinate()].enemy = null;
 					Board.getBoard().repaint();
 					destroyWindow();
+					DungeonCrawler.getInstance().setVisible(true);
+					DungeonCrawler.getInstance().updateHealth();
+					return;
 				}
 				if (enemy.agilityRoll() >= Board.getPlayer().agilityRoll()) {
 					Board.getPlayer().updateHealth((enemy.attack()) * -1);
@@ -242,6 +246,104 @@ public class Battle extends JFrame {
 			setVisible(false);
 			health.setText(enemy.name + " health: " + enemy.HP);
 			setVisible(true);
+		}
+	}
+	
+	private class AbilityView extends JFrame {
+		private ArrayList<JPanel> panels;
+		
+		public AbilityView() {
+			//Variables to be used throughout
+			JTextField ability = new JTextField(15);
+			JTextArea description = new JTextArea();
+			UseButton useButton;
+			JPanel temp;
+			panels = new ArrayList<JPanel>();
+			setSize(850, 600);
+			
+			if (Board.getPlayer().getAbilities().size() == 0) {
+				destroyWindow();
+				return;
+			} else {
+				for (Ability i : Board.getPlayer().getAbilities()) {
+					ability = new JTextField(15); ability.setEditable(false);
+					description = new JTextArea(); description.setEditable(false);
+					
+					ability.setText(i.getName());
+					description.setText(i.getDescription());
+					
+					useButton = new UseButton(i);
+					
+					temp = new JPanel();
+					temp.add(ability); temp.add(description); temp.add(useButton.getButton());
+					panels.add(temp);
+				}
+				
+				JPanel centerPanel = new JPanel();
+				for (int i = 0; i < panels.size(); i++) {
+					centerPanel.add(panels.get(i));
+				}
+				
+				add(centerPanel, BorderLayout.CENTER);
+				
+				setVisible(true);
+			}
+		}
+		
+		private void destroyFrame() {
+			setVisible(false);
+			dispose();
+		}
+		
+		private class UseButton extends JPanel {
+			private JButton button;
+			private Ability ability;
+			private ButtonListener listener = new ButtonListener();
+			
+			public UseButton(Ability ability) {
+				this.ability = ability;
+				this.button = new JButton("Use");
+				this.button.addActionListener(listener);
+			}
+			
+			//Getter method
+			public JButton getButton() {
+				return button;
+			}
+			
+			private class ButtonListener implements ActionListener {
+				
+				@Override 
+				public void actionPerformed(ActionEvent e) {
+					if (ability.behavior() != null) {
+						enemy.takeDamage(ability.behavior());
+						enemyHealth.updateHealth();
+					} else {
+						ability.behavior();
+					}
+					
+					if (enemy.HP <= 0) {
+						Board.getPlayer().updateXP(enemy.XP);
+						XP.getInstance().updateXP();
+						Board.getBoard().getBoardArray()[Board.getPlayer().getxCoordinate()][Board.getPlayer().getyCoordinate()].enemy = null;
+						Board.getBoard().repaint();
+						destroyFrame();
+						destroyWindow();
+						DungeonCrawler.getInstance().setVisible(true);
+						DungeonCrawler.getInstance().updateHealth();
+						return;
+					} else {
+						if (enemy.agilityRoll() >= Board.getPlayer().agilityRoll()) {
+							Board.getPlayer().updateHealth((enemy.attack()) * -1);
+						}
+						health.updateHealth();
+						if (Board.getPlayer().getHP() <= 0) {
+							destroyWindow();
+						}
+					}
+					destroyFrame();
+				}
+			}
 		}
 	}
 }

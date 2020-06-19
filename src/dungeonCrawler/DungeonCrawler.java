@@ -63,6 +63,7 @@ public class DungeonCrawler extends JFrame{
 	private AttributeSlider intelligenceSlider = new AttributeSlider("Intelligence", 5);
 	private AttributeSlider charismaSlider = new AttributeSlider("Charisma", 6);
 	private ArrayList<JTextField> attributePointTitles = new ArrayList<JTextField>();
+	private Health playerHealth;
 
 	//GUI for the main game
 	public void dungeonCrawler() {
@@ -84,7 +85,7 @@ public class DungeonCrawler extends JFrame{
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new GridLayout(1,3));
 
-		Health playerHealth = Health.getInstance();
+		playerHealth = Health.getInstance();
 		playerHealth.updateHealth();
 
 		JTextField playerName = new JTextField();
@@ -280,7 +281,10 @@ public class DungeonCrawler extends JFrame{
 	public void showFrame() {
 		setVisible(true);
 	}
-	
+	//Allows the board's health to be "reset" by non-DungeonCrawler classes
+	public void updateHealth() {
+		playerHealth.updateHealth();
+	}
 	//Classes for the various Components
 	private class AttributeSlider extends JSlider {
 		private JSlider slider;

@@ -22,6 +22,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import abilities.BasicFireball;
 import armor.BasicGarment;
 import potions.BasicHealthPotion;
 import weapons.Sword;
@@ -50,6 +51,7 @@ public class Player {
 	private ArrayList<Weapon> weapons;
 	private ArrayList<Armor> armor;
 	private ArrayList<Potion> potions;
+	private ArrayList<Ability> abilities;
 	private int level;
 	private final char ICON = 'X';
 	private BufferedImage image;
@@ -63,6 +65,7 @@ public class Player {
 		this.weapons = new ArrayList<Weapon>();
 		this.armor = new ArrayList<Armor>();
 		this.potions = new ArrayList<Potion>();
+		this.abilities = new ArrayList<Ability>();
 		//Gets the current instance of board
 		this.board = Board.getBoard();
 		//Initializes purse with 0 gold
@@ -84,7 +87,9 @@ public class Player {
 	//Checks the player can level up and increases their level
 	public void levelUp() {
 		this.xpThreshold += xpThreshold * (board.getLevel() - 1);
+		this.HP = this.maxHP;
 		LevelUpView luView = new LevelUpView();
+		
 	}
 	//Adds the starting items
 	public void addStartingItems() {
@@ -97,6 +102,10 @@ public class Player {
 
 		equippedWeapon = weapons.get(0);
 		equippedArmor = armor.get(0);
+
+		if (this.INTELLIGENCE >= 2) {
+			abilities.add(new BasicFireball());
+		}
 	}
 	//Equips the items
 	public void equipItem(Item item) {
@@ -151,7 +160,6 @@ public class Player {
 		} else {
 			return rando.nextInt(this.STRENGTH) + 1 + equippedWeapon.damage;
 		}
-
 	}
 	//Handles the player's defense
 	public Integer defend() {
@@ -231,6 +239,10 @@ public class Player {
 		return potions;
 	}
 
+	public ArrayList<Ability> getAbilities() {
+		return abilities;
+	}
+	
 	public char getIcon() {
 		return ICON;
 	}
@@ -317,6 +329,7 @@ public class Player {
 
 	public void updateENDURANCE(int eNDURANCE) {
 		ENDURANCE += eNDURANCE;
+		this.maxHP = ENDURANCE * 3;
 	}
 
 	public void updateSTRENGTH(int sTRENGTH) {
