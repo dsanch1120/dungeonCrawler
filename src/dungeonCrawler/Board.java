@@ -170,8 +170,14 @@ public class Board extends JPanel{
 		placeEnemies();
 		theInstance.levels.add(theInstance.board);
 
+		//Creates Treasure chest if there are at least 4 rooms
 		if (theInstance.rooms.size() >= 4) {
 			theInstance.board[theInstance.rooms.get(3).getxStair()][theInstance.rooms.get(3).getyStair()] = new Treasure(theInstance.rooms.get(3).getxStair(), theInstance.rooms.get(3).getyStair(), theInstance.image);
+		}
+		
+		//Spawns merchant if there are exactly 5 rooms
+		if (theInstance.rooms.size() == 5) {
+			theInstance.board[theInstance.rooms.get(4).getxStair()][theInstance.rooms.get(4).getyStair()] = new Merchant(theInstance.rooms.get(4).getxStair(), theInstance.rooms.get(4).getyStair(), theInstance.image);
 		}
 	}
 	//Places the randomly generated enemies

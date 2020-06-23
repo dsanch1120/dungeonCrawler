@@ -5,5 +5,5 @@
 package dungeonCrawler;
 
 public enum CellType {
-	BORDER, PATH, ROOM, STAIRS, TREASURE;
+	BORDER, PATH, ROOM, STAIRS, TREASURE, MERCHANT;
 }
