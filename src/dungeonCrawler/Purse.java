@@ -29,4 +29,10 @@ public class Purse extends Item{
 	public boolean spawn() {
 		return false;
 	}
+
+	@Override
+	public void updateStats() {
+		// TODO Auto-generated method stub
+		
+	}
 }

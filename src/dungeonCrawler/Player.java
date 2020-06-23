@@ -196,6 +196,7 @@ public class Player {
 	}
 
 	//Getters and Setters
+	
 	public void updateXP(int XP) {
 		this.XP += XP;
 		if (this.XP >= this.xpThreshold) {
@@ -377,5 +378,7 @@ public class Player {
 		}
 	}
 
-
+	public Purse getPurse() {
+		return this.purse;
+	}
 }

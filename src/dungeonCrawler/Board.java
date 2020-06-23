@@ -74,6 +74,10 @@ public class Board extends JPanel{
 		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].getType() == CellType.TREASURE) {
 			theInstance.board[player.getxCoordinate()][player.getyCoordinate()].behavior();
 		}
+		//Checks if the player is on a merchant tile
+		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].getType() == CellType.MERCHANT) {
+			theInstance.board[player.getxCoordinate()][player.getyCoordinate()].behavior();
+		}
 		//Handles a player standing on stairs
 		if (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].getType() == CellType.STAIRS) {
 			switch (theInstance.board[player.getxCoordinate()][player.getyCoordinate()].behavior()) {

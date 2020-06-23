@@ -11,6 +11,7 @@ public class BasicGarment extends Armor{
 				+ "\n" + "the basic garment does little more than protect"
 				+ "\n" + "one from the embarrasment of fighting naked";
 		this.weight = 2;
+		this.price = 5;
 		this.type = ItemType.ARMOR;
 	}
 
@@ -22,6 +23,7 @@ public class BasicGarment extends Armor{
 				+ "\n" + "the basic garment does little more than protect"
 				+ "\n" + "one from the embarrasment of fighting naked";		
 		this.weight = 2;
+		this.price = 5;
 		this.type = ItemType.ARMOR;
 	}
 	
@@ -46,6 +48,12 @@ public class BasicGarment extends Armor{
 				return false;
 			}
 		}
+	}
+
+	@Override
+	public void updateStats() {
+		this.defense = 1;
+		
 	}
 
 }

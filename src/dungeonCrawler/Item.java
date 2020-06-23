@@ -17,10 +17,12 @@ public abstract class Item {
 	protected Random rando = new Random();
 	protected double spawnChance;
 	protected double weight;
+	protected int price;
 	
 	//Methods
 	public abstract int behavior();
 	public abstract boolean spawn();
+	public abstract void updateStats();
 	
 	//Getters and Setters
 	public ItemType getType() {
@@ -31,5 +33,8 @@ public abstract class Item {
 	}
 	public String getDescription() {
 		return this.description;
+	}
+	public int getPrice() {
+		return this.price;
 	}
 }

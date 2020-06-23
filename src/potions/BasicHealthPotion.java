@@ -3,8 +3,9 @@ package potions;
 import dungeonCrawler.ItemType;
 import dungeonCrawler.Potion;
 
-public class BasicHealthPotion extends Potion{
-
+public class BasicHealthPotion extends Potion {
+	private int healthRestoration;
+	
 	public BasicHealthPotion(String name) {
 		super(name);
 		this.description = "The basic health potion restores a modest amount of health. "
@@ -15,6 +16,8 @@ public class BasicHealthPotion extends Potion{
 		this.weight = 0.1;
 		this.type = ItemType.POTION;
 		this.intelligenceCheck = 2;
+		this.price = 4;
+		this.healthRestoration = 3;
 		checkIntelligence();
 	}
 
@@ -28,6 +31,8 @@ public class BasicHealthPotion extends Potion{
 		this.weight = 0.1;
 		this.type = ItemType.POTION;
 		this.intelligenceCheck = 2;
+		this.price = 4;
+		this.healthRestoration = 3;
 		checkIntelligence();
 	}
 	
@@ -43,7 +48,7 @@ public class BasicHealthPotion extends Potion{
 	
 	@Override
 	public void effect() {
-		board.getPlayer().updateHealth(3);
+		board.getPlayer().updateHealth(healthRestoration);
 		health.updateHealth();
 	}
 
@@ -60,4 +65,8 @@ public class BasicHealthPotion extends Potion{
 		return ((this.spawnChance * 100000) <= spawnCheck);
 	}
 
+	@Override
+	public void updateStats() {
+		this.healthRestoration = 4;
+	}
 }
