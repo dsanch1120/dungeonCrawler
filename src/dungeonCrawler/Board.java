@@ -48,7 +48,7 @@ public class Board extends JPanel{
 	private static Player player;
 	private boolean newGame;
 	private BufferedImage image;
-	
+
 
 	//Methods
 	//Initializes variables to be used throughout the program
@@ -88,7 +88,7 @@ public class Board extends JPanel{
 					theInstance.level++;
 					theInstance.board = theInstance.levels.get(theInstance.level);
 					theInstance.player.setLocation(theInstance.levelRooms.get(theInstance.level).get(1).getxStair(), (theInstance.levelRooms.get(theInstance.level).get(1).getyStair()));
-				//If the next level does not exist, a new level is generated.
+					//If the next level does not exist, a new level is generated.
 				} catch(NullPointerException e) {
 					theInstance.level--;
 					player.updateXP(5);
@@ -135,9 +135,12 @@ public class Board extends JPanel{
 
 		theInstance.level++;
 
+		//Updates Level Panel
+		LevelView.getInstance().updateLevel();
+
 		NUM_ROOMS = rando.nextInt(6) + 4;
 		generatePossibleItems();
-		
+
 		//Generate the rooms
 		generateRooms();
 		theInstance.levelRooms.put(theInstance.level, theInstance.rooms);
@@ -178,7 +181,7 @@ public class Board extends JPanel{
 		if (theInstance.rooms.size() >= 4) {
 			theInstance.board[theInstance.rooms.get(3).getxStair()][theInstance.rooms.get(3).getyStair()] = new Treasure(theInstance.rooms.get(3).getxStair(), theInstance.rooms.get(3).getyStair(), theInstance.image);
 		}
-		
+
 		//Spawns merchant if there are exactly 5 rooms
 		if (theInstance.rooms.size() == 5) {
 			theInstance.board[theInstance.rooms.get(4).getxStair()][theInstance.rooms.get(4).getyStair()] = new Merchant(theInstance.rooms.get(4).getxStair(), theInstance.rooms.get(4).getyStair(), theInstance.image);
@@ -348,7 +351,7 @@ public class Board extends JPanel{
 	public ArrayList<Item> getPossibleItems() {
 		return theInstance.possibleItems;
 	}
-	
+
 	public BoardCell[][] getBoardArray() {
 		return theInstance.board;
 	}
@@ -362,7 +365,7 @@ public class Board extends JPanel{
 
 	public int getLevel() {
 		if (theInstance.level >= 1) {
-			return theInstance.level;
+			return theInstance.level + 1;
 		} else {
 			return 1;
 		}

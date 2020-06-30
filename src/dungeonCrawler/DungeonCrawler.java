@@ -64,6 +64,8 @@ public class DungeonCrawler extends JFrame{
 	private AttributeSlider charismaSlider = new AttributeSlider("Charisma", 6);
 	private ArrayList<JTextField> attributePointTitles = new ArrayList<JTextField>();
 	private Health playerHealth;
+	private GoldView playerGold;
+	private LevelView currentLevel;
 
 	//GUI for the main game
 	public void dungeonCrawler() {
@@ -83,11 +85,17 @@ public class DungeonCrawler extends JFrame{
 		//Sets up Board
 		//Creates northern panel
 		JPanel northPanel = new JPanel();
-		northPanel.setLayout(new GridLayout(1,3));
+		northPanel.setLayout(new GridLayout(1,5));
 
 		playerHealth = Health.getInstance();
 		playerHealth.updateHealth();
+		
+		playerGold = GoldView.getInstance();
+		playerGold.updateGold();
 
+		currentLevel = LevelView.getInstance();
+		currentLevel.updateLevel();
+		
 		JTextField playerName = new JTextField();
 		playerName.setEditable(false);
 		playerName.setText(board.getPlayer().getName());
@@ -97,7 +105,9 @@ public class DungeonCrawler extends JFrame{
 		
 
 		northPanel.add(playerHealth);
+		northPanel.add(playerGold);
 		northPanel.add(playerName);
+		northPanel.add(currentLevel);
 		northPanel.add(playerXP);
 		add(northPanel, BorderLayout.NORTH);
 

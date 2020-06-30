@@ -58,6 +58,7 @@ public abstract class Enemy {
 	public abstract Integer defend();
 	public abstract void takeDamage(int damage);
 	public abstract void draw(Graphics cell);
+	public abstract void death();
 	
 	//Getters and Setters
 	public char getIcon() {

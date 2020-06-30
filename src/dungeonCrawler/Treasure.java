@@ -158,6 +158,7 @@ public class Treasure extends BoardCell {
 			contents.remove(index);
 			setVisible(false);
 			this.getContentPane().removeAll();
+			GoldView.getInstance().updateGold();
 			DisplayTreasure();
 		}
 

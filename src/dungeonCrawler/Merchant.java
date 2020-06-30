@@ -137,6 +137,7 @@ public class Merchant extends BoardCell{
 			} else {
 				Board.getBoard().getPlayer().addItem(stock.get(index));
 				Board.getBoard().getPlayer().getPurse().addGold(stock.get(index).price * -1);
+				GoldView.getInstance().updateGold();
 				stock.remove(index);
 				setVisible(false);
 				this.getContentPane().removeAll();

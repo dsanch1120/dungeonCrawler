@@ -77,4 +77,9 @@ public class Spider extends Enemy{
 		this.HP -= damage;
 		
 	}
+	
+	@Override
+	public void death() {
+		board.getPlayer().getPurse().addGold(this.gold);
+	}
 }

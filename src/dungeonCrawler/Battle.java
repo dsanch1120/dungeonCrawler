@@ -144,6 +144,8 @@ public class Battle extends JFrame {
 				//health.updateHealth();
 				if (enemy.HP <= 0) {
 					Board.getPlayer().updateXP(enemy.XP);
+					Board.getPlayer().getPurse().addGold(enemy.gold);
+					GoldView.getInstance().updateGold();
 					XP.getInstance().updateXP();
 					Board.getBoard().getBoardArray()[Board.getPlayer().getxCoordinate()][Board.getPlayer().getyCoordinate()].enemy = null;
 					Board.getBoard().repaint();
