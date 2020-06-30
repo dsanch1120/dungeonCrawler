@@ -47,7 +47,7 @@ public class Player {
 	private final int WIDTH = 15;
 	private final int HEIGHT = 15;
 	private Purse purse;
-	private Set<Item> inventory;
+	private ArrayList<Item> inventory;
 	private ArrayList<Weapon> weapons;
 	private ArrayList<Armor> armor;
 	private ArrayList<Potion> potions;
@@ -61,7 +61,7 @@ public class Player {
 	//Constructor
 	public Player() {
 		//Allocates memory for item related arraylists
-		this.inventory = new HashSet<Item>();
+		this.inventory = new ArrayList<Item>();
 		this.weapons = new ArrayList<Weapon>();
 		this.armor = new ArrayList<Armor>();
 		this.potions = new ArrayList<Potion>();
@@ -127,7 +127,7 @@ public class Player {
 	}
 	//Updates the inventory
 	public void updateInventory() {
-		this.inventory = new HashSet<Item>();
+		this.inventory = new ArrayList<Item>();
 		for (int i = 0; i < this.armor.size(); i++) {
 			this.inventory.add(armor.get(i));
 		}
@@ -224,7 +224,7 @@ public class Player {
 		return PERCEPTION * 5;
 	}
 
-	public Set<Item> getInventory() {
+	public ArrayList<Item> getInventory() {
 		return inventory;
 	}
 
