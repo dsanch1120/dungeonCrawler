@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -24,7 +25,7 @@ import javax.swing.JTextField;
 
 public class Treasure extends BoardCell {
 	BufferedImage image;
-	
+
 	private ArrayList<Item> contents;
 
 	public Treasure(int X, int Y, BufferedImage oImage) {
@@ -45,6 +46,11 @@ public class Treasure extends BoardCell {
 	}
 
 	public void generateContents() {
+		Random rando = new Random();
+		int multiFact = rando.nextInt(3) + 1;
+
+		contents.add(new Purse(Board.getBoard().getLevel() * multiFact));
+
 		board = Board.getBoard();
 		for (int i = 0; i < board.getPossibleItems().size(); i++) {
 			if (board.getPossibleItems().get(i).spawn()) {
@@ -52,11 +58,11 @@ public class Treasure extends BoardCell {
 			}
 		}
 	}
-	
+
 	public ArrayList<Item> getContents() {
 		return contents;
 	}
-	
+
 	@Override
 	public void draw(Graphics cell) {
 		if (visible) {
@@ -82,23 +88,23 @@ public class Treasure extends BoardCell {
 	public boolean hasEnemy() {
 		return false;
 	}
-	
+
 	public class TreasureDisplay extends JFrame{
 		//Variables to be used throughout
 		private Board board = Board.getBoard();
 		private ArrayList<JPanel> panels;
-		
+
 		public TreasureDisplay() {
 			DisplayTreasure();
 		}
-		
+
 		public void DisplayTreasure() {
 			setSize(850, 600);
 			JTextField title = new JTextField(15);
 			title.setEditable(false);
 			title.setText("Treasure Chest");
 			add(title, BorderLayout.NORTH);
-			
+
 			panels = new ArrayList<JPanel>();
 			JTextField item;
 			JTextArea description;
@@ -110,35 +116,35 @@ public class Treasure extends BoardCell {
 			for (int i = 0; i < contents.size(); i++) {
 				item = new JTextField(15); item.setEditable(false);
 				description = new JTextArea(); description.setEditable(false);
-				
+
 				item.setText(contents.get(i).getName());
 				description.setText(contents.get(i).getDescription());
-				
+
 				button = new ObtainButton(i);
-				
+
 				temp = new JPanel();
 				temp.add(item); temp.add(description); temp.add(button.getButton());
 				panels.add(temp);
 			}
-			
+
 			JPanel centerPanel = new JPanel();
 			for (int i = 0; i < panels.size(); i++) {
 				centerPanel.add(panels.get(i));
 			}
-			
+
 			add(centerPanel, BorderLayout.CENTER);
-			
+
 			ReturnToGameButton returnButton = new ReturnToGameButton();
 			add(returnButton.getButton(), BorderLayout.SOUTH);
-			
+
 			setVisible(true);
 		}
-		
+
 		private void destroyWindow() {
 			setVisible(false);
 			dispose();
 		}
-		
+
 		private void addItem(int index) {
 			board.getPlayer().addItem(contents.get(index));
 			contents.remove(index);
@@ -146,7 +152,15 @@ public class Treasure extends BoardCell {
 			this.getContentPane().removeAll();
 			DisplayTreasure();
 		}
-		
+
+		private void addGold(int index) {
+			board.getPlayer().getPurse().addGold(contents.get(index).behavior());
+			contents.remove(index);
+			setVisible(false);
+			this.getContentPane().removeAll();
+			DisplayTreasure();
+		}
+
 		private class ReturnToGameButton extends JPanel {
 			private JButton button;
 			ButtonListener listener = new ButtonListener();
@@ -169,30 +183,34 @@ public class Treasure extends BoardCell {
 				}	
 			}
 		}
-		
+
 		private class ObtainButton extends JPanel {
 			private JButton button;
 			private int index;
 			private ButtonListener listener = new ButtonListener();
-			
+
 			public ObtainButton(int index) {
 				this.button = new JButton("Add to Inventory");
 				this.index = index;
 				this.button.addActionListener(listener);
 			}
-			
+
 			//Getter method
 			public JButton getButton() {
 				return button;
 			}
-			
+
 			private class ButtonListener implements ActionListener {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					addItem(index);
+					if (contents.get(index).getType() == ItemType.PURSE) {
+						addGold(index);
+					} else {
+						addItem(index);
+					}
 				}
-				
+
 			}
 		}
 	}
