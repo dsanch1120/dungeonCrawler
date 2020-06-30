@@ -3,6 +3,7 @@ package dungeonCrawler;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -24,6 +25,7 @@ public class Merchant extends BoardCell{
 		super(oImage);
 		this.X = X;
 		this.Y = Y;
+		
 		this.type = CellType.MERCHANT;
 		try {
 			image = ImageIO.read(new File("data/Dungeon_Tileset.png"));
@@ -79,6 +81,7 @@ public class Merchant extends BoardCell{
 		//Variables to be used throughout
 		private ArrayList<JPanel> panels;
 		private PurchaseButton button;
+		private SellButton sellButton;
 
 		public MerchantDisplay() {
 			DisplayMerchant();
@@ -120,6 +123,10 @@ public class Merchant extends BoardCell{
 
 			add(centerPanel, BorderLayout.CENTER);
 
+			JPanel southMenu = new JPanel();
+			southMenu.setLayout(new GridLayout(2,1));
+			SellButton sellButton = new SellButton();
+			add(sellButton.getButton(), BorderLayout.SOUTH);
 			ReturnToGameButton returnButton = new ReturnToGameButton();
 			add(returnButton.getButton(), BorderLayout.SOUTH);
 
@@ -146,6 +153,28 @@ public class Merchant extends BoardCell{
 			}
 		}
 
+		private class SellButton extends JPanel {
+			private JButton button;
+			ButtonListener listener = new ButtonListener();
+			
+			public SellButton() {
+				this.button = new JButton("Sell");
+				this.button.addActionListener(listener);
+			}
+			
+			//Getter Method
+			public JButton getButton() {
+				return button;
+			}
+			
+			private class ButtonListener implements ActionListener {
+				@Override 
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			}
+		}
+		
 		private class ReturnToGameButton extends JPanel {
 			private JButton button;
 			ButtonListener listener = new ButtonListener();

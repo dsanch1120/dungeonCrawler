@@ -10,6 +10,7 @@ public class Purse extends Item{
 	public Purse(int gold) {
 		super();
 		this.gold = gold;
+		this.name = this.gold + " Gold";
 		this.description = "A valuable currency that is dropped by enemies "
 				+ "\n" + " and found in treasure chests."
 				+ "\n" + "Can be spent at the merchant's store";
