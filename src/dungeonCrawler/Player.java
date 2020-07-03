@@ -163,6 +163,7 @@ public class Player {
 	}
 	//Handles adding an item
 	public void addItem(Item item) {
+		item.modifyPrice(0);
 		this.inventory.add(item);
 		if (item.getType() == ItemType.POTION) {
 			this.potions.add((Potion) item);

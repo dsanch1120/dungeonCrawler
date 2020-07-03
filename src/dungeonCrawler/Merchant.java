@@ -44,6 +44,7 @@ public class Merchant extends BoardCell{
 			if (Board.getBoard().getPossibleItems().get(i).spawn()) {
 				stock.add(Board.getBoard().getPossibleItems().get(i));
 				stock.get(stock.size() - 1).updateStats();
+				stock.get(stock.size() - 1).modifyPrice(1);
 			}
 		}
 	}

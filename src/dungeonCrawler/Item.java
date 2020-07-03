@@ -20,7 +20,27 @@ public abstract class Item {
 	protected int price;
 	protected boolean equipped = false;
 	
-	//Methods
+	//Modifies the price of the item
+	public void modifyPrice(int option) {
+		switch (option) {
+		//Player/enemy owns the item
+		case 0:
+			this.price--;
+			this.price = this.price + Board.getPlayer().getCHARISMA();
+		//Merchant owns the items
+		case 1:
+			this.price++;
+			this.price = this.price - Board.getPlayer().getCHARISMA();
+			if (this.price < 1) {
+				this.price = 1;
+			}
+			break;
+		default:
+			System.exit(0);
+		}
+	}
+	
+	//Abstract Methods
 	public abstract int behavior();
 	public abstract boolean spawn();
 	public abstract void updateStats();
