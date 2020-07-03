@@ -18,6 +18,7 @@ public abstract class Item {
 	protected double spawnChance;
 	protected double weight;
 	protected int price;
+	protected boolean equipped = false;
 	
 	//Methods
 	public abstract int behavior();
@@ -25,6 +26,10 @@ public abstract class Item {
 	public abstract void updateStats();
 	
 	//Getters and Setters
+	public boolean isEquipped() {
+		return equipped;
+	}
+	
 	public ItemType getType() {
 		return this.type;
 	}

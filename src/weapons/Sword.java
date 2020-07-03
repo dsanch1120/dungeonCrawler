@@ -35,10 +35,12 @@ public class Sword extends Weapon{
 	//Because the basic sword doesn't impact the user's attributes, equip and unquip do nothing.
 	@Override
 	public void equip() {
+		equipped = true;
 	}
 
 	@Override
 	public void unequip() {
+		equipped = false;
 	}
 	
 	@Override

@@ -81,7 +81,6 @@ public class Merchant extends BoardCell{
 		//Variables to be used throughout
 		private ArrayList<JPanel> panels;
 		private PurchaseButton button;
-		private SellInventoryButton sellButton;
 		private SellButton sell;
 
 		public MerchantDisplay() {
@@ -89,6 +88,7 @@ public class Merchant extends BoardCell{
 		}
 
 		private void DisplayMerchant() {
+			this.getContentPane().removeAll();
 			setSize(850, 600);
 			JTextField title = new JTextField(15);
 			title.setEditable(false);
@@ -127,15 +127,16 @@ public class Merchant extends BoardCell{
 			JPanel southMenu = new JPanel();
 			southMenu.setLayout(new GridLayout(2,1));
 			SellInventoryButton sellButton = new SellInventoryButton();
-			southMenu.add(sellButton.getButton(), BorderLayout.SOUTH);
+			southMenu.add(sellButton.getButton());
 			ReturnToGameButton returnButton = new ReturnToGameButton();
-			southMenu.add(returnButton.getButton(), BorderLayout.SOUTH);
-			add(southMenu);
+			southMenu.add(returnButton.getButton());
+			add(southMenu, BorderLayout.SOUTH);
 			
 			setVisible(true);
 		}
 		
 		private void DisplaySell() {
+			this.getContentPane().removeAll();
 			setSize(850, 600);
 			JTextField title = new JTextField(15);
 			title.setEditable(false);
@@ -147,7 +148,11 @@ public class Merchant extends BoardCell{
 			JTextField price;
 			
 			JPanel temp;
+			Board.getBoard().getPlayer().updateInventory();
 			for (int i = 0; i < Board.getBoard().getPlayer().getInventory().size(); i++) {
+				if (Board.getBoard().getPlayer().getInventory().get(i).isEquipped()) {
+					continue;
+				}
 				item = new JTextField(15); item.setEditable(false);
 				price = new JTextField(3); price.setEditable(false);
 				
@@ -170,7 +175,9 @@ public class Merchant extends BoardCell{
 
 			JPanel southMenu = new JPanel();
 			southMenu.setLayout(new GridLayout(2,1));
+			BuyInventoryButton buyButton = new BuyInventoryButton();
 			ReturnToGameButton returnButton = new ReturnToGameButton();
+			southMenu.add(buyButton.getButton());
 			southMenu.add(returnButton.getButton());
 			add(southMenu, BorderLayout.SOUTH);
 
@@ -196,6 +203,17 @@ public class Merchant extends BoardCell{
 				return true;
 			}
 		}
+		
+		private void sellItem(int index) {
+			Board.getBoard().getPlayer().getPurse().addGold(Board.getBoard().getPlayer().getInventory().get(index).price);
+			GoldView.getInstance().updateGold();
+			Board.getBoard().getPlayer().getInventory().remove(index);
+			Board.getBoard().getPlayer().updateCollections();
+			setVisible(false);
+			this.getContentPane().removeAll();
+			DisplaySell();
+		}
+		
 
 		private class SellButton extends JPanel {
 			private JButton button;
@@ -217,9 +235,32 @@ public class Merchant extends BoardCell{
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					
+					sellItem(index);
 				}
 
+			}
+		}
+		
+		private class BuyInventoryButton extends JPanel {
+			private JButton button;
+			private ButtonListener listener = new ButtonListener();
+			
+			public BuyInventoryButton() {
+				this.button = new JButton("Buy");
+				this.button.addActionListener(listener);
+			}
+			
+			//Getter Method
+			public JButton getButton() {
+				return button;
+			}
+			
+			private class ButtonListener implements ActionListener {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					destroyWindow();
+					DisplayMerchant();
+				}
 			}
 		}
 		
@@ -240,7 +281,8 @@ public class Merchant extends BoardCell{
 			private class ButtonListener implements ActionListener {
 				@Override 
 				public void actionPerformed(ActionEvent e) {
-					
+					destroyWindow();
+					DisplaySell();
 				}
 			}
 		}

@@ -18,6 +18,10 @@ public abstract class Weapon extends Item {
 		
 	}
 	
+	public boolean isEquipped() {
+		return equipped;
+	}
+	
 	//The "equip" and "unequip" methods modify the player's attributes when the weapon
 	//	is equipped or unquipped.
 	//	EX. Dagger increases player agility by 1 when equipped.

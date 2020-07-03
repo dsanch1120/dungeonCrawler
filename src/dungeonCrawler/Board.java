@@ -160,11 +160,10 @@ public class Board extends JPanel{
 		generateCorridors();
 
 		//Place the Rooms and Corridors
-		//placeCorridors();
 		placeRooms();
 		placeCorridors();
 
-		//Place the Stairs
+		//Places the Stairs
 		Collections.shuffle(theInstance.rooms);
 		theInstance.board[theInstance.rooms.get(0).getxStair()][theInstance.rooms.get(0).getyStair()] = new Stairs(theInstance.rooms.get(0).getxStair(), theInstance.rooms.get(0).getyStair(), 0, image);
 		if (theInstance.level > 0) {

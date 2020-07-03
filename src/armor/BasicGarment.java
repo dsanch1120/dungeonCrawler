@@ -29,11 +29,13 @@ public class BasicGarment extends Armor{
 	
 	@Override
 	public void equip() {
+		equipped = true;
 		board.getPlayer().updateAGILITY(1);	
 	}
 
 	@Override
 	public void unequip() {
+		equipped = false;
 		board.getPlayer().updateAGILITY(-1);
 	}
 

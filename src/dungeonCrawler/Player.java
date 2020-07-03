@@ -125,6 +125,29 @@ public class Player {
 			this.equippedArmor = null;
 		}
 	}
+	//Updates individual inventories
+	public void updateCollections() {
+		armor = new ArrayList<Armor>();
+		weapons = new ArrayList<Weapon>();
+		potions = new ArrayList<Potion>();
+		
+		for (int i = 0; i < this.inventory.size(); i++) {
+			switch (this.inventory.get(i).getType()) {
+			case WEAPON:
+				weapons.add((Weapon) this.inventory.get(i));
+				break;
+			case ARMOR:
+				armor.add((Armor) this.inventory.get(i));
+				break;
+			case POTION:
+				potions.add((Potion) this.inventory.get(i));
+				break;
+			default:
+				System.exit(0);
+			}
+		}
+	}
+	
 	//Updates the inventory
 	public void updateInventory() {
 		this.inventory = new ArrayList<Item>();
